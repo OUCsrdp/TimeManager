@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="90dp"
+    android:orientation="vertical"
+    android:background="@drawable/plandateradius">
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:text="2018年1月31日"
+            android:gravity="center"
+            android:textColor="@color/fontColor"
+            android:textSize="22sp"/>
+        <TextView
+            android:layout_marginBottom="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:text="星期三"
+            android:gravity="center"
+            android:textColor="@color/fontColor"
+            android:textSize="22sp"
+            />
+</LinearLayout>

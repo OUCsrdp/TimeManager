@@ -6,4 +6,5 @@
     <color name="halfTransparent">#a5ffffff</color>
     <color name="majorOrange">#ff8e01</color>
     <color name="blueBackground">#0f0125</color>
+    <color name="fontColor">#000000</color>
 </resources>

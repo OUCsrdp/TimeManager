@@ -18,12 +18,13 @@
             android:layout_marginTop="30dp"
             android:background="@color/blueBackground"
             app:layout_widthPercent="92%"
-            android:layout_height="400dp"
+            android:layout_height="wrap_content"
             app:layout_marginLeftPercent="4%"
             android:orientation="vertical">
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_height="400dp"
                 android:src="@drawable/backgroundline"
                 android:scaleType="centerInside"
                 />
@@ -66,6 +67,7 @@
                         />
                     <TextView
                         style="@style/timesharingTime"
+                        android:onClick="showChangeTime"
                         android:text="2018年3月17日 09:30"
                         />
                 </RelativeLayout>
@@ -80,7 +82,9 @@
                         android:text="结束"
                         />
                     <TextView
+
                         style="@style/timesharingTime"
+                        android:onClick="showChangeTime"
                         android:text="2018年3月17日 09:30"
                         />
                 </RelativeLayout>
@@ -97,6 +101,7 @@
                     <TextView
                         style="@style/timesharingTime"
                         android:text="05:30"
+                        android:onClick="showChangeTime"
                         />
                 </RelativeLayout>
                 <android.support.percent.PercentRelativeLayout
@@ -109,10 +114,17 @@
                             android:text="备注"
                             style="@style/timesharingEditLabel"
                             android:layout_centerVertical="false"/>
+                        <View
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="40dp"
+                                app:layout_widthPercent="85%"
+                                android:layout_height="2dp"
+                                android:background="@color/blueBackground" />
                         <EditText
+                            android:background="@null"
                             app:layout_widthPercent="80%"
                             android:layout_height="80dp"
-                            android:layout_marginTop="40dp"
+                            android:layout_marginTop="42dp"
                             android:layout_centerHorizontal="true"/>
                 </android.support.percent.PercentRelativeLayout>
                 <RelativeLayout
@@ -126,6 +138,7 @@
                         android:text="满意度"
                         />
                     <LinearLayout
+                        android:visibility="invisible"
                         android:id="@+id/allSatisy"
                         android:layout_marginLeft="110dp"
                         android:layout_width="wrap_content"
@@ -168,6 +181,12 @@
                         android:thumb="@drawable/switch_thumb"
                         android:track="@drawable/switch_track" />
                 </RelativeLayout>
+                <Button
+                    android:text="删除事件"
+                    android:textColor="#ff0000"
+                    style="@style/timesharingEditTitle"
+                    android:background="@drawable/editbutton"
+                    />
             </LinearLayout>
 
 
