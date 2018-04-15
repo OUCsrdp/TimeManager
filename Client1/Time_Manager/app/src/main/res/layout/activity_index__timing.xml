@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blueBackground"
+    android:orientation="vertical"
+    tools:context="com.srdp.admin.time_manager.ui.Index_Timing">
+    <RelativeLayout
+        android:id="@+id/indexNavi"
+        android:layout_width="match_parent"
+        android:layout_height="76dp">
+        <ImageView
+            android:src="@drawable/navi_orange"
+            android:layout_marginTop="22dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginStart="30dp"/>
+        <ImageView
+            android:id="@+id/setTiming"
+            android:layout_marginEnd="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/add_timing"
+            android:layout_marginTop="22dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"/>
+    </RelativeLayout>
+    <FrameLayout
+        android:layout_above="@+id/stopTiming"
+        android:layout_marginBottom="25dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:src="@drawable/sun_index"
+            android:layout_width="320dp"
+            android:layout_height="320dp" />
+       <TextView
+           android:id="@+id/indexTimer"
+           android:layout_gravity="center"
+           android:textColor="#ffffff"
+           android:text="00:00"
+           android:textSize="40sp"
+           android:layout_marginBottom="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
+    <FrameLayout
+        android:id="@+id/stopTiming"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        android:layout_width="90dp"
+        android:layout_height="90dp">
+        <ImageView
+            android:src="@drawable/timing_stop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <TextView
+            android:text="结束"
+            android:gravity="center"
+            android:textSize="22sp"
+            android:textColor="#ffffff"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
+    
+</RelativeLayout>

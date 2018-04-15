@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.srdp.admin.time_manager.ui.Person_Center">
+
+    <android.support.percent.PercentRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#0f0125"
+        android:orientation="vertical">
+
+        <com.srdp.admin.time_manager.ui.TitleLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+        <FrameLayout
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_marginTop="50dp">
+
+            <ImageView
+                android:layout_marginLeft="0dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/oneoffour" />
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/tryhead" />
+
+        </FrameLayout>
+        <TextView
+            android:layout_marginTop="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:text="爱吃肉的兔子"
+            android:gravity="center"
+            android:textColor="@color/majorOrange"
+            android:textSize="28sp"
+             />
+        <LinearLayout
+            android:layout_marginTop="200dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                style="@style/personInforItem"
+                >
+                    <ImageView
+                    android:src="@drawable/minipoint"
+                    style="@style/personInforPoint" />
+                    <TextView
+                        android:layout_marginLeft="-10dp"
+                        android:text="个人资料"
+                        style="@style/personInforLabel"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="100dp"
+                style="@style/personInforItem"
+                >
+                <ImageView
+                    android:src="@drawable/minipoint"
+                    style="@style/personInforPoint" />
+                <TextView
+                    android:layout_marginLeft="-10dp"
+                    android:text="密码修改"
+                    style="@style/personInforLabel"
+                    />
+            </LinearLayout>
+            <Button
+                android:layout_marginTop="20dp"
+                android:layout_width="130dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:text="退出登录"
+                android:textSize="22sp"
+                android:textColor="#ffffff"
+                android:background="@drawable/button_radius"
+                />
+        </LinearLayout>
+
+    </android.support.percent.PercentRelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

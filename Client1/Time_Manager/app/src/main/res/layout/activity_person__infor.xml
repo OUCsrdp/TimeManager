@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.srdp.admin.time_manager.ui.Person_Infor">
+
+    <android.support.percent.PercentRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#0f0125"
+        android:orientation="vertical">
+
+        <com.example.admin.timemanager.TitleLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+        <FrameLayout
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_marginTop="50dp">
+
+            <ImageView
+                android:layout_marginLeft="0dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/oneoffour" />
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/tryhead" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_marginTop="200dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                style="@style/personInforItem"
+                >
+                    <ImageView
+                    android:src="@drawable/minipoint"
+                    style="@style/personInforPoint" />
+                    <TextView
+                    android:text="@string/user_name"
+                    style="@style/personInforLabel"
+                    />
+                    <EditText
+                    android:text="@string/hintt"
+                    style="@style/personInforEdit"></EditText>
+            </LinearLayout>
+            <LinearLayout
+                style="@style/personInforItem"
+                >
+                <ImageView
+                    android:src="@drawable/minipoint"
+                    style="@style/personInforPoint" />
+                <TextView
+                    android:text="@string/user_school"
+                    style="@style/personInforLabel"
+                    />
+                <TextView
+                    android:text="@string/hintt"
+                    style="@style/personInforEdit"
+                    android:id="@+id/userSchool"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/personInforItem"
+                >
+                <ImageView
+                    android:src="@drawable/minipoint"
+                    style="@style/personInforPoint" />
+                <TextView
+                    android:text="@string/user_major"
+                    style="@style/personInforLabel"
+                    />
+                <EditText
+                    android:text="@string/hintt"
+                    style="@style/personInforEdit"></EditText>
+            </LinearLayout>
+            <LinearLayout
+                style="@style/personInforItem"
+                >
+                <ImageView
+                    android:src="@drawable/minipoint"
+                    style="@style/personInforPoint" />
+                <TextView
+                    android:text="@string/user_number"
+                    style="@style/personInforLabel"
+                    />
+                <EditText
+                    android:text="@string/hintt"
+                    style="@style/personInforEdit"></EditText>
+            </LinearLayout>
+            <LinearLayout
+                style="@style/personInforItem"
+                >
+                <ImageView
+                    android:src="@drawable/minipoint"
+                    style="@style/personInforPoint" />
+                <TextView
+                    android:text="@string/user_grade"
+                    style="@style/personInforLabel"
+                    />
+                <TextView
+                    android:text="@string/hintt"
+                    style="@style/personInforEdit"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.percent.PercentRelativeLayout>
+
+</android.support.constraint.ConstraintLayout>
