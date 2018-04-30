@@ -1,10 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>wangyiMusic</groupId>
-  <artifactId>wangyiMusic</artifactId>
+  <groupId>TimeManagerServer</groupId>
+  <artifactId>TimeManagerServer</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
-  <name>wangyiMusic</name>
+  <name>TimeManagerServer</name>
   <description>none</description>
   <dependencies>
   <!-- https://mvnrepository.com/artifact/commons-httpclient/commons-httpclient -->
@@ -26,6 +26,11 @@
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
 			<version>20171018</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.alibaba</groupId>
+		    <artifactId>fastjson</artifactId>
+		    <version>1.2.33</version>
 		</dependency>
   </dependencies>
   <build>

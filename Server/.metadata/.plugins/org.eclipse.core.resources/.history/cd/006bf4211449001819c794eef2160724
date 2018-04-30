@@ -1,0 +1,22 @@
+package com.srdp.admin.time_manager.model.db;
+
+import java.util.ArrayList;
+import com.srdp.admin.time_manager.model.moudle.*;
+
+public class UserManager {
+
+	public UserManager() {;}
+	
+	public static boolean add(User user) {return true;}
+
+	public static boolean delete(User user) {return true;}
+	
+	public static User findWithId(long id) {return null;}
+	public static User findWithNumStu(String numStu) {return null;}
+	public static ArrayList<User> findWithSchool(String school) {return null;}
+	public static ArrayList<User> findWithMajor(String major) {return null;}
+	public static ArrayList<User> findWithName(String name) {return null;}
+	public static ArrayList<User> findWithTimeRegister(String timeRegister) {return null;}
+	
+	public static boolean change(User user) {return true;}
+}
