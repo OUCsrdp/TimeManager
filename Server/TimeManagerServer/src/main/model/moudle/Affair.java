@@ -2,9 +2,9 @@ package main.model.moudle;
 
 public class Affair 
 {
-	private long id;
-	private long idTS;
-	private long idLabel;
+	private int id;
+	private int idTS;
+	private int idLabel;
 	
 	private int satisfaction;
 	
@@ -15,7 +15,7 @@ public class Affair
 	private String timeEnd;
 	private String timeEndPlan;
 	
-	public Affair(long id, long idTS, long idLabel, int satisfaction, String name, String tips, String timeStart, String timeEnd, String timeEndPlan)
+	public Affair(int id, int idTS, int idLabel, int satisfaction, String name, String tips, String timeStart, String timeEnd, String timeEndPlan)
 	{
 		this.id = id;
 		this.idTS = idTS;
@@ -28,19 +28,19 @@ public class Affair
 		this.timeEndPlan = timeEndPlan;
 	}
 
-	public long getIdTS() {
+	public int getIdTS() {
 		return idTS;
 	}
 
-	public void setIdTS(long idTS) {
+	public void setIdTS(int idTS) {
 		this.idTS = idTS;
 	}
 
-	public long getIdLabel() {
+	public int getIdLabel() {
 		return idLabel;
 	}
 
-	public void setIdLabel(long idLabel) {
+	public void setIdLabel(int idLabel) {
 		this.idLabel = idLabel;
 	}
 
@@ -92,7 +92,7 @@ public class Affair
 		this.timeEndPlan = timeEndPlan;
 	}
 
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 }

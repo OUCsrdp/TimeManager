@@ -1,18 +1,16 @@
 package main.model.moudle;
 
-
-
 public class S_Affair extends Affair
 {
-	private long idS;
+	private int idS;
 	
-	private boolean isImportant;
+	private String isImportant;
 	
 	private String timeStartPlan;
 	private String timeStartAlarm;
 	private String timeEndAlarm;
 	
-	public S_Affair(long id, long idTS, long idS, long idLabel, int satisfaction, boolean isImportant, String name, String tips, String timeStart, String timeEnd, String timeStartPlan, String timeEndPlan, String timeStartAlarm, String timeEndAlarm) 
+	public S_Affair(int id, int idTS, int idS, int idLabel, int satisfaction, String isImportant, String name, String tips, String timeStart, String timeEnd, String timeStartPlan, String timeEndPlan, String timeStartAlarm, String timeEndAlarm) 
 	{
 		super(id, idTS, idLabel, satisfaction, name, tips, timeStart, timeEnd, timeEndPlan);
 		this.idS = idS;
@@ -23,19 +21,19 @@ public class S_Affair extends Affair
 		// TODO Auto-generated constructor stub
 	}
 
-	public long getIdS() {
+	public int getIdS() {
 		return idS;
 	}
 
-	public void setIdS(long idS) {
+	public void setIdS(int idS) {
 		this.idS = idS;
 	}
 
-	public boolean isImportant() {
+	public String getIsImportant() {
 		return isImportant;
 	}
 
-	public void setImportant(boolean isImportant) {
+	public void setIsImportant(String isImportant) {
 		this.isImportant = isImportant;
 	}
 
@@ -55,7 +53,7 @@ public class S_Affair extends Affair
 		this.timeStartAlarm = timeStartAlarm;
 	}
 
-	public String gettimeEndAlarm() {
+	public String getTimeEndAlarm() {
 		return timeEndAlarm;
 	}
 

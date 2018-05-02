@@ -2,15 +2,15 @@ package main.model.moudle;
 
 public class Label 
 {
-	private long id;
+	private int id;
 	
 	private String name;
 	
 	private String image;
 	
-	private int color;
+	private String color;
 	
-	public Label(long id, String name, String image, int color)
+	public Label(int id, String name, String image, String color)
 	{
 		this.id = id;
 		this.name = name;
@@ -34,15 +34,15 @@ public class Label
 		this.image = image;
 	}
 
-	public int getColor() {
+	public String getColor() {
 		return color;
 	}
 
-	public void setColor(int color) {
+	public void setColor(String color) {
 		this.color = color;
 	}
 
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 }

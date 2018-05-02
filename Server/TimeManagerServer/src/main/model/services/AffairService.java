@@ -74,4 +74,26 @@ public class AffairService{//这里为啥需要isAffair?????
 		}
 	}
 
+	int DeleteAffair(int id,int isAffair) {	//删除事件，参数为事件的id,isAffair为1表示Affair,为0表示SAffair
+		if(isAffair == 1) { //区分是事件还是日程
+			AffairManager managerA = new AffairManager();
+			Affair affair = managerA.findWithId(id);
+			if(affair != null) { //看该用户是否存在
+				if(managerA.delete(id)) return 1;
+				else return 0;
+			}
+			else return 0;
+		}
+		else {
+			S_AffairManager managerSA = new S_AffairManager();
+			S_Affair affair = managerSA.findWithId(id);
+			if(affair != null) {
+				if(managersA.delete(id)) return 1;
+				else return 0;
+			}
+			else return 0;
+		}
+	}
+	//删除事件，参数为事件的id,isAffair为1表示Affair,为0表示SAffair
+
 }

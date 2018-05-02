@@ -1,8 +1,9 @@
 package main.model.moudle;
 
+
 public class User 
 {
-	private long id;
+	private int id;
 	private String numStu;
 	private String school;
 	private String major;
@@ -12,7 +13,7 @@ public class User
 	private String image;
 	private String timeRegister;
 	
-	public User(long id, String numStu, String school, String major, float GPA, String name, String pwd, String image, String timeRegister)
+	public User(int id, String numStu, String school, String major, float GPA, String name, String pwd, String image,String timeRegister)
 	{
 		this.id = id;
 		this.numStu = numStu;
@@ -25,10 +26,10 @@ public class User
 		this.timeRegister = timeRegister;
 	}
 	
-	public long getid() {return id;}
+	public int getId() {return id;}
 	
-	public void setnumStu(String numStu) {this.numStu = numStu;}
-	public String getnumStu() {return numStu;}
+	public void setNumStu(String numStu) {this.numStu = numStu;}
+	public String getNumStu() {return numStu;}
 	
 	public void setSchool(String school) {this.school = school;}
 	public String getSchool() {return school;}
@@ -36,14 +37,14 @@ public class User
 	public void setMajor(String major) {this.major = major;}
 	public String getMajor() {return major;}
 	
-	public void setgpa(float GPA) {this.GPA = GPA;}
+	public void setGPA(float GPA) {this.GPA = GPA;}
 	public float getGPA() {return GPA;}
 	
-	public void setname(String name) {this.name = name;}
-	public String getname() {return name;}
+	public void setName(String name) {this.name = name;}
+	public String getName() {return name;}
 	
-	public void setpwd(String pwd) {this.pwd = pwd;}
-	public String getpwd() {return pwd;}
+	public void setPwd(String pwd) {this.pwd = pwd;}
+	public String getPwd() {return pwd;}
 	
 	public void setImage(String image) {this.image = image;}
 	public String getImage() {return image;}

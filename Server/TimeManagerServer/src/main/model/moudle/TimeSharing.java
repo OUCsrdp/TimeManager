@@ -2,14 +2,14 @@ package main.model.moudle;
 
 public class TimeSharing 
 {
-	private long id;
-	private long idUser;
+	private int id;
+	private int idUser;
 	
 	private String date;
     
     private int weekday;
     
-    public TimeSharing(long id, long idUser, String date, int weekday)
+    public TimeSharing(int id, int idUser, String date, int weekday)
     {
     	this.id = id;
     	this.idUser = idUser;
@@ -17,13 +17,13 @@ public class TimeSharing
     	this.weekday = weekday;
     }
     
-    public long getId() {return id;}
+    public int getId() {return id;}
     
-    public void setIdUser(long idUser) {this.idUser = idUser;}
-    public long getIdUser() {return idUser;}
+    public void setIdUser(int idUser) {this.idUser = idUser;}
+    public int getIdUser() {return idUser;}
     
-    public void setString(String date) {this.date = date;}
-    public String getString() {return date;}
+    public void setDate(String date) {this.date = date;}
+    public String getDate() {return date;}
     
     public void setWeekday(int weekday) {this.weekday = weekday;}
     public int getWeekday()
