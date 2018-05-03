@@ -1,5 +1,14 @@
 package main.model.services;
-package com.zzw.getPhoneInfos;  
+//package main.model.services;  
+
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+import org.omg.CORBA.Environment;
 
 import android.app.Activity;  
 import android.content.Context;  
@@ -16,9 +25,9 @@ public class UserService {
 	
 	public String register(User user,String verify) {
 		UserManager managerU = new UserManager();
-		if(!managerU.findWithName(user.getName())) { //该用户名没有重复注册过
+		if(managerU.findWithName(user.getName()) != null) { //该用户名没有重复注册过
 			if(verify.equals(this.verifyR)) { //验证码正确
-				if(managerU.add(user)) return "success";
+				if(managerU.add(user.getNumStu(),user.getSchool(),user.getMajor(),user.getGPA(),user.getName(),user.getImage(),user.getPwd(),user.getTimeRegister()) == 1) return "success";
 				else return "fail";
 			}
 			else return "verifyfail";
@@ -44,16 +53,16 @@ public class UserService {
         
 	}
 	
-	public String login(String username,String password,String verify，String token) {
+	public String login(String username,String password,String verify,String token) {
 		if(token != null) {
 			TokenManager managerT = new TokenManager();
 			UserManager managerU = new UserManager();
-			if(managerU.findWithName(username)) { //该用户存在
+			if(managerU.findWithName(username) != null) { //该用户存在
 				User curU = managerU.findWithName(username);
 				if(password.equals(curU.getPwd())) { //密码正确
-					if(judgeVerify(verify)) { //验证码正确
+					if(judgeVerify(verify) == 1) { //验证码正确
 						//保存token到数据库
-						if(managerT.add(token)) return token;
+						if(managerT.add(token) == 1) return token;
 						else return "fail";
 					}
 					else return "verifyfail";
@@ -72,7 +81,7 @@ public class UserService {
 	
 	public int changeInfor(User user) {
 		UserManager manager = new UserManager();
-		long id = user.getid();
+		int id = user.getId();
 		//如果该用户存在
 		if(manager.findWithId(id) != null) {
 			if(manager.change(user)) return 1;
@@ -95,7 +104,7 @@ public class UserService {
 		TokenManager managerT = new TokenManager();
 		User user = managerU.findWithId(UserId);
 		if(user != null) { //该用户存在
-			Token token = managerT.findWithToken(token);
+			Token token = managerT.findWithToken(token.getToken());
 			if(token != null) { //token存在
 				if(managerT.delete(token.getId())) return 1; //删除成功
 				else return 0;

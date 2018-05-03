@@ -1,5 +1,8 @@
 package main.model.services;
 
+import java.util.ArrayList;
+
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import main.model.moudle.*;
 import main.model.db.*;
@@ -8,8 +11,8 @@ public class ScheduleService {
 	public JSONObject getScheduleTable( String userId,String date)
 	{
 		JSONObject back=new JSONObject();
-			ScheduleManager managerS = new ScheduleManaer();
-			ArrayList<Schedule> arrayList = managerS.findWithIdUser(userId);
+			ScheduleManager managerS = new ScheduleManager();
+			ArrayList<Schedule> arrayList = managerS.findWithIdUser(Integer.parseInt(userId));
 			Schedule curS = new Schedule();
 			if(arrayList != null) {
 				for(Schedule S:arrayList) { //遍历日程表，找到当前日期的时间分配表
@@ -18,21 +21,21 @@ public class ScheduleService {
 				
 				//将curS解析成JSONObject
 				S_AffairManager managerSA = new S_AffairManager();
-				int idS = curS.getId();
+				int idS1 = curS.getId();
 				
-				ArrayList<S_Affair> s_affairList = managerSA.findWithIdS(idS); //得到属于这个日程表的所有日程
+				ArrayList<S_Affair> s_affairList = managerSA.findWithIdS(idS1); //得到属于这个日程表的所有日程
 				
-				back.put("id",curS.getId().toString());
-				back.put("idUser",curS.getIdUser().toString());
+				back.put("id",Integer.toString(curS.getId()));
+				back.put("idUser",Integer.toString(curS.getIdUser()));
 				back.put("date",curS.getDate());
-				back.put("weekday",curS.getWeekday.toString());
+				back.put("weekday",Integer.toString(curS.getWeekday()));
 				
 				JSONArray array2 = new JSONArray();
 				JSONObject js2 = new JSONObject();
 				for(S_Affair a:s_affairList) {
 					int id = a.getId();
 					int idTS = a.getIdTS();
-					int idLabel = a.getIdLabel;
+					int idLabel = a.getIdLabel();
 					
 					int satisfaction = a.getSatisfaction();
 					
@@ -51,16 +54,16 @@ public class ScheduleService {
 					String timeEndAlarm = a.getTimeEndAlarm();
 					
 					
-					js2.put"id",id.toString());
-					js2.put("idTS",idTS.toString());
-					js2.put("idLabel",idLabel.toString());
-					js2.put("satisfaction",satisfaction.toString());
+					js2.put("id",Integer.toString(id));
+					js2.put("idTS",Integer.toString(idTS));
+					js2.put("idLabel",Integer.toString(idLabel));
+					js2.put("satisfaction",Integer.toString(satisfaction));
 					js2.put("name",name);
 					js2.put("tips",tips);
 					js2.put("timeStart",timeStart);
 					js2.put("timeEnd",timeEnd);
 					js2.put("timeEndPlan",timeEndPlan);
-					js2.put("idS",idS.toString());
+					js2.put("idS",Integer.toString(idS));
 					js2.put("isImportant",isImportant);
 					js2.put("timeStartPlan",timeStartPlan);
 					js2.put("timeStartAlarm",timeStartAlarm);

@@ -26,7 +26,7 @@ public class AffairService{//这里为啥需要isAffair?????
 			String timeEnd = affair.getTimeEnd();
 			String timeEndPlan = affair.getTimeEndPlan();
 			
-			if(managerA.add(idTS, idLabel, satisfaction, name, tips, timeStart, timeEnd,timeEndPlan)) return 1;
+			if(managerA.add(idTS, idLabel, satisfaction, name, tips, timeStart, timeEnd,timeEndPlan) == 1) return 1;
 			else return 0;
 		}
 		else { //修改事件
@@ -59,7 +59,7 @@ public class AffairService{//这里为啥需要isAffair?????
 			String timeStartAlarm = affair.getTimeStartAlarm();
 			String timeEndAlarm = affair.getTimeEndAlarm();
 			
-			if(add(idTS, idS, idLabel, satisfaction, isImportant, name, tips, timeStart, timeEnd, timeStartPlan, timeEndPlan, timeStartAlarm, timeEndAlarm)) 
+			if(managerSA.add(idTS, idS, idLabel, satisfaction, isImportant, name, tips, timeStart, timeEnd, timeStartPlan, timeEndPlan, timeStartAlarm, timeEndAlarm) == 1) 
 				return 1;
 			else return 0;
 		}
@@ -88,7 +88,7 @@ public class AffairService{//这里为啥需要isAffair?????
 			S_AffairManager managerSA = new S_AffairManager();
 			S_Affair affair = managerSA.findWithId(id);
 			if(affair != null) {
-				if(managersA.delete(id)) return 1;
+				if(managerSA.delete(id)) return 1;
 				else return 0;
 			}
 			else return 0;
