@@ -60,7 +60,7 @@ public class TimeSharingService {
 				js.put("timeEnd",timeEnd);
 				js.put("timeEndPlan",timeEndPlan);
 				
-				array1.put(js);
+				array1.add(js);
 			}
 			back.put("affair",array1);
 			
@@ -103,7 +103,7 @@ public class TimeSharingService {
 				js2.put("timeStartAlarm",timeStartAlarm);
 				js2.put("timeEndAlarm",timeEndAlarm);
 				
-				array2.put(js2);
+				array2.add(js2);
 			}
 			back.put("saffair",array2);
 		}

@@ -69,7 +69,7 @@ public class ScheduleService {
 					js2.put("timeStartAlarm",timeStartAlarm);
 					js2.put("timeEndAlarm",timeEndAlarm);
 					
-					array2.put(js2);
+					array2.add(js2);
 				}
 				back.put("saffair",array2);
 			}
