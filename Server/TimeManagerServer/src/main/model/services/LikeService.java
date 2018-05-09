@@ -26,7 +26,7 @@ public class LikeService{
 			int thumb = curTS.getThumbup();
 			thumb = thumb + 1;
 			curTS.setThumbup(thumb); //点赞数加一
-			if(managerL.add(userId, idTs) == 1) {
+			if(managerL.add(userId, idTs) != -1) {
 				if(managerTS.change(curTS)) return 1;
 			}
 			else  return -1;

@@ -25,7 +25,7 @@ public class CollectionService{
 			}
 		}
 		if(count == 0) {
-			if(managerC.add(userId, idTs) == 1) return "success";
+			if(managerC.add(userId, idTs) != -1) return "success";
 			else return "fail";
 		}
 		else return "fail";
@@ -45,7 +45,7 @@ public class CollectionService{
 				int idTS = curC.getIdTS(); //得到TimeSharing
 				TimeSharing curTS = TimeSharingManager.findWithId(idTS);
 				
-				SharedTable curST = SharedTableManager.findWithIdTS(); //以后会加上这个函数
+				SharedTable curST = SharedTableManager.findWithIdTS(idTS); //以后会加上这个函数
 				if(curST != null) {
 					JSONObject object = new JSONObject();
 					

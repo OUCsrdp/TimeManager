@@ -27,7 +27,7 @@ public class UserService {
 		UserManager managerU = new UserManager();
 		if(managerU.findWithName(user.getName()) != null) { //该用户名没有重复注册过
 			if(verify.equals(this.verifyR)) { //验证码正确
-				if(managerU.add(user.getNumStu(),user.getSchool(),user.getMajor(),user.getGPA(),user.getName(),user.getImage(),user.getPwd(),user.getTimeRegister()) == 1) return "success";
+				if(managerU.add(user.getNumStu(),user.getSchool(),user.getMajor(),user.getGPA(),user.getName(),user.getImage(),user.getPwd(),user.getTimeRegister()) != -1) return "success";
 				else return "fail";
 			}
 			else return "verifyfail";
@@ -117,7 +117,7 @@ public class UserService {
 				if(password.equals(curU.getPwd())) { //密码正确
 					if(judgeVerify(verify) == 1) { //验证码正确
 						//保存token到数据库
-						if(managerT.add(token) == 1) return token;
+						if(managerT.add(token) != -1) return token;
 						else return "fail";
 					}
 					else return "verifyfail";
