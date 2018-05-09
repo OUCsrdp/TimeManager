@@ -1,0 +1,20 @@
+package main;
+
+import com.alibaba.fastjson.JSONObject;
+
+import main.model.db.*;
+import main.model.moudle.User;
+import main.model.services.TimeSharingService;
+
+public class Main {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		/*User rabbit = UserManager.findWithName("兔子牙");
+		System.out.println("rabbit： "+rabbit.getGPA() + " " + rabbit.getMajor());*/
+		TimeSharingService ts=new TimeSharingService();
+		JSONObject json=ts.getSharingTable("2", "2018年5月四日");
+		System.out.println(json.toString());
+	}
+
+}

@@ -40,16 +40,21 @@ public class TimeSharingServlet extends HttpServlet {
 		try {
 			String queryString=request.getQueryString();
 			//token,userId,date
-			String gotString[]=new String[3];
+			String gotString[]=new String[5];
 			gotString=queryString.split("&");
 			String token=gotString[0].split("=")[1];
 			String userId=gotString[1].split("=")[1];
-			String date=gotString[2].split("=")[1];
-			int isSharingTable=1;
+			String year=gotString[2].split("=")[1];
+			String month=gotString[3].split("=")[1]; 
+			String day=gotString[4].split("=")[1]; 
+			String date=year+"Äê"+month+"ÔÂ"+day+"ÈÕ";
+			System.out.println("tsqueryString:"+token+" "+userId+" "+date);
 			int judgeToken=userService.judgeToken(token);
+			System.out.println("tstoken:"+judgeToken);
+			System.out.println("resJson:"+timeSharingService.getSharingTable(userId,date).toString());
 			if (judgeToken==1)
 			{
-				resJson=timeSharingService.getSharingTable(isSharingTable,userId,date);
+				resJson=timeSharingService.getSharingTable(userId,date);
 				resJson.put("status","success");
 			}
 			else {
@@ -61,6 +66,7 @@ public class TimeSharingServlet extends HttpServlet {
 		finally {
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(resJson.toString());
+			System.out.println("resjson:"+resJson.toString());
 		}
 	}
 

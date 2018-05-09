@@ -1,0 +1,32 @@
+package main.model.services;
+
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+
+public class TimeSharingService {
+	private int firstIn=1;
+	public JSONObject getSharingTable(String userId,String date)
+	{
+		/*JSONObject test=new JSONObject();
+		test.put("date",date);
+		return test;*/
+			firstIn=0;
+			JSONObject test=new JSONObject();
+			test.put("date", date);
+			test.put("weekday", 4);
+			JSONObject jsonObject1 = new JSONObject();
+	        JSONObject jsonObject2 = new JSONObject();
+	        JSONArray jsonArray = new JSONArray();
+	        jsonObject1.put("name","离散数学" );
+	        jsonObject1.put("timeStart", "9:00");
+	        jsonObject1.put("timeEnd", "10:00");
+	        jsonObject2.put("name","概率统计" );
+	        jsonObject2.put("timeStart", "11:00");
+	        jsonObject2.put("timeEnd", "12:00");
+	        jsonArray.add(jsonObject1);
+	        jsonArray.add(jsonObject2);
+	        test.put("affair", jsonArray);
+        System.out.println(test.toString());
+        return test;      
+	}
+}

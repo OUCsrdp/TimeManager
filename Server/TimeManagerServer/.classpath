@@ -14,5 +14,6 @@
 	<classpathentry kind="lib" path="D:/downloads/jl1.0.1.jar"/>
 	<classpathentry kind="lib" path="D:/downloads/httpcomponents-client-4.5.4/lib/commons-codec-1.10.jar"/>
 	<classpathentry kind="lib" path="D:/downloads/httpcomponents-client-4.5.4/lib/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="D:/downloads/sqljdbc42.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
