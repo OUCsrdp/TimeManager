@@ -34,34 +34,49 @@ public class CollectionService{
 	//返回success或fail
 
 	JSONObject getCollection(int userId) {
-		UserManager managerU = new UserManager();
-		User user = managerU.findWithId(userId);
+		
+		User user = UserManager.findWithId(userId);
 		JSONObject back = new JSONObject(); //用于装返回的数据的
 		if(user != null) {
-			CollectionManager managerC = new CollectionManager();
-			ArrayList<Collection> listC = managerC.findWithIdUser(userId);
+			
+			ArrayList<Collection> listC = CollectionManager.findWithIdUser(userId);
+			JSONArray array = new JSONArray();
 			for (Collection curC: listC) {
-				int idST = curC.getIdTS(); //这里应该得到idST
-				SharedTableManager managerST = new SharedTableManager();
-				SharedTable curST = managerST.findWithId(idST);
+				int idTS = curC.getIdTS(); //得到TimeSharing
+				TimeSharing curTS = TimeSharingManager.findWithId(idTS);
+				
+				SharedTable curST = SharedTableManager.findWithIdTS(); //以后会加上这个函数
 				if(curST != null) {
 					JSONObject object = new JSONObject();
-					JSONArray array = new JSONArray();
 					
-					TimeSharing curTS = 
-					String name = 
-					int userId
-					String image
-					String school
-					String major
-					String summary
-					String timeShared
-					int thumbup
 					
-					back.put("", array); //???没有指示么
+					
+					int userID = curTS.getIdUser();
+					User curUser = UserManager.findWithId(userID);
+					String name = curUser.getName();
+					String image = curUser.getImage();
+					String school = curUser.getSchool();
+					String major = curUser.getMajor();
+					String summary = curST.getSummary();
+					String timeShared = curST.getTimeShared();
+					int thumbup = curST.getThumbup();
+					
+					object.put("name", name);
+					object.put("userId", userID);
+					object.put("image", image);
+					object.put("school", school);
+					object.put("major", major);
+					object.put("summary",summary);
+					object.put("timeShared", timeShared);
+					object.put("thumbup", thumbup);
+					
+					array.add(object);
+					
 				}
 				else return null;
 			}
+			back.put("collections", array);
+			return back;
 		}
 		else return null;
 	}

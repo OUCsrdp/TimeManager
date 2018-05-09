@@ -23,11 +23,12 @@ public class TimeSharingService {
 			}
 			
 			//将curTS解析成JSONObject
-			AffairManager managerA = new AffairManager();
-			S_AffairManager managerSA = new S_AffairManager();
+			
 			int idTS1 = curTS.getId();
-			ArrayList<Affair> affairList = managerA.findWithIdTS(idTS1); //得到属于这个时间分配表的所有事件
-			ArrayList<S_Affair> s_affairList = managerSA.findWithIdTS(idTS1); //得到属于这个时间分配表的所有日程
+			ArrayList<Affair> affairL = AffairManager.findWithIdTS(idTS1); //得到属于这个时间分配表的所有事件
+			ArrayList<Affair> affairList = SortService.sortAByTime(affairL); //排序
+			ArrayList<S_Affair> s_affairL = S_AffairManager.findWithIdTS(idTS1); //得到属于这个时间分配表的所有日程
+			ArrayList<S_Affair> s_affairList = SortService.sortSByTime(s_affairL); //排序
 			
 			back.put("id",Integer.toString(curTS.getId()));
 			back.put("idUser",Integer.toString(curTS.getIdUser()));

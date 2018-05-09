@@ -5,6 +5,7 @@ import main.model.moudle.*;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import main.model.db.*;
 
@@ -58,6 +59,14 @@ public class AffairService{//这里为啥需要isAffair?????
 			String timeEndPlan = affair.getTimeEndPlan();
 			String timeStartAlarm = affair.getTimeStartAlarm();
 			String timeEndAlarm = affair.getTimeEndAlarm();
+			
+			
+			ArrayList<S_Affair> SAlist = S_AffairManager.findWithIdS(idS); //得到当前日程表下的已有日程
+			for(S_Affair SA :SAlist) {
+				if(SortService.compareTime(timeStartPlan, SA.getTimeStartPlan()) && SortService.compareTime(timeEndPlan, SA.getTimeEndPlan())) {}
+				else if(SortService.compareTime(SA.getTimeStartPlan(), timeStartPlan) && SortService.compareTime(SA.getTimeEndPlan(),timeEndPlan)) {}
+				else return 0;
+			}
 			
 			if(managerSA.add(idTS, idS, idLabel, satisfaction, isImportant, name, tips, timeStart, timeEnd, timeStartPlan, timeEndPlan, timeStartAlarm, timeEndAlarm) == 1) 
 				return 1;

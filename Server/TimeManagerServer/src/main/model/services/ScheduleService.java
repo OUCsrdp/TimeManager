@@ -11,8 +11,7 @@ public class ScheduleService {
 	public JSONObject getScheduleTable( String userId,String date)
 	{
 		JSONObject back=new JSONObject();
-			ScheduleManager managerS = new ScheduleManager();
-			ArrayList<Schedule> arrayList = managerS.findWithIdUser(Integer.parseInt(userId));
+			ArrayList<Schedule> arrayList = ScheduleManager.findWithIdUser(Integer.parseInt(userId));
 			Schedule curS = new Schedule();
 			if(arrayList != null) {
 				for(Schedule S:arrayList) { //遍历日程表，找到当前日期的时间分配表
@@ -20,10 +19,11 @@ public class ScheduleService {
 				}
 				
 				//将curS解析成JSONObject
-				S_AffairManager managerSA = new S_AffairManager();
+				
 				int idS1 = curS.getId();
 				
-				ArrayList<S_Affair> s_affairList = managerSA.findWithIdS(idS1); //得到属于这个日程表的所有日程
+				ArrayList<S_Affair> s_affairL = S_AffairManager.findWithIdS(idS1); //得到属于这个日程表的所有日程
+				ArrayList<S_Affair> s_affairList = SortService.sortSByTime(s_affairL); //排序
 				
 				back.put("id",Integer.toString(curS.getId()));
 				back.put("idUser",Integer.toString(curS.getIdUser()));

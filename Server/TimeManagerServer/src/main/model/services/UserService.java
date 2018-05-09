@@ -2,20 +2,20 @@ package main.model.services;
 //package main.model.services;  
 
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Date;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 
-import org.omg.CORBA.Environment;
 
-import android.app.Activity;  
-import android.content.Context;  
-import android.os.Build;  
-import android.os.Bundle;  
-import android.telephony.TelephonyManager;  
-import android.util.Log;
 import main.model.moudle.*;
 import main.model.db.*;
 
@@ -40,8 +40,10 @@ public class UserService {
 		else return 0;
 	}
 	
-	public String getVerify() {
-		String randomCode = CodeUtils.getRandomCode(CodeUtils.TYPE_NUM_CHAR, 4, null);
+	
+	
+	public byte[] getVerify() {
+		/*String randomCode = CodeUtils.getRandomCode(CodeUtils.TYPE_NUM_CHAR, 4, null);
 		verify = randomCode;
 		BufferedImage imageFromCode = ImageUtils.getImageFromCode(randomCode, 100, 50, 3, true, Color.WHITE, Color.BLACK, null);
 		try {
@@ -49,7 +51,60 @@ public class UserService {
 		    ImageIO.write(imageFromCode,"jpg",file);
 		    return Environment.getExternalStorageDirectory(), System.currentTimeMillis()+".jpg";
 		} 
-		catch (IOException e) {}
+		catch (IOException e) {}*/
+		try {
+			int width = 80;
+			int height = 40;
+			int lines = 10;
+			BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+			Graphics2D g2d = (Graphics2D)img.getGraphics();
+	
+			g2d.setFont(new Font("宋体", Font.BOLD, 20));
+	
+	
+			Random r = new Random(new Date().getTime());
+	
+			//设置背景色
+			g2d.setColor(new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255)));
+			g2d.drawRect(0, 0, width, height);//绘制指定矩形的边框。
+			g2d.setColor(new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255)));
+			g2d.fillRect(0, 0, width, height);//填充指定的矩形。
+			
+			
+			for(int i=0;i<4;i++){
+				String str = ""+r.nextInt(10);
+				verify += str;
+			   //处理旋转
+			   AffineTransform Tx = new AffineTransform();
+			   Tx.rotate(Math.random(), 5+i*15, height-5);
+			   //用弧度测量的旋转角度,旋转锚点的 X 坐标,旋转锚点的 Y 坐标
+			   //Tx.scale(0.7+Math.random(), 0.7+Math.random());
+			   //x坐标方向的缩放倍数，y坐标方向的缩放倍数
+			   g2d.setTransform(Tx);
+			   Color c = new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255));
+			   g2d.setColor(c);
+			   g2d.drawString(str, 2+i*width/4, height-13);
+			}
+			
+			//干扰线
+			for(int i=0;i<lines;i++){
+			   Color c = new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255));
+			   g2d.setColor(c);
+			   g2d.drawLine(r.nextInt(width), r.nextInt(height), r.nextInt(width), r.nextInt(height));
+			}
+			
+			g2d.dispose();
+			
+			//ImageIO.write(img, "JPG", new FileOutputStream("./verify.jpg")); 
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();   
+            ImageIO.write(img, "jpg", baos);   
+            byte[] bytes = baos.toByteArray();   
+               
+            return bytes; 
+		}
+		catch(Exception e) {}
+		return null;
+			
         
 	}
 	
