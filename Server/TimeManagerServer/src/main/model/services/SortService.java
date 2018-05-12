@@ -8,8 +8,37 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import main.model.moudle.*;
 import main.model.db.*;
+import java.math.*;
 
 public class SortService{
+	public static boolean timeCloser(String time1,String time2,String time) {//time1比time2更接近time返回true
+		int index1 = time1.indexOf(":");
+		int index2 = time2.indexOf(":");
+		int index3 = time.indexOf(":");
+		String hour3 = time.substring(0,index3-1);
+		String hour1 = time1.substring(0, index1-1);
+		String hour2 = time2.substring(0, index2-1);
+		String minute1 = time1.substring(index1+1);
+		String minute2 = time2.substring(index2+1);
+		String minute3 = time3.substring(index3+1);
+
+		int h1 = Integer.parseInt(hour1);
+		int h2 = Integer.parseInt(hour2);
+		int h3 = Integer.parseInt(hour3);
+
+		int m1 = Integer.parseInt(minute1);
+		int m2 = Integer.parseInt(minute2);
+		int m3 = Integer.parseInt(minute3);
+		
+		if(Math.abs(h1-h3) < Math.abs(h2-h3)) return true;
+		else if(Math.abs(h1-h3) == Math.abs(h2-h3)) {
+			if(Math.abs(m1-m3) <= Math.abs(m2-m3)) return true;
+			else return false;
+		}
+		return false;
+
+	}
+	
 	public static boolean compareTime(String time1,String time2) { //time1比time2早那么就放返回true
 		int index1 = time1.indexOf(":");
 		int index2 = time2.indexOf(":");

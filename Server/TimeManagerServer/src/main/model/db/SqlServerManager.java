@@ -6,13 +6,14 @@ public class SqlServerManager {
 	private static String url = "jdbc:sqlserver://127.0.0.1:1433;databaseName=TimeManager";
 	private static String username = "root";
 	private static String password = "password";
-	protected static Connection con;
-	protected static Statement stmt;
-    protected static PreparedStatement pst;
-    protected static ResultSet rs;
+	//protected static Connection con;
+	//protected static Statement stmt;
+    //protected static PreparedStatement pst;
+    //protected static ResultSet rs;
     
-    public static void Connect()
+    public static Connection Connect()
     {
+    	Connection con = null;
     	try {
 			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 		} catch (ClassNotFoundException e1) {
@@ -21,15 +22,15 @@ public class SqlServerManager {
 		}
     	try {
 			con = DriverManager.getConnection(url, username, password);
-			stmt = con.createStatement();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return null;
 		}
-    	
+    	return con;
     }
     
-    public static void Create()
+    public static void Create(Statement stmt)
     {
     	String sql_UseDataBase = "USE TimeManager";
     	String sql_SetANSI = "SET ANSI_NULLS ON";
@@ -113,6 +114,8 @@ public class SqlServerManager {
 					+ "(select * from sysobjects where id = object_id('SharedTables') and OBJECTPROPERTY(id, 'IsUserTable') = 1) "
 					+ "CREATE TABLE dbo.SharedTables ("
     				+ "id int IDENTITY(1,1) NOT NULL, "
+					+ "idUser int NOT NULL, "
+					+ "idTS int NOT NULL, "
     				+ "timeShare nvarchar(50) NOT NULL, "
     				+ "summary ntext NULL, "
     				+ "thumbup int NOT NULL, "
@@ -170,26 +173,33 @@ public class SqlServerManager {
 				+ "ON DELETE CASCADE";
     	String sql_LinkCheck3 = "ALTER TABLE [dbo].[Like] CHECK CONSTRAINT [FK_Like_TimeSharing]";
     	String sql_Link4 = "if not exists "
+				+ "(select * from sysobjects WHERE id = object_id('FK_SharedTables_TimeSharing'))"
+    			+ "ALTER TABLE [dbo].[SharedTables]  WITH CHECK ADD  CONSTRAINT [FK_SharedTables_TimeSharing] FOREIGN KEY([idTS])" 
+				+ "REFERENCES [dbo].[TimeSharing] ([id])" 
+    			+ "ON UPDATE CASCADE " 
+				+ "ON DELETE CASCADE";
+    	String sql_LinkCheck4 = "ALTER TABLE [dbo].[SharedTables] CHECK CONSTRAINT [FK_SharedTables_TimeSharing]";
+    	String sql_Link5 = "if not exists "
 				+ "(select * from sysobjects WHERE id = object_id('FK_S_Affairs_Schedule'))"
     			+ "ALTER TABLE [dbo].[S_Affairs]  WITH CHECK ADD  CONSTRAINT [FK_S_Affairs_Schedule] FOREIGN KEY([idS])" 
 				+ "REFERENCES [dbo].[Schedule] ([id])" 
     			+ "ON UPDATE CASCADE " 
     			+ "ON DELETE CASCADE";
-    	String sql_LinkCheck4 = "ALTER TABLE [dbo].[S_Affairs] CHECK CONSTRAINT [FK_S_Affairs_Schedule]";
-    	String sql_Link5 ="if not exists "
+    	String sql_LinkCheck5 = "ALTER TABLE [dbo].[S_Affairs] CHECK CONSTRAINT [FK_S_Affairs_Schedule]";
+    	String sql_Link6 ="if not exists "
 				+ "(select * from sysobjects WHERE id = object_id('FK_Schedule_Users'))"
     			+ "ALTER TABLE [dbo].[Schedule]  WITH CHECK ADD  CONSTRAINT [FK_Schedule_Users] FOREIGN KEY([idUser])" 
 				+ "REFERENCES [dbo].[Users] ([id])" 
     			+ "ON UPDATE CASCADE "
     			+ "ON DELETE CASCADE";
-    	String sql_LinkCheck5 = "ALTER TABLE [dbo].[Schedule] CHECK CONSTRAINT [FK_Schedule_Users]";
-    	String sql_Link6 = "if not exists "
+    	String sql_LinkCheck6 = "ALTER TABLE [dbo].[Schedule] CHECK CONSTRAINT [FK_Schedule_Users]";
+    	String sql_Link7 = "if not exists "
 				+ "(select * from sysobjects WHERE id = object_id('FK_TimeSharing_Users'))"
     			+ "ALTER TABLE [dbo].[TimeSharing]  WITH CHECK ADD  CONSTRAINT [FK_TimeSharing_Users] FOREIGN KEY([idUser])" + 
     			"REFERENCES [dbo].[Users] ([id])" + 
     			"ON UPDATE CASCADE " + 
     			"ON DELETE CASCADE";
-    	String sql_LinkCheck6 = "ALTER TABLE [dbo].[TimeSharing] CHECK CONSTRAINT [FK_TimeSharing_Users]";
+    	String sql_LinkCheck7 = "ALTER TABLE [dbo].[TimeSharing] CHECK CONSTRAINT [FK_TimeSharing_Users]";
     	try {
 			stmt.executeUpdate(sql_UseDataBase);
 	    	stmt.executeUpdate(sql_SetANSI);
@@ -237,17 +247,21 @@ public class SqlServerManager {
 	    	stmt.executeUpdate(sql_LinkCheck5);
 	    	stmt.executeUpdate(sql_Link6);
 	    	stmt.executeUpdate(sql_LinkCheck6);
+	    	stmt.executeUpdate(sql_Link7);
+	    	stmt.executeUpdate(sql_LinkCheck7);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }
     
-    public static void Close() 
+    public static void Close(Connection con, Statement stmt, ResultSet rs, PreparedStatement pst) 
     {
 		try {
 		    if(rs != null)
 		    	rs.close();
+		    if(pst != null)
+		    	pst.close();
 		    if(stmt != null)
 		    	stmt.close();
 		    if(con != null)

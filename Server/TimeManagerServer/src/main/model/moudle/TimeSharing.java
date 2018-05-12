@@ -30,4 +30,8 @@ public class TimeSharing
     {
     	return weekday;
     }
+
+	public void setId(int id) {
+		this.id = id;
+	}
 }

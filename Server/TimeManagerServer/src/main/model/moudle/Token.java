@@ -15,4 +15,8 @@ public class Token
 	
 	public void setToken(String token) {this.token = token;}//暂时未想好是否需要
 	public String getToken() {return token;}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 }

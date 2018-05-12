@@ -10,6 +10,9 @@ public class S_Affair extends Affair
 	private String timeStartAlarm;
 	private String timeEndAlarm;
 	
+	public S_Affair() {
+		// TODO Auto-generated constructor stub
+	}
 	public S_Affair(int id, int idTS, int idS, int idLabel, int satisfaction, String isImportant, String name, String tips, String timeStart, String timeEnd, String timeStartPlan, String timeEndPlan, String timeStartAlarm, String timeEndAlarm) 
 	{
 		super(id, idTS, idLabel, satisfaction, name, tips, timeStart, timeEnd, timeEndPlan);

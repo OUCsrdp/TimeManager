@@ -45,4 +45,8 @@ public class EventHour
 		this.isWorkday = isWorkday;
 		this.timeArea = timeArea;
 	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 }

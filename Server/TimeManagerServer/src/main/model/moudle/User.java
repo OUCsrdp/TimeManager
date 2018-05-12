@@ -50,4 +50,12 @@ public class User
 	public String getImage() {return image;}
 	
 	public String getTimeRegister(){return timeRegister;}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public void setTimeRegister(String timeRegister) {
+		this.timeRegister = timeRegister;
+	}
 }
