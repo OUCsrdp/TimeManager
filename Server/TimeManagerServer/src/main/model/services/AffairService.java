@@ -20,16 +20,20 @@ public class AffairService{//这里为啥需要isAffair?????
 		if(week == 0)weekday = 7;
 		else weekday = week - 1;
 		AffairManager managerA = new AffairManager();
+		User user = UserManager.findWithName(username);
+		int idU = user.getId();
 		//新建事件
 		if(change == 0) {
-			if(TimeSharingManager.findWithDate(date) != null) {} //数据库findWithDate函数应该返回TimeSharing而不是list
-			else {
-				User user = UserManager.findWithName(username);
-				int idU = user.getId();
-				int idts = TimeSharingManager.add(idU, date, weekday);
-				if(idts != -1) affair.setIdTS(idts);
-				else return 0;
+			if(affair.getIdTS() == 0) {
+				if(TimeSharingManager.findWithDate(idU,date) != null) {} //数据库findWithDate函数应该返回TimeSharing而不是list
+				else {
+					
+					int idts = TimeSharingManager.add(idU, date, weekday);
+					if(idts != -1) affair.setIdTS(idts);
+					else return 0;
+				}
 			}
+			
 			
 			
 			int idTS = affair.getIdTS();
@@ -62,17 +66,32 @@ public class AffairService{//这里为啥需要isAffair?????
 		int weekday;
 		if(week == 0)weekday = 7;
 		else weekday = week - 1;
+		User user = UserManager.findWithName(username);
+		int idU = user.getId();
 		//新建日程
 		if(change == 0) {
-			
-			if(ScheduleManager.findWithDate(date) != null) {} //数据库findWithDate函数应该返回TimeSharing而不是list
-			else {
-				User user = UserManager.findWithName(username);
-				int idU = user.getId();
-				int idts = ScheduleManager.add(idU, date, weekday);
-				if(idts != -1) affair.setIdS(idts);
-				else return 0;
+			if(affair.getIdS() == 0) {
+				if(ScheduleManager.findWithDate(idU,date) != null) {} //数据库findWithDate函数应该返回TimeSharing而不是list
+				else {
+					
+					int ids = ScheduleManager.add(idU, date, weekday);
+					if(ids != -1) affair.setIdS(ids);
+					else return 0;
+				}
 			}
+			if(affair.getTimeStart() != null) {
+				if(affair.getIdTS() == 0) {
+					if(TimeSharingManager.findWithDate(idU,date) != null) {} //数据库findWithDate函数应该返回TimeSharing而不是list
+					else {
+						
+						int idts = TimeSharingManager.add(idU, date, weekday);
+						if(idts != -1) affair.setIdS(idts);
+						else return 0;
+					}
+				}
+			}
+			
+			
 			
 			int idTS = affair.getIdTS();
 			int idS = affair.getIdS();
