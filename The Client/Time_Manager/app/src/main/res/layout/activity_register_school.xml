@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_login"
+    tools:context="com.srdp.admin.time_manager.ui.RegisterSchoolActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <com.srdp.admin.time_manager.ui.TitleLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="130dp"
+            android:layout_centerHorizontal="true">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="学校"
+                android:textColor="#fd8d01"
+                android:textSize="20sp"/>
+
+            <EditText
+                android:id="@+id/register_school"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1.5"
+                android:layout_gravity="center"
+                android:paddingLeft="20sp"
+                android:textColor="#ffffff"
+                android:textSize="20sp"
+                android:maxLines="1"
+                android:theme="@style/EditTextUnderlineStyle1"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="180dp"
+            android:layout_centerHorizontal="true">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="专业"
+                android:textColor="#fd8d01"
+                android:textSize="20sp"/>
+
+            <EditText
+                android:id="@+id/register_major"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1.5"
+                android:layout_gravity="center"
+                android:paddingLeft="20sp"
+                android:textColor="#ffffff"
+                android:textSize="20sp"
+                android:maxLines="1"
+                android:theme="@style/EditTextUnderlineStyle1"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/register_next_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/button_style"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="260dp"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="10dp"
+            android:gravity="center"
+            android:text="下一页"
+            android:textColor="#ffffff"
+            android:textSize="20sp"/>
+
+        <cn.forward.androids.views.StringScrollPicker
+            android:visibility="invisible"
+            android:id="@+id/select_school"
+            android:layout_width="200dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:layout_marginTop="250dp"
+            android:background="@drawable/label_bg_style"
+            app:spv_center_item_position="2"
+            app:spv_disallow_intercept_touch="true"
+            app:spv_is_circulation="false"
+            app:spv_max_text_size="22dp"
+            app:spv_min_text_size="16dp"
+            app:spv_start_color="#fd8d01"
+            app:spv_end_color="#000000"
+            app:spv_visible_item_count="5"/>
+
+
+
+
+    </FrameLayout>
+
+
+</android.support.constraint.ConstraintLayout>
