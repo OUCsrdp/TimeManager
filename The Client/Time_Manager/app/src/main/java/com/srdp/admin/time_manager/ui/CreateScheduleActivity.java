@@ -1,0 +1,388 @@
+package com.srdp.admin.time_manager.ui;
+
+import android.app.TimePickerDialog;
+import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AlertDialog;
+import android.os.Bundle;
+import android.content.DialogInterface;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.LinearLayout;
+import android.widget.RadioGroup;
+import android.widget.RadioButton;
+import android.widget.Switch;
+import android.widget.Button;
+import android.widget.TextView;
+
+import java.lang.ref.WeakReference;
+import java.util.Calendar;
+import java.util.Date;
+
+import android.app.DatePickerDialog;
+
+import android.content.pm.ActivityInfo;
+import android.view.View.OnClickListener;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.TimePicker;
+import android.content.Context;
+import android.widget.Toast;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.srdp.admin.time_manager.R;
+import com.srdp.admin.time_manager.http.AffairHttp;
+import com.srdp.admin.time_manager.model.moudle.S_Affair;
+import com.srdp.admin.time_manager.util.TokenUtil;
+import com.srdp.admin.time_manager.util.UserUtil;
+
+
+public class CreateScheduleActivity extends AppCompatActivity {
+    private Intent intent;
+    private S_Affair s_affair=new S_Affair();
+    private String date;
+    //提醒设置
+    private Switch schedule_switch;
+    private LinearLayout schedule_remind_text;
+    private TextView schedule_remind_time;
+    private TextView schedule_remind_date;
+
+    //标签选择
+    private LinearLayout schedule_label_frame;
+    private Button schedule_change_label;
+    private TextView schedule_label_name;
+    private Context context = this;
+
+    //标签
+    private RadioGroup schedule_labels;
+    private RadioButton schedule_label_trans;
+    private RadioButton schedule_label_cours;
+    private RadioButton schedule_label_club;
+    private RadioButton schedule_label_rest;
+    private RadioButton schedule_label_sleep;
+    private RadioButton schedule_label_life;
+
+    // 定义显示时间控件
+    private Calendar calendar; // 通过Calendar获取系统时间
+    private int mYear;
+    private int mMonth;
+    private int mDay;
+    private int mHour;
+    private int mMinute;
+
+    //创建按钮
+    private Button schedule_create_btn;
+    private EditText schedule_name;
+    private EditText schedule_ps;
+
+    private String[] strItems = new String[]{"交通","课业","社团","休息","睡眠","生活"};
+
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_create_schedule);
+        //隐藏默认actionbar
+        ActionBar actionbar = getSupportActionBar();
+        if (actionbar != null) {
+            actionbar.hide();
+        }
+        //获取当前日期
+        Calendar calendar=Calendar.getInstance();
+        calendar.setTime(new Date());
+        int year=calendar.get(Calendar.YEAR);
+        int month=calendar.get(Calendar.MONTH)+1;
+        int day=calendar.get(Calendar.DAY_OF_MONTH);
+        date=year+"年"+month+"月"+day+"日";
+        schedule_create_btn = (Button) findViewById(R.id.schedule_create_btn);
+        schedule_name = (EditText) findViewById(R.id.schedule_name);
+        schedule_ps=(EditText)findViewById(R.id.schedule_create_ps);
+        //提醒设置
+        schedule_switch = (Switch) findViewById(R.id.schedule_remind_btn);
+        schedule_remind_text = (LinearLayout) findViewById(R.id.schedule_remind_text);
+        schedule_remind_time = (TextView) findViewById(R.id.schedule_remind_time);
+        schedule_remind_date = (TextView) findViewById(R.id.schedule_remind_date);
+
+
+        //如果是编辑页面,初始化设置页面
+        intent=getIntent();
+        if(intent.getStringExtra("type").equals("edit"))
+            initPage();
+
+
+
+        // 提醒添加监听
+        schedule_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    schedule_remind_text.setVisibility(View.VISIBLE);
+                    // 锁定屏幕
+                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                    //setContentView(R.layout.activity_create_schedule);
+
+                    //时间选择
+                    schedule_remind_date.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            Calendar c_date= Calendar.getInstance();
+                            new DatePickerDialog(CreateScheduleActivity.this,
+                                    new DatePickerDialog.OnDateSetListener() {
+                                        @Override
+                                        public void onDateSet(DatePicker view, int year,
+                                                              int month, int day) {
+                                            // TODO Auto-generated method stub
+                                            mYear = year;
+                                            mMonth = month;
+                                            mDay = day;
+                                            // 更新日期 小于10加0
+                                            schedule_remind_date.setText(new StringBuilder()
+                                                    .append(mYear)
+                                                    .append("年")
+                                                    .append((mMonth + 1) < 10 ? "0"
+                                                            + (mMonth + 1) : (mMonth + 1))
+                                                    .append("月")
+                                                    .append((mDay < 10) ? "0" + mDay : mDay).append("日 "));
+
+                                        }
+
+                                    },
+                                    c_date.get(Calendar.YEAR), c_date
+                                    .get(Calendar.MONTH), c_date
+                                    .get(Calendar.DAY_OF_MONTH)).show();
+
+                        }
+                    });
+
+                    schedule_remind_time.setOnClickListener(new OnClickListener(){
+                        @Override
+                        public void onClick(View v){
+                            Calendar c_time= Calendar.getInstance();
+                            new TimePickerDialog(CreateScheduleActivity.this,
+                                    new TimePickerDialog.OnTimeSetListener() {
+                                        @Override
+                                        public void onTimeSet(TimePicker view, int hour,
+                                                              int minute){
+                                            // TODO Auto-generated method stub
+                                            mHour = hour;
+                                            mMinute = minute;
+                                            // 更新时间 小于10加0
+                                            schedule_remind_time.setText(new StringBuilder()
+                                                    .append((mHour + 1) < 10 ? "0"
+                                                            + (mHour + 1) : (mHour + 1))
+                                                    .append(":")
+                                                    .append((mMinute < 10) ? "0" + mMinute : mMinute));
+
+                                        }
+                                    },
+                                    c_time.get(Calendar.HOUR), c_time
+                                    .get(Calendar.MINUTE),true).show();
+                        }
+                    });
+
+
+
+
+                }else {
+                    schedule_remind_text.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+
+        //标签设置
+        schedule_change_label = (Button) findViewById(R.id.schedule_change_label);
+        schedule_label_name = (TextView) findViewById(R.id.schedule_label_name);
+
+        schedule_labels = (RadioGroup) findViewById(R.id.schedule_labels);
+
+
+        schedule_change_label.setOnClickListener(new OnClickListener(){
+            @Override
+            public void onClick(View v){
+                //点击按钮弹框
+                AlertDialog.Builder builder =new AlertDialog.Builder(context);
+                //builder.setView(R.layout.schedule_label_dialog);
+                //builder.setView(R.layout.schedule_label_dialog);
+                builder.setItems(strItems, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        schedule_label_name.setText(strItems[i].toString());
+                    }
+                });
+                builder.create();
+                builder.show();
+//                final AlertDialog dialog = builder.show();
+//                builder.setOnItemSelectedListener(new OnItemSelectedListener(){
+//                    @Override
+//                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id){
+//                        int sInfo = schedule_labels.getCheckedRadioButtonId();
+//                        switch(sInfo)
+//                        {
+//                            case 0:
+//                                schedule_label_name.setText("交通");
+//                                break;
+//                            case 1:
+//                                schedule_label_name.setText("课业");
+//                                break;
+//                            case 2:
+//                                schedule_label_name.setText("社团");
+//                                break;
+//                            case 3:
+//                                schedule_label_name.setText("休息");
+//                                break;
+//                            case 4:
+//                                schedule_label_name.setText("睡眠");
+//                                break;
+//                            case 5:
+//                                schedule_label_name.setText("生活");
+//                                break;
+//
+//                        }
+//                        dialog.dismiss();
+//
+//                    }
+//                    @Override
+//                    public void onNothingSelected(AdapterView<?> arg0){
+//                        Toast.makeText(CreateScheduleActivity.this,"请选择一项",Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+
+//                AlertDialog.Builder builder = new AlertDialog.Builder(CreateScheduleActivity.this);
+//                builder.setIcon(R.drawable.ic_launcher_background);
+//
+//                //    通过LayoutInflater来加载一个xml的布局文件作为一个View对象
+//                View view = LayoutInflater.from(CreateScheduleActivity.this).inflate(R.layout.schedule_label_dialog, null);
+//                //    设置我们自己定义的布局文件作为弹出框的Content
+//                builder.setView(view);
+//
+//                final AlertDialog dia = builder.show();
+//
+//                schedule_label_frame = (LinearLayout) findViewById(R.id.schedule_label_frame);
+//                schedule_labels = (RadioGroup) findViewById(R.id.schedule_labels);
+//
+//                schedule_label_trans = (RadioButton) findViewById(R.id.schedule_label_trans);
+//                schedule_label_cours = (RadioButton) findViewById(R.id.schedule_label_cours);
+//                schedule_label_club = (RadioButton) findViewById(R.id.schedule_label_club);
+//                schedule_label_rest = (RadioButton) findViewById(R.id.schedule_label_rest);
+//                schedule_label_sleep = (RadioButton) findViewById(R.id.schedule_label_sleep);
+//                schedule_label_life = (RadioButton) findViewById(R.id.schedule_label_life);
+//
+//
+//                //选择标签
+//                schedule_labels.setOnClickListener(new View.OnClickListener(){
+//                    int schedule_label_choose = schedule_labels.getCheckedRadioButtonId();
+//                    @Override
+//                    public void onClick(View v){
+//                        schedule_label_choose = schedule_labels.getCheckedRadioButtonId();
+//                        if(schedule_label_choose == R.id.schedule_label_trans){
+//                            schedule_change_label.setText("交通");
+//                        }
+//                        else if(schedule_label_choose == R.id.schedule_label_cours){
+//                            schedule_change_label.setText("课业");
+//                        }
+//                        else if(schedule_label_choose == R.id.schedule_label_club){
+//                            schedule_change_label.setText("社团");
+//                        }
+//                        else if(schedule_label_choose == R.id.schedule_label_rest){
+//                            schedule_change_label.setText("休息");
+//                        }
+//                        else if(schedule_label_choose == R.id.schedule_label_sleep){
+//                            schedule_change_label.setText("睡眠");
+//                        }
+//                        else if(schedule_label_choose == R.id.schedule_label_life){
+//                            schedule_change_label.setText("生活");
+//                        }
+//
+//                    }
+//
+//                });
+//
+//               dia.dismiss();
+            }
+
+        });
+
+        //创建
+        schedule_create_btn.setOnClickListener(new OnClickListener(){
+            @Override
+            public void onClick(View v){
+                String schedule_name_edit = schedule_name.getText().toString();//获取日程名
+                if(TextUtils.isEmpty(schedule_name_edit)){
+                    Toast.makeText(CreateScheduleActivity.this,"日程名不能为空",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                request();
+//                if(schedule_remind_text.getVisibility()== View.VISIBLE){
+//                    final String schedule_remind_text_edit = schedule_remind_text.getContext().toString();
+//                }
+            }
+        });
+
+    }
+    private static class createSHandler extends Handler {
+        //持有弱引用HandlerActivity,GC回收时会被回收掉.
+        private final WeakReference<CreateScheduleActivity> mActivty;
+
+        public createSHandler(CreateScheduleActivity activity) {
+            mActivty = new WeakReference<CreateScheduleActivity>(activity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            CreateScheduleActivity activity = mActivty.get();
+            super.handleMessage(msg);
+            if (activity != null) {
+                switch (msg.what) {
+                    case 1:
+                        Toast.makeText(activity,"创建成功",Toast.LENGTH_SHORT).show();
+                        activity.finish();break;
+                        //创建日程成功后弹出提示并且返回原来页面
+                    case 0:
+                        activity.reLogin();break;
+                }
+            }
+        }
+    }
+    private void initPage()
+    {
+        JSONObject jaffiar= JSONObject.parseObject(intent.getStringExtra("saffair"));
+        s_affair=new S_Affair(jaffiar.getIntValue("id"),jaffiar.getIntValue("idTS"),jaffiar.getIntValue("idS"),
+                jaffiar.getIntValue("idLabel"),jaffiar.getIntValue("satisfaction"),jaffiar.getString("isImportant"),
+                jaffiar.getString("name"),jaffiar.getString("tips"), jaffiar.getString("timeStart"),jaffiar.getString("timeEnd"),
+                jaffiar.getString("timeStartPlan"), jaffiar.getString("timeEndPlan"),jaffiar.getString("timeStartAlarm"),
+                jaffiar.getString("timeEndAlarm"));
+        schedule_name.setText(s_affair.getName());
+        schedule_ps.setText(s_affair.getTips());
+        schedule_remind_time.setText(s_affair.getTimeStartAlarm());
+    }
+    private void request()
+    {
+        s_affair.setIdS(0);
+        s_affair.setName(schedule_name.getText().toString());
+        s_affair.setTips(schedule_ps.getText().toString());
+        s_affair.setTimeStartAlarm(schedule_remind_time.getText().toString());
+        JSONObject jobject=(JSONObject) JSON.toJSON(s_affair);
+        if(intent.getStringExtra("type").equals("create"))
+            jobject.put("sign1", 1);
+        else
+            jobject.put("sign1",0);
+        jobject.put("sign2",0);
+        jobject.put("token", TokenUtil.getToken());
+        jobject.put("date",intent.getStringExtra("date"));//plantable传送过来的时间
+        jobject.put("username", UserUtil.getUser().getName());
+        AffairHttp affairHttp=new AffairHttp(jobject);
+        affairHttp.requestByPost(new createSHandler(this));
+    }
+    private void reLogin()
+    {
+        Intent relogin=new Intent(this,LoginActivity.class);
+        startActivity(relogin);
+    }
+}
