@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+		<item value="D:\andriod\Server\TimeManagerServer"/>
+		<item value="D:\andriod\srdp\TimeManager\Server"/>
+		<item value="D:\andriod\srdp\TimeManager\Server\TimeManagerServer"/>
 		<item value="D:\eclipse\MusicWeb-master"/>
 		<item value="D:\eclipse\musicWeb"/>
 		<item value="D:\eclipse\music"/>

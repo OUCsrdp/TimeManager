@@ -1,8 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="javax.servlet.ServletConfig"/>
-<fullyQualifiedTypeName name="main.model.services.TimeSharingService"/>
-<fullyQualifiedTypeName name="main.model.services.ScheduleService"/>
-<fullyQualifiedTypeName name="main.model.services.UserService"/>
+<fullyQualifiedTypeName name="com.alibaba.fastjson.JSON"/>
 <fullyQualifiedTypeName name="com.alibaba.fastjson.JSONObject"/>
+<fullyQualifiedTypeName name="javax.servlet.http.HttpServletRequest"/>
+<fullyQualifiedTypeName name="java.io.IOException"/>
+<fullyQualifiedTypeName name="main.util.GetRequestUtil"/>
+<fullyQualifiedTypeName name="main.model.moudle.Affair"/>
+<fullyQualifiedTypeName name="main.model.moudle.S_Affair"/>
+<fullyQualifiedTypeName name="main.model.services.AffairService"/>
+<fullyQualifiedTypeName name="org.apache.commons.logging.Log"/>
+<fullyQualifiedTypeName name="main.model.services.UserService"/>
+<fullyQualifiedTypeName name="main.model.db.SqlServerManager"/>
+<fullyQualifiedTypeName name="main.model.moudle.User"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="main.model.db.EventHourManager"/>
+<fullyQualifiedTypeName name="main.model.services.TimeSharingService"/>
+<fullyQualifiedTypeName name="com.alibaba.fastjson.JSONArray"/>
+<fullyQualifiedTypeName name="java.awt.List"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="main.model.services.ScheduleService"/>
 </qualifiedTypeNameHistroy>

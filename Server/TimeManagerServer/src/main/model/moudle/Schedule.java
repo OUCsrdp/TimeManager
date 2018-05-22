@@ -2,14 +2,14 @@ package main.model.moudle;
 
 public class Schedule 
 {
-	private long id;
-	private long idUser;
+	private int id;
+	private int idUser;
 	
 	private String date;
 	    
     private int weekday;
     
-    public Schedule(long id, long idUser, String date, int weekday)
+    public Schedule(int id, int idUser, String date, int weekday)
     {
     	this.id = id;
     	this.idUser = idUser;
@@ -17,10 +17,14 @@ public class Schedule
     	this.weekday = weekday;
     }
     
-    public long getId() {return id;}
+    public Schedule() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public int getId() {return id;}
     
-    public void setIdUser(long idUser) {this.idUser = idUser;}
-    public long getIdUser() {return idUser;}
+    public void setIdUser(int idUser) {this.idUser = idUser;}
+    public int getIdUser() {return idUser;}
     
    public void setDate(String date) {this.date = date;}
    public String getDate() {return date;}

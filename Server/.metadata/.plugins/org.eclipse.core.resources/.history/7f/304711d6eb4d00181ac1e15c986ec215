@@ -1,0 +1,31 @@
+package main.model.services;
+
+import main.model.moudle.User;
+
+public class UserService {
+	 public int judgeToken(String token)
+	 {
+		 return 1;
+	 }
+	 public String register(User user)
+	 {
+		 return "success";
+	 }
+	 public String login(String username,String password)
+	 {
+		 return "loginsuccess";
+	 }
+	 public int changeInfor(User user)
+	 {
+		 return 1;
+	 }
+	 public User getUserInfor(String UserName) {
+		 return null;
+	 }
+	 public int logout(int UserId,String token) {
+		 return 1;
+	 }
+	 public int changePassword(int UserId,String password1,String password2) {
+		 return 1;
+	 }
+}
