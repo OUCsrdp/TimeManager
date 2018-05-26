@@ -146,7 +146,7 @@ public class LoginActivity extends AppCompatActivity {
                         UserUtil.setUserName(activity.getLogin_name_edit());
                         Toast.makeText(activity,"登录成功",Toast.LENGTH_SHORT).show();
                         //提示登录成功并去往首页
-                        Intent go_activity_page = new Intent(activity,Person_Center.class);
+                        Intent go_activity_page = new Intent(activity,Index_Timing.class);
                         activity.startActivity(go_activity_page);
                         break;
                     case 2:
@@ -172,10 +172,13 @@ public class LoginActivity extends AppCompatActivity {
     }
     private void TryLogin()
     {
+        UserUtil.setUserName(login_name_edit);
+        //在userUtil中设置用户名字
         JSONObject loginJson=new JSONObject();
         loginJson.put("name",login_name_edit);
         loginJson.put("pwd",login_password_edit);
         loginJson.put("verify",login_captcha.getText().toString());
+        TokenUtil.initToken(this);
         loginJson.put("token", TokenUtil.getToken());
         loginJson.put("operation","login");
         UserHttp userHttp=new UserHttp(loginJson);

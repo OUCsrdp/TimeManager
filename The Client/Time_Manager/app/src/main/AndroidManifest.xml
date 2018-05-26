@@ -13,10 +13,6 @@
         <activity android:name=".ui.Timesharing_edit">
         </activity>
         <activity android:name=".ui.Index_Timing">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".ui.Plan_Table">
         </activity>
@@ -33,6 +29,10 @@
         <activity android:name=".ui.ExcellentDistributionListActivity">
         </activity>
         <activity android:name=".ui.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".ui.RegisterActivity">
         </activity>

@@ -83,6 +83,11 @@ public class CreateScheduleActivity extends AppCompatActivity {
     private String[] strItems = new String[]{"交通","课业","社团","休息","睡眠","生活"};
 
 
+    //日程时间设置
+    private TextView schedule_time_start;
+    private TextView schedule_time_end;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,8 +151,8 @@ public class CreateScheduleActivity extends AppCompatActivity {
                                             schedule_remind_date.setText(new StringBuilder()
                                                     .append(mYear)
                                                     .append("年")
-                                                    .append((mMonth + 1) < 10 ? "0"
-                                                            + (mMonth + 1) : (mMonth + 1))
+                                                    .append((mMonth ) < 10 ? "0"
+                                                            + (mMonth ) : (mMonth ))
                                                     .append("月")
                                                     .append((mDay < 10) ? "0" + mDay : mDay).append("日 "));
 
@@ -175,8 +180,8 @@ public class CreateScheduleActivity extends AppCompatActivity {
                                             mMinute = minute;
                                             // 更新时间 小于10加0
                                             schedule_remind_time.setText(new StringBuilder()
-                                                    .append((mHour + 1) < 10 ? "0"
-                                                            + (mHour + 1) : (mHour + 1))
+                                                    .append((mHour ) < 10 ? "0"
+                                                            + (mHour ) : (mHour ))
                                                     .append(":")
                                                     .append((mMinute < 10) ? "0" + mMinute : mMinute));
 
@@ -195,6 +200,62 @@ public class CreateScheduleActivity extends AppCompatActivity {
                 }
             }
         });
+
+
+        //日程时间设置
+        schedule_time_start = (TextView) findViewById(R.id.schedule_time_start);
+        schedule_time_end = (TextView) findViewById(R.id.schedule_time_end);
+        schedule_time_start.setOnClickListener(new OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Calendar c_time= Calendar.getInstance();
+                new TimePickerDialog(CreateScheduleActivity.this,
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker view, int hour,
+                                                  int minute){
+                                // TODO Auto-generated method stub
+                                mHour = hour;
+                                mMinute = minute;
+                                // 更新时间 小于10加0
+                                schedule_time_start.setText(new StringBuilder()
+                                        .append((mHour ) < 10 ? "0"
+                                                + (mHour ) : (mHour ))
+                                        .append(":")
+                                        .append((mMinute < 10) ? "0" + mMinute : mMinute));
+
+                            }
+                        },
+                        c_time.get(Calendar.HOUR), c_time
+                        .get(Calendar.MINUTE),true).show();
+            }
+        });
+        schedule_time_end.setOnClickListener(new OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Calendar c_time= Calendar.getInstance();
+                new TimePickerDialog(CreateScheduleActivity.this,
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker view, int hour,
+                                                  int minute){
+                                // TODO Auto-generated method stub
+                                mHour = hour;
+                                mMinute = minute;
+                                // 更新时间 小于10加0
+                                schedule_time_end.setText(new StringBuilder()
+                                        .append((mHour ) < 10 ? "0"
+                                                + (mHour ) : (mHour ))
+                                        .append(":")
+                                        .append((mMinute < 10) ? "0" + mMinute : mMinute));
+
+                            }
+                        },
+                        c_time.get(Calendar.HOUR), c_time
+                        .get(Calendar.MINUTE),true).show();
+            }
+        });
+
 
         //标签设置
         schedule_change_label = (Button) findViewById(R.id.schedule_change_label);
@@ -218,93 +279,7 @@ public class CreateScheduleActivity extends AppCompatActivity {
                 });
                 builder.create();
                 builder.show();
-//                final AlertDialog dialog = builder.show();
-//                builder.setOnItemSelectedListener(new OnItemSelectedListener(){
-//                    @Override
-//                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id){
-//                        int sInfo = schedule_labels.getCheckedRadioButtonId();
-//                        switch(sInfo)
-//                        {
-//                            case 0:
-//                                schedule_label_name.setText("交通");
-//                                break;
-//                            case 1:
-//                                schedule_label_name.setText("课业");
-//                                break;
-//                            case 2:
-//                                schedule_label_name.setText("社团");
-//                                break;
-//                            case 3:
-//                                schedule_label_name.setText("休息");
-//                                break;
-//                            case 4:
-//                                schedule_label_name.setText("睡眠");
-//                                break;
-//                            case 5:
-//                                schedule_label_name.setText("生活");
-//                                break;
-//
-//                        }
-//                        dialog.dismiss();
-//
-//                    }
-//                    @Override
-//                    public void onNothingSelected(AdapterView<?> arg0){
-//                        Toast.makeText(CreateScheduleActivity.this,"请选择一项",Toast.LENGTH_SHORT).show();
-//                    }
-//                });
 
-//                AlertDialog.Builder builder = new AlertDialog.Builder(CreateScheduleActivity.this);
-//                builder.setIcon(R.drawable.ic_launcher_background);
-//
-//                //    通过LayoutInflater来加载一个xml的布局文件作为一个View对象
-//                View view = LayoutInflater.from(CreateScheduleActivity.this).inflate(R.layout.schedule_label_dialog, null);
-//                //    设置我们自己定义的布局文件作为弹出框的Content
-//                builder.setView(view);
-//
-//                final AlertDialog dia = builder.show();
-//
-//                schedule_label_frame = (LinearLayout) findViewById(R.id.schedule_label_frame);
-//                schedule_labels = (RadioGroup) findViewById(R.id.schedule_labels);
-//
-//                schedule_label_trans = (RadioButton) findViewById(R.id.schedule_label_trans);
-//                schedule_label_cours = (RadioButton) findViewById(R.id.schedule_label_cours);
-//                schedule_label_club = (RadioButton) findViewById(R.id.schedule_label_club);
-//                schedule_label_rest = (RadioButton) findViewById(R.id.schedule_label_rest);
-//                schedule_label_sleep = (RadioButton) findViewById(R.id.schedule_label_sleep);
-//                schedule_label_life = (RadioButton) findViewById(R.id.schedule_label_life);
-//
-//
-//                //选择标签
-//                schedule_labels.setOnClickListener(new View.OnClickListener(){
-//                    int schedule_label_choose = schedule_labels.getCheckedRadioButtonId();
-//                    @Override
-//                    public void onClick(View v){
-//                        schedule_label_choose = schedule_labels.getCheckedRadioButtonId();
-//                        if(schedule_label_choose == R.id.schedule_label_trans){
-//                            schedule_change_label.setText("交通");
-//                        }
-//                        else if(schedule_label_choose == R.id.schedule_label_cours){
-//                            schedule_change_label.setText("课业");
-//                        }
-//                        else if(schedule_label_choose == R.id.schedule_label_club){
-//                            schedule_change_label.setText("社团");
-//                        }
-//                        else if(schedule_label_choose == R.id.schedule_label_rest){
-//                            schedule_change_label.setText("休息");
-//                        }
-//                        else if(schedule_label_choose == R.id.schedule_label_sleep){
-//                            schedule_change_label.setText("睡眠");
-//                        }
-//                        else if(schedule_label_choose == R.id.schedule_label_life){
-//                            schedule_change_label.setText("生活");
-//                        }
-//
-//                    }
-//
-//                });
-//
-//               dia.dismiss();
             }
 
         });
@@ -360,19 +335,30 @@ public class CreateScheduleActivity extends AppCompatActivity {
                 jaffiar.getString("timeEndAlarm"));
         schedule_name.setText(s_affair.getName());
         schedule_ps.setText(s_affair.getTips());
+        ((TextView) findViewById(R.id.schedule_time_start)).setText(s_affair.getTimeStartPlan());
+        ((TextView) findViewById(R.id.schedule_time_end)).setText(s_affair.getTimeEndPlan());
         schedule_remind_time.setText(s_affair.getTimeStartAlarm());
+        ((TextView) findViewById(R.id.schedule_date)).setText(intent.getStringExtra("date"));
+        //初始设置事件名称，事件备注，计划开始时间，计划结束时间，提醒时间
+
     }
     private void request()
     {
-        s_affair.setIdS(0);
         s_affair.setName(schedule_name.getText().toString());
         s_affair.setTips(schedule_ps.getText().toString());
         s_affair.setTimeStartAlarm(schedule_remind_time.getText().toString());
+        s_affair.setTimeStartPlan(schedule_time_start.getText().toString());
+        s_affair.setTimeEndPlan(schedule_time_end.getText().toString());
+        if(intent.getStringExtra("type").equals("create"))
+        {
+            s_affair.setIdS(0);
+            s_affair.setIsImportant("n");
+        }
         JSONObject jobject=(JSONObject) JSON.toJSON(s_affair);
         if(intent.getStringExtra("type").equals("create"))
-            jobject.put("sign1", 1);
+            jobject.put("sign1", 0);
         else
-            jobject.put("sign1",0);
+            jobject.put("sign1",1);
         jobject.put("sign2",0);
         jobject.put("token", TokenUtil.getToken());
         jobject.put("date",intent.getStringExtra("date"));//plantable传送过来的时间

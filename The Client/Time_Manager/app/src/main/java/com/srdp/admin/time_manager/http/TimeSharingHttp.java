@@ -19,15 +19,16 @@ import java.net.URL;
  * Created by admin on 2018/4/17.
  */
 
-public class TimeSharingHttp implements GetRequest{
+public class TimeSharingHttp extends BaseHttp implements GetRequest{
     private int year;
     private int month;
     private int day;
     public TimeSharingHttp(int year,int month,int day)
     {
+        super();
         this.year=year;
         this.month=month;
-        this.day=day-2;
+        this.day=day;
     }
     @Override
     public void requestByGet(final Handler handler) {
@@ -40,7 +41,7 @@ public class TimeSharingHttp implements GetRequest{
                     Log.i("tsrequest",TokenUtil.getToken()+year+month+day);
                     HttpURLConnection conn=null;//声明连接对象
                     //String urlStr="http://localhost:8080/TimeManagerServer?token="+token+"&date=";
-                    String urlStr="http://10.115.200.45:8080/TimeManagerServer/TimeSharingServlet?token="+ TokenUtil.getToken()+"&userId=2"+"&year="+year+"&month="+month+"&day="+day;
+                    String urlStr=baseUrl+"TimeManagerServer/TimeSharingServlet?token="+ TokenUtil.getToken()+"&userId=2"+"&year="+year+"&month="+month+"&day="+day;
                     InputStream is = null;
                     String resultData = "";
                     JSONObject jsonObject=null;
@@ -71,8 +72,10 @@ public class TimeSharingHttp implements GetRequest{
                             msg.obj = jsonObject;
                             Log.i("tsjson",jsonObject.toString());
                         }
-                        else
-                            msg.what=2;
+                        else {
+                                msg.what = 3;//表示该张时间分配表不存在
+                                msg.obj = jsonObject;
+                            }
                         handler.sendMessage(msg);
                     }
                     else {

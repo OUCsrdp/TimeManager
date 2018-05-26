@@ -8,6 +8,7 @@ import java.util.Date;
  */
 
 public class TimeUtil {
+    private static String[] weekday={"星期日","星期一","星期二","星期三","星期四","星期五","星期六"};
     public static String getFormatTime(long time)
     {
         if (time <= 0) {
@@ -67,6 +68,11 @@ public class TimeUtil {
         int month=calendar.get(Calendar.MONTH)+1;
         int day=calendar.get(Calendar.DAY_OF_MONTH);
         return year+"年"+month+"月"+day+"日";
+    }
+    public static String getWeekday(Calendar calendar)
+    {
+        int theDay=calendar.get(Calendar.DAY_OF_WEEK)-1;
+        return weekday[theDay];
     }
     public static String getHourandmin()
     {

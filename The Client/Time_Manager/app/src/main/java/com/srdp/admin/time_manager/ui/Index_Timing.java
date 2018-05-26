@@ -1,5 +1,6 @@
 package com.srdp.admin.time_manager.ui;
 
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,6 +21,8 @@ import com.srdp.admin.time_manager.http.AffairHttp;
 import com.srdp.admin.time_manager.model.moudle.Affair;
 import com.srdp.admin.time_manager.model.moudle.MyApplication;
 import com.srdp.admin.time_manager.model.moudle.S_Affair;
+import com.srdp.admin.time_manager.model.moudle.User;
+import com.srdp.admin.time_manager.util.DensityUtil;
 import com.srdp.admin.time_manager.util.LabelUtil;
 import com.srdp.admin.time_manager.util.TimeUtil;
 import com.srdp.admin.time_manager.util.TokenUtil;
@@ -38,6 +41,8 @@ public class Index_Timing extends AppCompatActivity {
     private String date;//当前日期
     private String startTime;//开始时间
     private String endTime;//结束时间
+    private int clickTimes=0;//表示导航栏点击次数
+    private FrameLayout showedNavi;//表示隐藏部分的导航栏
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +55,7 @@ public class Index_Timing extends AppCompatActivity {
         //初始化token,测试用
         initData();
         //创建该活动时初始化日期信息
+        initNavi();//初始化导航栏
         mHandler = new Handler();
         indexTimer =(TextView) findViewById(R.id.indexTimer);
         timer=0;
@@ -88,10 +94,13 @@ public class Index_Timing extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if(getIntent().getStringExtra("startTime")!=null){
-            startTime=getIntent().getStringExtra("startTime");
-            timer=0;
-            isStart=true;
-            countTimer();
+            if(!isStart)
+            {
+                startTime=getIntent().getStringExtra("startTime");
+                timer=0;
+                isStart=true;
+                countTimer();
+            }
         }//如果页面是从创建计时页过来且传了startTime，重新设置startTime
     }
     //在activity销毁的时候移除handler的回调函数
@@ -173,19 +182,20 @@ public class Index_Timing extends AppCompatActivity {
             affair.setTimeStart(startTime);
             affair.setTimeEnd(endTime);
             affairjson=(JSONObject) JSON.toJSON(affair);
-            affairjson.put("sign1",1);
+            affairjson.put("sign1",0);
             affairjson.put("sign2",1);
         }else{
             S_Affair saffair=application.getTimingSAffair();
             saffair.setTimeStart(startTime);
             saffair.setTimeEnd(endTime);
             affairjson=(JSONObject) JSON.toJSON(saffair);
-            affairjson.put("sign1",0);
+            affairjson.put("sign1",1);
             affairjson.put("sign2",0);
         }
         affairjson.put("token", TokenUtil.getToken());
         affairjson.put("date",date);
         affairjson.put("username", UserUtil.getUser().getName());
+        //username  for test
         AffairHttp affairHttp=new AffairHttp(affairjson);
         affairHttp.requestByPost(new TimingHandler(Index_Timing.this));
     }
@@ -203,5 +213,79 @@ public class Index_Timing extends AppCompatActivity {
         Intent relogin=new Intent(this,LoginActivity.class);
         startActivity(relogin);
     }
+    //导航栏及其处理
+    private void initNavi()
+    {
+        ImageView naviShow=(ImageView) findViewById(R.id.IndexNaviShow);
+        showedNavi=(FrameLayout) findViewById(R.id.IndexShowedNavi);
+        naviShow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                clickTimes++;
+                if(clickTimes%2==1)
+                {
+                    showWholeNavi();
+                }
+                else
+                {
+                    hideWholeNavi();
+                }
+            }
+        });
+        TextView navi1=(TextView) findViewById(R.id.IndexNaviMyAssign);
+        navi1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent theIntent=new Intent(Index_Timing.this,assign_table.class);
+                startActivity(theIntent);
 
+            }
+        });
+        TextView navi2=(TextView) findViewById(R.id.IndexNaviMyPlan);
+        navi2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent theIntent=new Intent(Index_Timing.this,Plan_Table.class);
+                startActivity(theIntent);
+            }
+        });
+        TextView navi6=(TextView) findViewById(R.id.IndexNaviMyCenter);
+        navi6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent theIntent=new Intent(Index_Timing.this,Person_Center.class);
+                startActivity(theIntent);
+            }
+        });
+
+    }
+    private void showWholeNavi()
+    {
+
+        ValueAnimator changeWid = ValueAnimator.ofInt(showedNavi.getLayoutParams().width, DensityUtil.dip2px(this,249));
+        changeWid.setDuration(300);
+        changeWid.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animator) {
+                int currentValue = (Integer) animator.getAnimatedValue();
+                showedNavi.getLayoutParams().width = currentValue;
+                showedNavi.requestLayout();
+            }
+        });
+        changeWid.start();
+    }
+    private void hideWholeNavi()
+    {
+        ValueAnimator changeWid = ValueAnimator.ofInt(showedNavi.getLayoutParams().width,0);
+        changeWid.setDuration(300);
+        changeWid.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animator) {
+                int currentValue = (Integer) animator.getAnimatedValue();
+                showedNavi.getLayoutParams().width = currentValue;
+                showedNavi.requestLayout();
+            }
+        });
+        changeWid.start();
+    }
 }

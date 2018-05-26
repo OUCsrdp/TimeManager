@@ -36,7 +36,6 @@
                 android:orientation="vertical">
                 <EditText
                     android:id="@+id/EditName"
-                    android:text="离散数学"
                     style="@style/timesharingEditTitle"
                     android:background="@drawable/edittilebackground" />
                 <RelativeLayout

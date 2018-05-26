@@ -174,8 +174,8 @@ public class CreateTimingActivity extends AppCompatActivity {
                                             mMinute = minute;
                                             // 更新时间 小于10加0
                                             timing_remind_time.setText(new StringBuilder()
-                                                    .append((mHour + 1) < 10 ? "0"
-                                                            + (mHour + 1) : (mHour + 1))
+                                                    .append((mHour) < 10 ? "0"
+                                                            + (mHour) : (mHour))
                                                     .append(":")
                                                     .append((mMinute < 10) ? "0" + mMinute : mMinute));
 
@@ -299,8 +299,8 @@ public class CreateTimingActivity extends AppCompatActivity {
     private void createTiming(int hasSAffair )
     {
         String schedule_name_edit = timing_name.getText().toString();//获取事件名
-        String schedule_ps_edit = timing_ps.getText().toString();//获取备注
-        String time_end_plan=timing_remind_time.getText().toString();//获取结束时间提醒
+        final String schedule_ps_edit = timing_ps.getText().toString();//获取备注
+        final String time_end_plan=timing_remind_time.getText().toString();//获取结束时间提醒
         //Toast.makeText(CreateTimingActivity.this,schedule_name_edit,Toast.LENGTH_SHORT).show();
 
         //String schedule_exist ="高等数学";
@@ -312,9 +312,11 @@ public class CreateTimingActivity extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setMessage("我们在你的日程表中发现了同名事件，是否为相同事件？").setPositiveButton("是", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(DialogInterface dialog, int which)  {
                         //点击确定按钮处理
                         isAffair = 0;
+                        SAffair.setTips(schedule_ps_edit);
+                        SAffair.setTimeEndPlan(time_end_plan);
                         //获取application对象
                         application.setIsAffair(0);
                         application.setTimingSAffair(SAffair);

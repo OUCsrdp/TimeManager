@@ -7,6 +7,7 @@ import android.os.Message;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSONObject;
+import com.srdp.admin.time_manager.model.moudle.MyApplication;
 import com.srdp.admin.time_manager.model.moudle.TimeSharing;
 import com.srdp.admin.time_manager.util.TokenUtil;
 
@@ -23,10 +24,11 @@ import java.util.Date;
  * Created by admin on 2018/5/1.
  */
 
-public class UserHttp implements GetRequest,PostRequest{
+public class UserHttp extends BaseHttp implements GetRequest,PostRequest{
     private JSONObject requestJson;
     public UserHttp(JSONObject userJson)
     {
+        super();
         this.requestJson=userJson;
     }
     public void requestByGet(final Handler handler){
@@ -37,7 +39,7 @@ public class UserHttp implements GetRequest,PostRequest{
                 try {
                     HttpURLConnection conn=null;//声明连接对象
                     //String urlStr="http://localhost:8080/TimeManagerServer?token="+token+"&date=";
-                    String urlStr="http://10.115.200.45:8080/TimeManagerServer/UserServlet?"+new Date();
+                    String urlStr=baseUrl+"TimeManagerServer/UserServlet?"+new Date();
                     InputStream is = null;
                     OutputStream os=null;
                     URL url = new URL(urlStr); //URL对象
@@ -51,6 +53,7 @@ public class UserHttp implements GetRequest,PostRequest{
                         //从服务器端获取字符串
                         Log.i("userverify",is.toString());
                         Bitmap bitmap = BitmapFactory.decodeStream(is);
+                        Log.i("userVerify1",bitmap.toString());
                         msg.what=7;//表示获得验证码成功
                         msg.obj=bitmap;
                         handler.sendMessage(msg);
@@ -74,7 +77,7 @@ public class UserHttp implements GetRequest,PostRequest{
                     Log.i("userrequest",requestJson.toString());
                     HttpURLConnection conn=null;//声明连接对象
                     //String urlStr="http://localhost:8080/TimeManagerServer?token="+token+"&date=";
-                    String urlStr="http://10.115.200.45:8080/TimeManagerServer/UserServlet";
+                    String urlStr=baseUrl+"TimeManagerServer/UserServlet";
                     InputStream is = null;
                     OutputStream os=null;
                     String resultData = "";

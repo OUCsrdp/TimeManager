@@ -34,6 +34,7 @@ import com.srdp.admin.time_manager.model.moudle.S_Affair;
 import com.srdp.admin.time_manager.util.DensityUtil;
 import com.srdp.admin.time_manager.util.TimeUtil;
 import com.srdp.admin.time_manager.util.TokenUtil;
+import com.srdp.admin.time_manager.util.UserUtil;
 
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
@@ -62,16 +63,18 @@ public class Timesharing_edit extends AppCompatActivity {
         //获取timelsharing传送过来的数据
         initData();
         EditText editTips=(EditText)findViewById(R.id.EditTips);
-        editTips.setSelection(editTips.getText().length());
         EditText editName=(EditText)findViewById(R.id.EditName);
         //把备注的光标移到文字的最后
         if(intent.getStringExtra("type").equals("edit"))
         {
             initPage();
-            editName.setFocusable(false);
+            //editName.setFocusable(false);
         }
         else
-            editName.setFocusable(true);
+        {
+            ((TextView)findViewById(R.id.editStartTime)).setText("00:00");
+            ((TextView)findViewById(R.id.editEndTime)).setText("00:00");
+        }
         for(int i=0;i<24;i++)
         {
             String str = String.format("%2d",i).replace(" ", "0");
@@ -153,9 +156,10 @@ public class Timesharing_edit extends AppCompatActivity {
     //静态类handler，用于将网络请求线程里的数据调入主线程，并且使用当前活动的引用防止内存泄漏
     private void initData()
     {
-        Calendar calendar= Calendar.getInstance();
-        calendar.setTime(new Date());
-        date=calendar.get(Calendar.YEAR)+"年"+String.valueOf(calendar.get(Calendar.MONTH)+1)+"月"+calendar.get(Calendar.DAY_OF_MONTH) +"日";
+        //Calendar calendar= Calendar.getInstance();
+        //calendar.setTime(new Date());
+        //date=calendar.get(Calendar.YEAR)+"年"+String.valueOf(calendar.get(Calendar.MONTH)+1)+"月"+calendar.get(Calendar.DAY_OF_MONTH) +"日";
+        date=intent.getStringExtra("date");
         TextView editStart=(TextView)findViewById(R.id.editStartTime);
         TextView editEnd=(TextView)findViewById(R.id.editEndTime);
         editStart.setText(date);
@@ -260,7 +264,6 @@ public class Timesharing_edit extends AppCompatActivity {
             jsonObject=(JSONObject)JSON.toJSON(nowAffair);
             jsonObject.put("sign1",1);
             jsonObject.put("sign2",1);
-            jsonObject.put("token", TokenUtil.getToken());
         }
         else{
             nowSAffair.setSatisfaction(theIndex);
@@ -272,9 +275,10 @@ public class Timesharing_edit extends AppCompatActivity {
             Log.i("changesaffair",jsonObject.toString());
             jsonObject.put("sign1",1);
             jsonObject.put("sign2",0);
-            jsonObject.put("token", TokenUtil.getToken());
         }
         jsonObject.put("token", TokenUtil.getToken());
+        jsonObject.put("date",intent.getStringExtra("date"));
+        jsonObject.put("username",UserUtil.getUser().getName());
         AffairHttp affairHttp=new AffairHttp(jsonObject);
         Log.i("affairedit",jsonObject.toString());
         affairHttp.requestByPost(new TSeditHandler(this));

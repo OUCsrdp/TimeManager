@@ -113,6 +113,7 @@
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/fontColor</item>
         <item name="android:gravity">center_vertical</item>
+        <item name="android:singleLine">true</item>
     </style>
     <style name="naviOrange">
         <item name="android:layout_width">match_parent</item>
@@ -123,6 +124,7 @@
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/fontColor</item>
         <item name="android:gravity">center_vertical</item>
+        <item name="android:singleLine">true</item>
     </style>
     <style name="naviShadow">
         <item name="android:layout_width">match_parent</item>

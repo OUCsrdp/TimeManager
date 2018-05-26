@@ -15,7 +15,11 @@ import java.net.URL;
  * Created by admin on 2018/5/8.
  */
 
-public class LabelHttp implements GetRequest {
+public class LabelHttp extends BaseHttp implements GetRequest {
+    public LabelHttp()
+    {
+        super();
+    }
     @Override
     public void requestByGet(final Handler handler) {
 
@@ -25,7 +29,7 @@ public class LabelHttp implements GetRequest {
                 //urlConnection请求服务器，验证
                 try {
                     HttpURLConnection conn=null;//声明连接对象
-                    String urlStr="http://10.115.200.45:8080/TimeManagerServer/LabelServlet";
+                    String urlStr=baseUrl+"TimeManagerServer/LabelServlet";
                     InputStream is = null;
                     String resultData = "";
                     JSONObject jsonObject=null;

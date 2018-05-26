@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.srdp.admin.time_manager.model.moudle.MyApplication;
 import com.srdp.admin.time_manager.model.moudle.TimeSharing;
 
 
@@ -22,10 +23,11 @@ import java.net.URL;
  * Created by admin on 2018/4/30.
  */
 
-public class AffairHttp implements PostRequest {
+public class AffairHttp extends BaseHttp implements PostRequest {
     private JSONObject requestJson;
     public AffairHttp(JSONObject requestJson)
     {
+        super();
         this.requestJson=requestJson;
     }
     @Override
@@ -38,8 +40,8 @@ public class AffairHttp implements PostRequest {
                     Log.i("affairrequest", requestJson.toString());
                     HttpURLConnection conn=null;//声明连接对象
                     //String urlStr="http://localhost:8080/TimeManagerServer?token="+token+"&date=";
-                    String urlStr="http://172.17.146.1:8080/TimeManagerServer/AffairServlet";
-                    //String urlStr="http://10.115.200.45:8080/TimeManagerServer/AffairServlet";
+                    //String urlStr="http://172.17.146.1:8080/TimeManagerServer/AffairServlet";
+                    String urlStr=baseUrl+"TimeManagerServer/AffairServlet";
                     InputStream is = null;
                     OutputStream os=null;
                     String resultData = "";

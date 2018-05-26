@@ -18,7 +18,7 @@ import java.net.URL;
  * Created by admin on 2018/5/7.
  */
 
-public class PlanHttp implements GetRequest {
+public class PlanHttp extends BaseHttp implements GetRequest {
     private int year;
     private int month;
     private int day;
@@ -26,6 +26,7 @@ public class PlanHttp implements GetRequest {
     //表示请求的年月日
     public PlanHttp(int year,int month,int day,String timeSign)
     {
+        super();
         this.year=year;
         this.month=month;
         this.day=day;
@@ -41,7 +42,7 @@ public class PlanHttp implements GetRequest {
                 try {
                     Log.i("planrequest", TokenUtil.getToken()+year+month+day);
                     HttpURLConnection conn=null;//声明连接对象
-                    String urlStr="http://10.115.200.45:8080/TimeManagerServer/ScheduleServlet?token="+ TokenUtil.getToken()+"&userId=2"+"&year="+year+"&month="+month+"&day="+day;
+                    String urlStr=baseUrl+"TimeManagerServer/ScheduleServlet?token="+ TokenUtil.getToken()+"&userId=2"+"&year="+year+"&month="+month+"&day="+day;
                     InputStream is = null;
                     String resultData = "";
                     JSONObject jsonObject=null;

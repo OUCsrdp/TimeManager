@@ -43,9 +43,17 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/naviIndex"
+                style="@style/naviOrange"
+                android:layout_marginTop="80dp"
+                android:text="首页"
+                />
+            <View
+                style="@style/naviShadow"
+                />
+            <TextView
                 android:id="@+id/naviMyAssign"
                 style="@style/naviWhite"
-                android:layout_marginTop="80dp"
                 android:text="我的时间分配"
                 />
             <View

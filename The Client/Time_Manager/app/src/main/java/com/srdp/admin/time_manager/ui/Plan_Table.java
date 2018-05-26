@@ -41,7 +41,7 @@ public class Plan_Table extends AppCompatActivity {
     private int nowDayIndex;
     private WindowManager windowmanager;
     private int screenWidth;
-    private boolean isAnimated=false;
+    private boolean isAnimated=true;
     private ViewGroup[] plan=new ViewGroup[4];
     private boolean toNextPlan=true;
     private boolean spareLeft=true;
@@ -99,8 +99,10 @@ public class Plan_Table extends AppCompatActivity {
         rightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.i("plananimated:",""+isAnimated);
                 if(!isAnimated)
                 {
+                    isAnimated=true;
                     realCalendar.add(Calendar.DATE,1);
                     date=TimeUtil.getDate(realCalendar,0);
                     //设置日期加一
@@ -115,7 +117,7 @@ public class Plan_Table extends AppCompatActivity {
                     changeToOtherPlan(v);
                     lastClick=1;
                 }
-                isAnimated=true;
+
             }
         });
         ImageView leftButton=(ImageView) findViewById(R.id.planLeft);
@@ -124,6 +126,7 @@ public class Plan_Table extends AppCompatActivity {
             public void onClick(View v) {
                 if(!isAnimated)
                 {
+                    isAnimated=true;
                     realCalendar.add(Calendar.DATE,-1);
                     date=TimeUtil.getDate(realCalendar,0);
                     //设置日期-1
@@ -138,7 +141,6 @@ public class Plan_Table extends AppCompatActivity {
                     changeToOtherPlan(v);
                     lastClick=-1;
                 }
-                isAnimated=true;
             }
         });
         //切换日程表函数
@@ -218,6 +220,7 @@ public class Plan_Table extends AppCompatActivity {
         //翻页获取后一天和前一天日程的时候对jsonObject数组赋值
         else
         {
+            isAnimated=false;
             threedays[Integer.parseInt(timeSign.substring(7,8))]=j;
             if(timeSign.substring(7,8).equals("1"))
             {
@@ -237,9 +240,9 @@ public class Plan_Table extends AppCompatActivity {
             return;
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         LinearLayout planDate =(LinearLayout)layoutInflater.inflate(R.layout.plan_date, null);
+        ((TextView)(planDate.getChildAt(0))).setText(j.getString("date"));
         //((TextView)(planDate.getChildAt(0))).setText(j.getString("date"));
-        //((TextView)(planDate.getChildAt(0))).setText(j.getString("date"));
-        ((TextView)(planDate.getChildAt(0))).setText(TimeUtil.getDate(realCalendar,changeDate));
+        //((TextView)(planDate.getChildAt(0))).setText(TimeUtil.getDate(realCalendar,changeDate));
         ((TextView)(planDate.getChildAt(1))).setText(weekday[j.getIntValue("weekday")-1]);
         vg.addView(planDate);
         //在plan_table中添加日期相关信息
@@ -322,8 +325,6 @@ public class Plan_Table extends AppCompatActivity {
     }
     private void  changeToOtherPlan(View v)
     {
-        if(isAnimated) return;
-        isAnimated=true;
         plan[1]=(ViewGroup) findViewById(R.id.nowDayPlan);
         plan[0]=(ViewGroup) findViewById(R.id.lastDayPlan);
         plan[2]=(ViewGroup) findViewById(R.id.nextDayPlan);
@@ -378,7 +379,7 @@ public class Plan_Table extends AppCompatActivity {
         set.playTogether(lastTransX,nowTransX,nextTransX,spareTransX,lastTransY,nowTransY,nextTransY,lastAlpha,nowAlpha);
         set.setDuration(1000);
         set.start();
-        nextTransX.addListener(new AnimatorListenerAdapter() {
+        set.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
