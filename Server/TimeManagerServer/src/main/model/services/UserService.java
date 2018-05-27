@@ -21,12 +21,12 @@ import main.model.db.*;
 
 public class UserService {
 	private String verify;
-	private String verifyR;
+//	private String verifyR;
 	
 	public String register(User user,String verify) {
 		UserManager managerU = new UserManager();
-		if(managerU.findWithName(user.getName()) != null) { //该用户名没有重复注册过
-			if(verify.equals(this.verifyR)) { //验证码正确
+		if(managerU.findWithName(user.getName()) == null) { //该用户名没有重复注册过
+			if(verify.equals(this.verify)) { //验证码正确
 				if(managerU.add(user.getNumStu(),user.getSchool(),user.getMajor(),user.getGPA(),user.getName(),user.getImage(),user.getPwd(),user.getTimeRegister()) != -1) return "success";
 				else return "fail";
 			}
@@ -36,13 +36,15 @@ public class UserService {
 	} //注册成功返回1，失败返回0
 	
 	int judgeVerify(String verify) {
-		if(verify == this.verify) return 1;
+		System.out.println("this:"+this.verify);
+		if(verify.equals(this.verify)) return 1;
 		else return 0;
 	}
 	
 	
 	
 	public byte[] getVerify() {
+		verify = "";
 		/*String randomCode = CodeUtils.getRandomCode(CodeUtils.TYPE_NUM_CHAR, 4, null);
 		verify = randomCode;
 		BufferedImage imageFromCode = ImageUtils.getImageFromCode(randomCode, 100, 50, 3, true, Color.WHITE, Color.BLACK, null);
@@ -55,7 +57,7 @@ public class UserService {
 		try {
 			int width = 80;
 			int height = 40;
-			int lines = 10;
+			int lines = 5;
 			BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 			Graphics2D g2d = (Graphics2D)img.getGraphics();
 	
@@ -65,9 +67,9 @@ public class UserService {
 			Random r = new Random(new Date().getTime());
 	
 			//设置背景色
-			g2d.setColor(new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255)));
+			g2d.setColor(Color.WHITE);
 			g2d.drawRect(0, 0, width, height);//绘制指定矩形的边框。
-			g2d.setColor(new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255)));
+			g2d.setColor(Color.WHITE);
 			g2d.fillRect(0, 0, width, height);//填充指定的矩形。
 			
 			
@@ -95,11 +97,11 @@ public class UserService {
 			
 			g2d.dispose();
 			
-			//ImageIO.write(img, "JPG", new FileOutputStream("./verify.jpg")); 
+			ImageIO.write(img, "JPG", new FileOutputStream("./verify.jpg")); 
             ByteArrayOutputStream baos = new ByteArrayOutputStream();   
             ImageIO.write(img, "jpg", baos);   
             byte[] bytes = baos.toByteArray();   
-               
+            //System.out.println("verify:"+verify);   
             return bytes; 
 		}
 		catch(Exception e) {}
@@ -110,6 +112,7 @@ public class UserService {
 	
 	public String login(String username,String password,String verify,String token) {
 		if(token != null) {
+			System.out.println("verify2:"+verify);
 			TokenManager managerT = new TokenManager();
 			UserManager managerU = new UserManager();
 			if(managerU.findWithName(username) != null) { //该用户存在
@@ -126,6 +129,7 @@ public class UserService {
 			}
 			else return "usernamefail";
 		}
+		else return "fail";
 	} //登录成功返回token,失败返回”usernamefail”,”passwordfail”,”verifyfail”
 	
 	public int judgeToken(String token) {
@@ -145,7 +149,7 @@ public class UserService {
 		else return 0;
 	} //修改用户信息
 	
-	User getUserInfor(String UserName) {
+	public User getUserInfor(String UserName) {
 		UserManager managerU = new UserManager();
 		if(managerU.findWithName(UserName) != null) { //该用户存在，返回用户信息
 			User user = managerU.findWithName(UserName);
@@ -154,14 +158,14 @@ public class UserService {
 		else return null; //该用户不存在，返回null
 	}
 
-	int logout(int UserId,String token) { //这里我需要该用户的token
+	public int logout(int UserId,String token) { //这里我需要该用户的token
 		UserManager managerU = new UserManager();
 		TokenManager managerT = new TokenManager();
 		User user = managerU.findWithId(UserId);
 		if(user != null) { //该用户存在
-			Token token = managerT.findWithToken(token.getToken());
+			Token token1 = managerT.findWithToken(token);
 			if(token != null) { //token存在
-				if(managerT.delete(token.getId())) return 1; //删除成功
+				if(managerT.delete(token1.getId())) return 1; //删除成功
 				else return 0;
 			}
 			else return 0;
@@ -169,7 +173,7 @@ public class UserService {
 		else return 0;
 	}
 	
-	int changePassword(int UserId,String pwdOld,String pwdNew) { //我需要旧密码的输入以及新密码两个密码
+	public int changePassword(int UserId,String pwdOld,String pwdNew) { //我需要旧密码的输入以及新密码两个密码
 		UserManager managerU = new UserManager();
 		User user = managerU.findWithId(UserId);
 		if(user != null) { //该用户存在
@@ -183,4 +187,5 @@ public class UserService {
 		}
 		else return 0;
 	}
+
 }

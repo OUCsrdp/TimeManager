@@ -203,6 +203,48 @@ public class ScheduleManager extends SqlServerManager
 			return null;
 		return schedules;
 	}
+	
+	public static Schedule findWithDate(int idUser, String date) 
+	{
+		Connection con = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		PreparedStatement pst = null;
+		con = ScheduleManager.Connect();
+		try {
+			stmt = con.createStatement();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		ScheduleManager.Create(stmt);
+		int id = -1;
+		int weekday = -1;
+		String sql = "select * from [dbo].[Schedule] where idUser = ? and date = ?";
+		try {
+			pst = con.prepareStatement(sql);
+			pst.setInt(1, idUser);
+			pst.setString(2, date);
+			rs = pst.executeQuery();
+			if(!rs.next())
+			{
+				ScheduleManager.Close(con, stmt, rs, pst);
+				return null;
+			}
+			id = rs.getInt("id");
+			weekday = rs.getInt("weekday");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			ScheduleManager.Close(con, stmt, rs, pst);
+			return null;
+		}
+		ScheduleManager.Close(con, stmt, rs, pst);
+		if(idUser == -1)
+			return null;
+		return new Schedule(id, idUser, date, weekday);
+	}
+	
 	public static ArrayList<Schedule> findWithDate(String date) 
 	{
 		Connection con = null;

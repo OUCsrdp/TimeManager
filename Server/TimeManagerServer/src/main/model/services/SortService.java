@@ -20,7 +20,7 @@ public class SortService{
 		String hour2 = time2.substring(0, index2-1);
 		String minute1 = time1.substring(index1+1);
 		String minute2 = time2.substring(index2+1);
-		String minute3 = time3.substring(index3+1);
+		String minute3 = time.substring(index3+1);
 
 		int h1 = Integer.parseInt(hour1);
 		int h2 = Integer.parseInt(hour2);
@@ -42,8 +42,8 @@ public class SortService{
 	public static boolean compareTime(String time1,String time2) { //time1比time2早那么就放返回true
 		int index1 = time1.indexOf(":");
 		int index2 = time2.indexOf(":");
-		String hour1 = time1.substring(0, index1-1);
-		String hour2 = time2.substring(0, index2-1);
+		String hour1 = time1.substring(0, index1);
+		String hour2 = time2.substring(0, index2);
 		String minute1 = time1.substring(index1+1);
 		String minute2 = time2.substring(index2+1);
 		int h1 = Integer.parseInt(hour1);
@@ -65,8 +65,8 @@ public class SortService{
 			@Override
 			public int compare(Affair arg0, Affair arg1) {
 				// TODO Auto-generated method stub
-				if(compareTime(arg0.getTimeStart(),arg1.getTimeStart())) return 1; //开始时早的放前面
-				else return -1;
+				if(compareTime(arg0.getTimeStart(),arg1.getTimeStart())) return -1; //开始时早的放前面
+				else return 1;
 			}  
         });  
 		

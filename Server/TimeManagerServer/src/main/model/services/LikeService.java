@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import main.model.db.*;
 
 public class LikeService{
-	public int thumb(int userId,int idTs) {
+	public String thumb(int userId,int idTs) {
 		//用户是指当前用户id
 		//操作：1.添加到like表2.sharedTable中的这一项thumbup要加一
 		//要先查看是否已经有这层关系，即点赞只能一次
@@ -17,7 +17,7 @@ public class LikeService{
 		for(Like a:findList) {
 			if(a.getIdUser() == userId) {
 				count ++;
-				return -1; //已经赞过，不能再次赞
+				return "likedfail"; //已经赞过，不能再次赞
 			}
 		}
 		if(count == 0) {
@@ -27,11 +27,12 @@ public class LikeService{
 			thumb = thumb + 1;
 			curTS.setThumbup(thumb); //点赞数加一
 			if(managerL.add(userId, idTs) != -1) {
-				if(managerTS.change(curTS)) return 1;
+				if(managerTS.change(curTS)) return "success";
 			}
-			else  return -1;
+			else  return "fail";
 		}
-		else return -1;
+		else return "fail";
+		return "fail";
 
 		
 	}
