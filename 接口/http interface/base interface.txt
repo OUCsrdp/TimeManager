@@ -1,0 +1,106 @@
+userServlet
+
+register
+请求：
+{
+	"operation":"register",
+	"verify":"4635",
+	"id":233,
+	"numStu":"13467"//user的其他基本信息	
+}
+返回
+{
+	"status":"success"||"usernamefail"||"verifyfail"
+}
+
+login
+{
+	"operation":"login",
+	"name":"lajfla",
+	"pwd":"fdlvnv",
+	"verify":"4353",
+	"token":"gprejgp"
+}
+{
+	"status":"success"||”usernamefail"||"passwordfail","verifyfail",
+	"token":"rgegg"
+}
+
+changeInfor
+{
+	"operation":"infor"
+	"token",
+	"id":233,
+	"nameStu":"5240",
+}
+{
+	"status":"success"||"fail"||"unlogin"
+}
+
+getUser
+{
+	"operation":"getUser",
+	"token":,
+	"name":"爱吃肉的兔子"
+}
+{
+	user转化成的json字符串加上
+	"status":"success"||"fail"||"unlogin"
+}
+logout
+{
+	"operation":"logout",
+	"token":,
+	"id":13555
+}
+{
+	"status":"success"||"fail"||"unlogin"
+}
+
+TimeSharingServlet
+?token userId year month day
+{
+	"id":
+	"idUser":
+	"date":
+	"weekday":
+	"affair":[{},{}]
+	"saffair":[{},{}]
+	"status":"success"||"fail"||"unlogin"
+}
+affairServlet
+创建修改
+{
+	"token":
+	"sign1"://1 means modify,0 means create
+	"sign2"://1 means affair,0 means saffair
+	"date":
+	"username":
+	//各种affair消息
+	
+}
+{
+	"status":"success"||"fail"||"unlogin"
+}
+删除
+{
+	"token":
+	"sign1":-1,
+	"id":
+	"isAffair":
+}
+{
+	"status":"success"||"fail"||"unlogin"
+}
+猜日程
+{
+	"token":
+	"name":
+	"date":
+	"time":
+}
+{
+	"status":"success"||"fail"||"unlogin"
+	"hasSAffair":1表示有同名日程，0表示没有
+	//各种s_affair信息
+}

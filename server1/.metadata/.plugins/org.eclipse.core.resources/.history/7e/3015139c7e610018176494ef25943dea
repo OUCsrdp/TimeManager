@@ -1,0 +1,5 @@
+package main.model.services;
+
+public class LikeService {
+
+}
