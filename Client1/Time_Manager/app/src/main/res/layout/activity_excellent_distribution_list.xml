@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0f002f"
+    tools:context="com.example.lizliz.timemanager.ExcellentDistributionListActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!--筛选条件-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp">
+
+            <Button
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="40dp"
+                android:background="@drawable/list_condition03"
+                android:gravity="center"
+                android:text="筛选条件"
+                android:textColor="#ffffff"
+                android:textSize="16dp"/>
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="50dp"
+                android:src="@drawable/list_condition02"
+                android:layout_marginTop="50dp"/>
+
+            <Button
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:background="@drawable/list_condition03"
+                android:layout_marginTop="10dp"
+                android:text="不限学校"
+                android:textColor="#ffffff"
+                android:textSize="25dp"/>
+
+        </LinearLayout>
+
+        <!--列表-->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/distribution_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            android:scrollbarThumbVertical="@drawable/scrollbars_style"
+            android:scrollbarTrackVertical="@drawable/scrollbars_bg_style"
+            android:scrollbarSize="7dp">
+        </android.support.v7.widget.RecyclerView>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
