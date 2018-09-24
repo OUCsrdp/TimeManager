@@ -1,0 +1,8 @@
+127.0.0.1 - - [21/Sep/2018:09:35:35 +0800] "GET / HTTP/1.1" 404 1074
+0:0:0:0:0:0:0:1 - - [21/Sep/2018:09:35:36 +0800] "GET /TimeManagerServer/servlet/main.servlet.BaseServlet HTTP/1.1" 404 1132
+0:0:0:0:0:0:0:1 - - [21/Sep/2018:09:36:09 +0800] "GET /TimeManagerServer/UserServlet?method=test HTTP/1.1" 500 2
+0:0:0:0:0:0:0:1 - - [21/Sep/2018:09:36:23 +0800] "GET /TimeManagerServer/UserServlet?method=test&token=12345674 HTTP/1.1" 500 2
+0:0:0:0:0:0:0:1 - - [21/Sep/2018:09:36:56 +0800] "GET /TimeManagerServer/UserServlet?method=test&token=12345674 HTTP/1.1" 500 2
+127.0.0.1 - - [21/Sep/2018:09:41:16 +0800] "GET / HTTP/1.1" 404 1074
+0:0:0:0:0:0:0:1 - - [21/Sep/2018:09:41:16 +0800] "GET /TimeManagerServer/servlet/main.servlet.BaseServlet HTTP/1.1" 404 1132
+0:0:0:0:0:0:0:1 - - [21/Sep/2018:09:41:21 +0800] "GET /TimeManagerServer/UserServlet?method=test&token=12345674 HTTP/1.1" 200 21

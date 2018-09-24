@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
+  <display-name>TimeManagerServer</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  <!-- 处理用户相关信息的userServlet -->
+  <servlet>
+  	<servlet-name>UserServlet</servlet-name>
+  	<servlet-class>main.servlet.UserServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>UserServlet</servlet-name>
+  	<url-pattern>/UserServlet</url-pattern>
+  </servlet-mapping>
+  <!-- 对时间分配表进行操作的userServlet -->
+  <servlet>
+  	<servlet-name>TimeSharingServlet</servlet-name>
+  	<servlet-class>main.servlet.TimeSharingServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>TimeSharingServlet</servlet-name>
+  	<url-pattern>/TimeSharingServlet</url-pattern>
+  </servlet-mapping>
+</web-app>

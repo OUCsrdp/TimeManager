@@ -1,0 +1,16 @@
+127.0.0.1 - - [20/Sep/2018:14:44:18 +0800] "GET / HTTP/1.1" 404 1074
+0:0:0:0:0:0:0:1 - - [20/Sep/2018:14:44:18 +0800] "GET /TimeManagerServer/UserServlet HTTP/1.1" 500 1389
+0:0:0:0:0:0:0:1 - - [20/Sep/2018:14:54:24 +0800] "GET /TimeManagerServer/UserServlet?method=OperateUser HTTP/1.1" 200 17
+127.0.0.1 - - [20/Sep/2018:15:03:25 +0800] "GET / HTTP/1.1" 404 1074
+0:0:0:0:0:0:0:1 - - [20/Sep/2018:15:03:34 +0800] "GET /TimeManagerServer/UserServlet?method=test HTTP/1.1" 200 17
+127.0.0.1 - - [20/Sep/2018:15:06:42 +0800] "GET / HTTP/1.1" 404 1074
+0:0:0:0:0:0:0:1 - - [20/Sep/2018:15:06:47 +0800] "GET /TimeManagerServer/UserServlet?method=test HTTP/1.1" 200 24
+0:0:0:0:0:0:0:1 - - [20/Sep/2018:15:08:18 +0800] "GET /TimeManagerServer/UserServlet?method=test HTTP/1.1" 200 24
+127.0.0.1 - - [20/Sep/2018:15:36:14 +0800] "GET / HTTP/1.1" 404 1074
+127.0.0.1 - - [20/Sep/2018:15:38:17 +0800] "GET / HTTP/1.1" 404 1074
+127.0.0.1 - - [20/Sep/2018:15:39:06 +0800] "GET / HTTP/1.1" 404 1074
+0:0:0:0:0:0:0:1 - - [20/Sep/2018:15:39:07 +0800] "GET /TimeManagerServer/TimeSharingServlet HTTP/1.1" 200 17
+0:0:0:0:0:0:0:1 - - [20/Sep/2018:15:41:08 +0800] "GET /TimeManagerServer/UserServlet HTTP/1.1" 200 17
+0:0:0:0:0:0:0:1 - - [20/Sep/2018:15:41:15 +0800] "GET /TimeManagerServer/UserServlet?method=OperateUser HTTP/1.1" 200 17
+0:0:0:0:0:0:0:1 - - [20/Sep/2018:15:41:46 +0800] "GET /TimeManagerServer/TimeSharingServlet?method=OperateTS&userId=1&year=2018&month=9&day=18 HTTP/1.1" 200 28
+0:0:0:0:0:0:0:1 - - [20/Sep/2018:15:42:30 +0800] "GET /TimeManagerServer/TimeSharingServlet?method=OperateTS&userId=2&year=2018&month=9&day=17 HTTP/1.1" 200 101

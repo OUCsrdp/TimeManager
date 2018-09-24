@@ -1,0 +1,40 @@
+package main.servlet;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+
+import main.model.services.TimeSharingService;
+import main.model.services.UserService;
+import main.util.GetRequestUtil;
+
+public class TimeSharingServlet extends BaseServlet{
+	private static final long serialVersionUID = 1L;
+	public JSONObject OperateTS(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
+		TimeSharingService tsService=new TimeSharingService();
+		JSONObject resJson = new JSONObject();
+		String queryString=request.getQueryString();
+		//token,userId,date
+		String gotString[]=new String[5];
+		gotString=queryString.split("&");
+		String token=gotString[0].split("=")[1];
+		String userId=gotString[1].split("=")[1];
+		String year=gotString[2].split("=")[1];
+		String month=gotString[3].split("=")[1]; 
+		String day=gotString[4].split("=")[1]; 
+		String date=year+"Äê"+month+"ÔÂ"+day+"ÈÕ";
+		resJson=tsService.getSharingTable(userId,date);
+		if(resJson==null)
+		{
+			resJson=new JSONObject();
+			resJson.put("id", -1);
+		}
+		resJson.put("status","success");
+		return resJson;
+	}
+}

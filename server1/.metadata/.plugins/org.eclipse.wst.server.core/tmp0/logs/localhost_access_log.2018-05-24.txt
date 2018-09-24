@@ -1,4 +1,0 @@
-127.0.0.1 - - [24/May/2018:11:57:21 +0800] "GET / HTTP/1.1" 404 951
-0:0:0:0:0:0:0:1 - - [24/May/2018:11:57:22 +0800] "GET /TimeManagerServer/index.jsp HTTP/1.1" 200 274
-127.0.0.1 - - [24/May/2018:12:00:54 +0800] "GET / HTTP/1.1" 404 951
-0:0:0:0:0:0:0:1 - - [24/May/2018:12:00:54 +0800] "GET /TimeManagerServer/TimeSharingServlet HTTP/1.1" 200 17
