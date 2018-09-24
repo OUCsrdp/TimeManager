@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_login"
+    tools:context="com.srdp.admin.time_manager.ui.LoginActivity">
+    <com.srdp.admin.time_manager.ui.TitleLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:layout_marginTop="60dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!--头像-->
+        <ImageView
+            android:id="@+id/login_icon"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:src="@drawable/login_icon1" />
+
+        <!--用户名-->
+        <EditText
+            android:id="@+id/login_name"
+            android:layout_width="250sp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:hint="请输入用户名"
+            android:paddingLeft="20sp"
+            android:textColor="#878092"
+            android:textColorHint="#878092"
+            android:textSize="20sp"
+            android:theme="@style/EditTextUnderlineStyle1"/>
+
+        <!--密码-->
+        <EditText
+            android:id="@+id/login_password"
+            android:layout_width="250sp"
+            android:layout_height="50sp"
+            android:layout_gravity="center"
+            android:hint="请输入密码"
+            android:inputType="textPassword"
+            android:paddingLeft="20sp"
+            android:textColor="#878092"
+            android:textColorHint="#878092"
+            android:textSize="20sp"
+            android:theme="@style/EditTextUnderlineStyle2"/>
+        
+        <!--验证码-->
+        <LinearLayout
+            android:layout_width="250sp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+            
+            <EditText
+                android:id="@+id/login_captcha"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:hint="验证码"
+                android:paddingLeft="20sp"
+                android:textColor="#878092"
+                android:textColorHint="#878092"
+                android:textSize="20sp"
+                android:theme="@style/EditTextUnderlineStyle1"/>
+            
+            <ImageView
+                android:id="@+id/login_captcha_img"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:src="@drawable/login_icon1"/>
+            
+        </LinearLayout>
+
+        <!--记住我&忘记密码-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!--记住我-->
+            <CheckBox
+                android:id="@+id/remember_me"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:layout_marginLeft="65dp"
+                android:text="记住我"
+                android:textSize="16sp"
+                android:textColor="#ffffff"
+                android:theme="@style/EditTextUnderlineStyle1"/>
+
+            <!--忘记密码-->
+            <TextView
+                android:id="@+id/forget_password"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/forget_password"
+                android:textSize="16sp"
+                android:textColor="#ffffff" />
+
+
+        </LinearLayout>
+
+        <!--登录按钮-->
+        <Button
+            android:background="@drawable/button_style"
+            android:id="@+id/login_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="30dp"
+            android:text="登录"
+            android:textSize="20sp"
+            android:textColor="#ffffff"
+            android:layout_gravity="center" />
+
+        <!--跳转注册-->
+        <TextView
+            android:id="@+id/go_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/register_now"
+            android:textSize="16sp"
+            android:textColor="#ffffff"/>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="30dp">
+    <View
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="8dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:text="少于预定时间的比例"
+        android:textSize="12sp"
+        android:textColor="@color/chartWhite"
+        android:gravity="center_vertical"
+        />
+</LinearLayout>

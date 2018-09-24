@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_create"
+    tools:context="com.srdp.admin.time_manager.ui.CreateTimingActivity">
+    <com.srdp.admin.time_manager.ui.TitleLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:layout_marginTop="60dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!--事件名称-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="50dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginLeft="70dp"
+                android:text="事件名称"
+                android:textColor="#ffffff"
+                android:textSize="20sp"/>
+
+            <EditText
+                android:id="@+id/timing_name"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="20sp"
+                android:paddingLeft="20sp"
+                android:textColor="#878092"
+                android:textSize="20sp"
+                android:theme="@style/EditTextUnderlineStyle2"
+                />
+
+        </LinearLayout>
+
+        <!--标签-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="30dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginLeft="160dp"
+                android:text="标签"
+                android:textColor="#ffffff"
+                android:textSize="20sp"/>
+
+            <!--标签修改-->
+            <Button
+                android:id="@+id/timing_change_label"
+                android:layout_width="30dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center"
+                android:background="@drawable/button_style" />
+
+            <TextView
+                android:id="@+id/timing_label_name"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:text="课业"
+                android:textColor="#ffffff"
+                android:textSize="20dp" />
+
+        </LinearLayout>
+
+        <!--提醒设置-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="70dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginLeft="190dp"
+                android:text="提醒设置"
+                android:textColor="#ffffff"
+                android:textSize="20sp"/>
+
+            <Switch
+                android:id="@+id/timing_remind_btn"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:switchMinWidth="30dp"
+                android:thumb="@drawable/schedule_switch_thumb"
+                android:track="@drawable/schedule_switch_track" />
+
+        </LinearLayout>
+        <!--提醒时间文本-->
+        <LinearLayout
+            android:id="@+id/timing_remind_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="160dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:visibility="invisible">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="提醒时间"
+                android:textColor="#ffffff"
+                android:textSize="16dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/timing_remind_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="10dp"
+                    android:gravity="left"
+                    android:text="2018年09月08日"
+                    android:textColor="#ffffff"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/timing_remind_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="left"
+                    android:text="18:00"
+                    android:textColor="#ffffff"
+                    android:textSize="16dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!--备注-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginLeft="160dp"
+                android:text="备注"
+                android:textColor="#ffffff"
+                android:textSize="20sp"/>
+
+            <EditText
+                android:id="@+id/timing_ps"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="20sp"
+                android:paddingLeft="20sp"
+                android:maxLines="2"
+                android:textColor="#878092"
+                android:textSize="20sp"
+                android:theme="@style/EditTextUnderlineStyle2"/>
+
+        </LinearLayout>
+
+        <!--创建按钮-->
+        <Button
+            android:id="@+id/timing_create_btn"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/create_button_bg"
+            android:gravity="center"
+            android:text="创建"
+            android:textColor="#ffffff"
+            android:textSize="20dp" />
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

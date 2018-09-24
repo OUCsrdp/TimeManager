@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0f002f"
+    tools:context="com.srdp.admin.time_manager.ui.CreateScheduleActivity">
+    <com.srdp.admin.time_manager.ui.TitleLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:layout_marginTop="60dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <!--新建日程标题-->
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:background="@drawable/create_schedule_title_bg"
+            android:gravity="center"
+            android:text="新建日程"
+            android:textColor="#ffffff"
+            android:textSize="23dp" />
+
+        <!--创建选项-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/create_schedule_select_bg"
+            android:orientation="vertical">
+
+            <!--日程名称-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="70dp"
+                android:layout_marginTop="0dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="日程名称"
+                    android:textColor="#ffffff"
+                    android:textSize="18dp" />
+
+                <EditText
+                    android:id="@+id/schedule_name"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:maxLines="2"
+                    android:textColor="#fd8d01"
+                    android:textSize="20sp"
+                    android:theme="@style/EditTextUnderlineStyle2" />
+
+            </LinearLayout>
+
+            <!--设置日程时间-->
+            <LinearLayout
+                android:id="@+id/schedule_set"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="70dp"
+                android:layout_marginTop="0dp"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="10dp"
+                        android:gravity="left"
+                        android:text="日程日期"
+                        android:textColor="#ffffff"
+                        android:textSize="16dp" />
+
+                    <TextView
+                        android:id="@+id/schedule_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="10dp"
+                        android:gravity="left"
+                        android:text="2018年9月8日"
+                        android:textColor="#ffffff"
+                        android:textSize="16dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="10dp"
+                        android:gravity="left"
+                        android:text="开始时间"
+                        android:textColor="#ffffff"
+                        android:textSize="16dp" />
+
+                    <TextView
+                        android:id="@+id/schedule_time_start"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="10dp"
+                        android:gravity="left"
+                        android:text="08:00"
+                        android:textColor="#ffffff"
+                        android:textSize="16dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="10dp"
+                        android:gravity="left"
+                        android:text="结束时间"
+                        android:textColor="#ffffff"
+                        android:textSize="16dp" />
+
+                    <TextView
+                        android:id="@+id/schedule_time_end"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="10dp"
+                        android:gravity="left"
+                        android:text="18:00"
+                        android:textColor="#ffffff"
+                        android:textSize="16dp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <!--备注-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="备注"
+                    android:textColor="#ffffff"
+                    android:textSize="18dp" />
+
+                <EditText
+                    android:id="@+id/schedule_create_ps"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:maxLines="2"
+                    android:textColor="#fd8d01"
+                    android:textSize="20sp"
+                    android:theme="@style/EditTextUnderlineStyle2" />
+
+            </LinearLayout>
+
+            <!--提醒设置-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="60dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="提醒设置"
+                    android:textColor="#ffffff"
+                    android:textSize="18dp" />
+
+                <Switch
+                    android:id="@+id/schedule_remind_btn"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:switchMinWidth="30dp"
+                    android:thumb="@drawable/schedule_switch_thumb"
+                    android:track="@drawable/schedule_switch_track" />
+
+            </LinearLayout>
+
+            <!--提醒时间文本-->
+            <LinearLayout
+                android:id="@+id/schedule_remind_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="130dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:visibility="invisible">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="提醒时间"
+                    android:textColor="#ffffff"
+                    android:textSize="16dp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/schedule_remind_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="10dp"
+                    android:gravity="left"
+                    android:text="2018年09月08日"
+                    android:textColor="#ffffff"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/schedule_remind_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="left"
+                    android:text="18:00"
+                    android:textColor="#ffffff"
+                    android:textSize="16dp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <!--标签-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="70dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="标签"
+                    android:textColor="#ffffff"
+                    android:textSize="18dp" />
+
+                <!--标签修改-->
+                <Button
+                    android:id="@+id/schedule_change_label"
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="40dp"
+                    android:background="@drawable/button_style" />
+
+                <TextView
+                    android:id="@+id/schedule_label_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:text="课业"
+                    android:textColor="#ffffff"
+                    android:textSize="18dp" />
+
+
+            </LinearLayout>
+
+
+            <!--创建按钮-->
+            <Button
+                android:id="@+id/schedule_create_btn"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="0dp"
+                android:background="@drawable/create_button_bg"
+                android:gravity="center"
+                android:text="创建"
+                android:textColor="#ffffff"
+                android:textSize="20dp" />
+
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:background="#aaaaaa"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:layout_marginTop="-350dp"-->
+                <!--android:id="@+id/time_title">-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:gravity="center"-->
+                    <!--android:text="月"-->
+                    <!--android:textColor="#000000"-->
+                    <!--android:textSize="16sp" />-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:gravity="center"-->
+                    <!--android:text="日"-->
+                    <!--android:textColor="#000000"-->
+                    <!--android:textSize="16sp" />-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:gravity="center"-->
+                    <!--android:text="年"-->
+                    <!--android:textColor="#000000"-->
+                    <!--android:textSize="16sp" />-->
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:layout_above="@id/time_title">-->
+
+                <!--<cn.forward.androids.views.StringScrollPicker-->
+                    <!--android:id="@+id/view_month"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="120dp"-->
+                    <!--android:layout_weight="1"-->
+                    <!--app:spv_center_item_background="#22888888"-->
+                    <!--app:spv_disallow_intercept_touch="true"-->
+                    <!--app:spv_max_text_size="30dp"-->
+                    <!--app:spv_min_text_size="24dp"-->
+                    <!--app:spv_visible_item_count="3" />-->
+
+                <!--<cn.forward.androids.views.StringScrollPicker-->
+                    <!--android:id="@+id/view_day"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="120dp"-->
+                    <!--android:layout_weight="1"-->
+                    <!--app:spv_center_item_background="#22888888"-->
+                    <!--app:spv_disallow_intercept_touch="true"-->
+                    <!--app:spv_max_text_size="30dp"-->
+                    <!--app:spv_min_text_size="24dp"-->
+                    <!--app:spv_visible_item_count="3" />-->
+
+                <!--<cn.forward.androids.views.StringScrollPicker-->
+                    <!--android:id="@+id/view_year"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="120dp"-->
+                    <!--android:layout_weight="1"-->
+                    <!--app:spv_center_item_background="#22888888"-->
+                    <!--app:spv_disallow_intercept_touch="true"-->
+                    <!--app:spv_max_text_size="30dp"-->
+                    <!--app:spv_min_text_size="24dp"-->
+                    <!--app:spv_visible_item_count="3" />-->
+
+            <!--</LinearLayout>-->
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 按钮的选择器，可以设置按钮在不同状态下的时候，按钮不同的颜色 -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:height="20dp" android:width="20dp"  >
+    <shape
+            android:shape="rectangle" >
+            <corners android:radius="10dp"/>
+            <gradient
+                android:endColor="#ff8e01"
+                android:startColor="#ff8e01" />
+
+        </shape>
+    </item>
+</layer-list>
