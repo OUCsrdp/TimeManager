@@ -36,15 +36,14 @@ public class AffairService{
 	//这里为啥需要isAffair?????
 	//Change为1表示修改，为0表示创建，isAffair为1表示Affair,为0表示s_affair
 	//返回是否成功（成功返回1，不成功返回0）
-	public int changeAffair(int change,int isAffair,Affair affair,String date,String username) {
+	public int changeAffair(int change,int isAffair,Affair affair,String date,int idU) {
 		Calendar calendar = Calendar.getInstance();
 		int week = calendar.get(Calendar.DAY_OF_WEEK);
 		int weekday;
 		if(week == 0)weekday = 7;
 		else weekday = week - 1;
 		AffairManager managerA = new AffairManager();
-		User user = UserManager.findWithName(username);
-		int idU = user.getId();
+		
 		//新建事件
 		if(change == 0) {
 			if(affair.getIdTS() == 0) {
@@ -83,19 +82,14 @@ public class AffairService{
 			else return 0;
 		}
 	}
-	public int changeSAffair(int change,int isAffair,S_Affair affair,String date,String username) {
+	public int changeSAffair(int change,int isAffair,S_Affair affair,String date,int idU) {
 		S_AffairManager managerSA = new S_AffairManager();
 		Calendar calendar = Calendar.getInstance();
 		int week = calendar.get(Calendar.DAY_OF_WEEK);
 		int weekday;
 		if(week == 0)weekday = 7;
 		else weekday = week - 1;
-		User user = UserManager.findWithName(username);
-		int idU = 0;
-		if(user != null)
-		{
-			idU = user.getId();
-		}
+		
 		
 		//新建日程
 		if(change == 0) {
