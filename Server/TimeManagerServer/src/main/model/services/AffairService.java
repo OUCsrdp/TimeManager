@@ -1,4 +1,4 @@
-package main.model.services;
+package main.model;
 
 import main.model.moudle.*;
 
@@ -6,11 +6,34 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import main.model.db.*;
 
 
-public class AffairService{//这里为啥需要isAffair?????
+public class AffairService{
+	
+	//通过id来修改一个affair或sAffair的开始时间，结束时间
+	//isAffair为1表示Affair,为0表示s_affair
+	//成功返回true，失败返回false
+	boolean changeAffairById(int isAffair,int id,String startTime,String endTime) {
+		if(isAffair == 1) {
+			Affair affair = AffairManager.findWithId(id);
+			affair.setTimeStart(startTime);
+			affair.setTimeEnd(endTime);
+			if(AffairManager.change(affair)) return true;
+			else return false;
+		}
+		else {
+			S_Affair sAffair = S_AffairManager.findWithId(id);
+			sAffair.setTimeStart(startTime);
+			sAffair.setTimeEnd(endTime);
+			if(S_AffairManager.change(sAffair)) return true;
+			else return false;
+		}
+	}
+	
+	//这里为啥需要isAffair?????
 	//Change为1表示修改，为0表示创建，isAffair为1表示Affair,为0表示s_affair
 	//返回是否成功（成功返回1，不成功返回0）
 	public int changeAffair(int change,int isAffair,Affair affair,String date,String username) {
@@ -45,7 +68,8 @@ public class AffairService{//这里为啥需要isAffair?????
 			String timeEnd = affair.getTimeEnd();
 			String timeEndPlan = affair.getTimeEndPlan();
 			
-			if(managerA.add(idTS, idLabel, satisfaction, name, tips, timeStart, timeEnd,timeEndPlan) != -1) return 1;
+			int add_result = managerA.add(idTS, idLabel, satisfaction, name, tips, timeStart, timeEnd,timeEndPlan);
+			if( add_result!= -1) return add_result;
 			else return 0;
 		}
 		else { //修改事件
@@ -53,7 +77,7 @@ public class AffairService{//这里为啥需要isAffair?????
 			int id = affair.getId();
 			if(managerA.findWithId(id) != null) {
 				//该事件存在
-				if(managerA.change(affair)) return 1;
+				if(managerA.change(affair)) return id;
 				else return 0;
 			}
 			else return 0;
@@ -67,7 +91,12 @@ public class AffairService{//这里为啥需要isAffair?????
 		if(week == 0)weekday = 7;
 		else weekday = week - 1;
 		User user = UserManager.findWithName(username);
-		int idU = user.getId();
+		int idU = 0;
+		if(user != null)
+		{
+			idU = user.getId();
+		}
+		
 		//新建日程
 		if(change == 0) {
 			if(affair.getIdS() == 0) {
@@ -111,14 +140,18 @@ public class AffairService{//这里为啥需要isAffair?????
 			
 			
 			ArrayList<S_Affair> SAlist = S_AffairManager.findWithIdS(idS); //得到当前日程表下的已有日程
-			for(S_Affair SA :SAlist) {
-				if(SortService.compareTime(timeStartPlan, SA.getTimeStartPlan()) && SortService.compareTime(timeEndPlan, SA.getTimeEndPlan())) {}
-				else if(SortService.compareTime(SA.getTimeStartPlan(), timeStartPlan) && SortService.compareTime(SA.getTimeEndPlan(),timeEndPlan)) {}
-				else return 0;
+			if(SAlist != null)
+			{
+				for(S_Affair SA :SAlist) {
+					if(SortService.compareTime(timeStartPlan, SA.getTimeStartPlan()) && SortService.compareTime(timeEndPlan, SA.getTimeEndPlan())) {}
+					else if(SortService.compareTime(SA.getTimeStartPlan(), timeStartPlan) && SortService.compareTime(SA.getTimeEndPlan(),timeEndPlan)) {}
+					else return 0;
+				}
 			}
 			
-			if(managerSA.add(idTS, idS, idLabel, satisfaction, isImportant, name, tips, timeStart, timeEnd, timeStartPlan, timeEndPlan, timeStartAlarm, timeEndAlarm) != -1) 
-				return 1;
+			int add_result = managerSA.add(idTS, idS, idLabel, satisfaction, isImportant, name, tips, timeStart, timeEnd, timeStartPlan, timeEndPlan, timeStartAlarm, timeEndAlarm);
+			if(add_result != -1) 
+				return add_result;
 			else return 0;
 		}
 		else { //修改日程
@@ -130,14 +163,12 @@ public class AffairService{//这里为啥需要isAffair?????
 						else return 0;
 					}
 				}
-				
-				
 			}
 			int id = affair.getId();
 			System.out.println("id:"+Integer.toString(id));
 			if(managerSA.findWithId(id) != null) {
 				//该日程存在
-				if(managerSA.change(affair)) return 1;
+				if(managerSA.change(affair)) return id;
 				else return 0;
 			}
 			else return 0;	
