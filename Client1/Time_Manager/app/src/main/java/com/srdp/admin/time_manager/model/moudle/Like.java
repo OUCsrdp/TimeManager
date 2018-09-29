@@ -2,34 +2,34 @@ package com.srdp.admin.time_manager.model.moudle;
 
 public class Like 
 {
-	private long id;
-	private long idUser;
-	private long idTS;
+	private int id;
+	private int idUser;
+	private int idTS;
 	
-	public Like(long id, long idUser, long idTS)
+	public Like(int id, int idUser, int idTS)
 	{
 		this.id = id;
 		this.idUser = idUser;
 		this.idTS = idTS;
 	}
 
-	public long getIdUser() {
+	public int getIdUser() {
 		return idUser;
 	}
 
-	public void setIdUser(long idUser) {
+	public void setIdUser(int idUser) {
 		this.idUser = idUser;
 	}
 
-	public long getIdTS() {
+	public int getIdTS() {
 		return idTS;
 	}
 
-	public void setIdTS(long idTS) {
+	public void setIdTS(int idTS) {
 		this.idTS = idTS;
 	}
 
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 	

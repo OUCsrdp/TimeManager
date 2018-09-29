@@ -14,6 +14,8 @@ import android.widget.TextView;
 import com.srdp.admin.time_manager.R;
 import com.srdp.admin.time_manager.util.DensityUtil;
 
+import org.w3c.dom.Text;
+
 
 public class NaviLayout extends LinearLayout {
     private FrameLayout showedNavi;
@@ -40,6 +42,14 @@ public class NaviLayout extends LinearLayout {
                 {
                     hideWholeNavi();
                 }
+            }
+        });
+        TextView navi0=(TextView) findViewById(R.id.naviIndex);
+        navi0.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                theIntent.setClass(nowContext,Index_Timing.class);
+                nowContext.startActivity(theIntent);
             }
         });
         TextView navi1=(TextView) findViewById(R.id.naviMyAssign);

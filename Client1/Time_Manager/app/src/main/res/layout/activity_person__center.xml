@@ -14,12 +14,12 @@
 
         <com.srdp.admin.time_manager.ui.TitleLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp" />
+            android:layout_height="60dp" />
 
         <FrameLayout
             android:layout_width="130dp"
             android:layout_height="130dp"
-            android:layout_marginTop="50dp">
+            android:layout_marginTop="60dp">
 
             <ImageView
                 android:layout_marginLeft="0dp"
@@ -36,29 +36,29 @@
 
         </FrameLayout>
         <TextView
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="55dp"
             android:layout_alignParentRight="true"
             android:layout_marginRight="50dp"
             android:layout_width="wrap_content"
             android:layout_height="100dp"
-            android:text="爱吃肉的兔子"
+            android:id="@+id/CenterUsername"
             android:gravity="center"
             android:textColor="@color/majorOrange"
             android:textSize="28sp"
              />
         <LinearLayout
-            android:layout_marginTop="200dp"
+            android:layout_marginTop="215dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
-                style="@style/personInforItem"
-                >
+                style="@style/personInforItem">
                     <ImageView
                     android:src="@drawable/minipoint"
                     style="@style/personInforPoint" />
                     <TextView
+                        android:id="@+id/PersonInforEdit"
                         android:layout_marginLeft="-10dp"
                         android:text="个人资料"
                         style="@style/personInforLabel"
@@ -78,10 +78,12 @@
                     />
             </LinearLayout>
             <Button
-                android:layout_marginTop="20dp"
+                android:id="@+id/LogoutButton"
+                android:layout_marginTop="30dp"
                 android:layout_width="130dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center_horizontal"
+                android:gravity="center"
                 android:text="退出登录"
                 android:textSize="22sp"
                 android:textColor="#ffffff"

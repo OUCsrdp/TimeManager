@@ -7,10 +7,12 @@
     android:orientation="vertical"
     android:background="@color/blueBackground"
     tools:context="com.srdp.admin.time_manager.ui.Plan_Table">
-    <com.example.admin.timemanager.NaviLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp" />
+        android:layout_height="match_parent">
     <TextView
+
+            android:layout_marginTop="60dp"
             android:id="@+id/planTitle"
             android:background="@drawable/plan_half_circle"
             android:layout_width="200dp"
@@ -20,15 +22,14 @@
             android:gravity="center"
             android:textColor="#ffffff"
             android:textSize="22sp"
-            android:alpha="0"
-        />
-
-    <RelativeLayout
         android:alpha="0"
+        />
+    <RelativeLayout
         android:id="@+id/planAll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-20dp"
+        android:layout_marginTop="140dp"
+        android:alpha="0"
         >
         <FrameLayout
             android:id="@+id/spareDayPlan"
@@ -112,13 +113,13 @@
         android:id="@+id/planNail"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginTop="-420dp"
+        android:layout_marginTop="170dp"
         android:layout_gravity="center_horizontal"
         android:src="@drawable/minipoint" />
     <RelativeLayout
         android:id="@+id/planLeftRight"
         android:alpha="0"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="300dp"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         >
@@ -137,4 +138,8 @@
             android:layout_alignParentEnd="true"
             android:background="@drawable/plan_right"/>
     </RelativeLayout>
+        <com.srdp.admin.time_manager.ui.NaviLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
 </LinearLayout>

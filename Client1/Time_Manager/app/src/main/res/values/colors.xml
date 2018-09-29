@@ -3,8 +3,11 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="halfTransparent">#a5ffffff</color>
+    <color name="halfTransparent">#b3ffffff</color>
     <color name="majorOrange">#ff8e01</color>
     <color name="blueBackground">#0f0125</color>
     <color name="fontColor">#000000</color>
+    <color name="chartWhite">#ffffff</color>
+    <color name="chartGrayLight">#b3b3b3</color>
+    <color name="chartGray">#4d4d4d</color>
 </resources>

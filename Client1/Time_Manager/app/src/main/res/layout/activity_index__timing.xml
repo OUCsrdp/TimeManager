@@ -7,28 +7,7 @@
     android:background="@color/blueBackground"
     android:orientation="vertical"
     tools:context="com.srdp.admin.time_manager.ui.Index_Timing">
-    <RelativeLayout
-        android:id="@+id/indexNavi"
-        android:layout_width="match_parent"
-        android:layout_height="76dp">
-        <ImageView
-            android:src="@drawable/navi_orange"
-            android:layout_marginTop="22dp"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginStart="30dp"/>
-        <ImageView
-            android:id="@+id/setTiming"
-            android:layout_marginEnd="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:src="@drawable/add_timing"
-            android:layout_marginTop="22dp"
-            android:layout_width="32dp"
-            android:layout_height="32dp"/>
-    </RelativeLayout>
+
     <FrameLayout
         android:layout_above="@+id/stopTiming"
         android:layout_marginBottom="25dp"
@@ -68,5 +47,114 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </FrameLayout>
-    
+    <!--导航栏-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:id="@+id/indexNavi"
+            android:layout_width="match_parent"
+            android:layout_height="76dp">
+            <ImageView
+                android:id="@+id/IndexNaviShow"
+                android:src="@drawable/navi_orange"
+                android:layout_marginTop="22dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginStart="30dp"/>
+            <ImageView
+                android:id="@+id/setTiming"
+                android:layout_marginEnd="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/add_timing"
+                android:layout_marginTop="22dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"/>
+        </RelativeLayout>
+        <FrameLayout
+            android:layout_marginTop="-10dp"
+            android:id="@+id/IndexShowedNavi"
+            android:layout_gravity="left"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+            <View
+                android:background="#ffffff"
+                android:alpha="0.8"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"    />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/IndexNaviIndex"
+                    style="@style/naviOrange"
+                    android:layout_marginTop="80dp"
+                    android:text="首页"
+                    />
+                <View
+                    style="@style/naviShadow"
+                    />
+                <TextView
+                    android:id="@+id/IndexNaviMyAssign"
+                    style="@style/naviWhite"
+                    android:text="我的时间分配"
+                    />
+                <View
+                    style="@style/naviShadow"
+                    />
+                <TextView
+                    android:id="@+id/IndexNaviMyPlan"
+                    style="@style/naviOrange"
+                    android:layout_width="match_parent"
+                    android:text="我的日程"
+                    />
+                <View
+                    style="@style/naviShadow"
+                    />
+                <TextView
+                    android:id="@+id/IndexNaviMyTable"
+                    style="@style/naviWhite"
+                    android:layout_width="match_parent"
+                    android:text="统计报表"
+                    />
+                <View
+                    style="@style/naviShadow" />
+                <TextView
+                    android:id="@+id/IndexNaviMyAnalyse"
+                    style="@style/naviOrange"
+                    android:text="行为模式分析"
+                    />
+                <View
+                    style="@style/naviShadow" />
+                <TextView
+                    android:id="@+id/IndexNaviMySuggest"
+                    style="@style/naviWhite"
+                    android:layout_width="match_parent"
+                    android:text="优秀分配推荐"
+                    />
+                <View
+                    style="@style/naviShadow" />
+                <TextView
+                    android:id="@+id/IndexNaviMyCenter"
+                    style="@style/naviOrange"
+                    android:text="个人中心"
+                    />
+                <View
+                    style="@style/naviShadow" />
+                <TextView
+                    android:id="@+id/IndexNaviMyCollect"
+                    style="@style/naviWhite"
+                    android:layout_width="match_parent"
+                    android:text="我的收藏"
+                    />
+                <View
+                    style="@style/naviShadow" />
+            </LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
 </RelativeLayout>

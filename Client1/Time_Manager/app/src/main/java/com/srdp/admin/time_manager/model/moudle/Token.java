@@ -13,6 +13,6 @@ public class Token
 	
 	public int getId() {return id;}
 	
-	public void setToken(String token) {this.token = token;}//ÔÝÊ±Î´ÏëºÃÊÇ·ñÐèÒª
+	public void setToken(String token) {this.token = token;}//ï¿½ï¿½Ê±Î´ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Òª
 	public String getToken() {return token;}
 }

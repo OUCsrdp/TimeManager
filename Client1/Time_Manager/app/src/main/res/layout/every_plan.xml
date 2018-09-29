@@ -18,14 +18,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
                 android:gravity="center_vertical"
-                android:text="离散数学"
                 android:textColor="@color/fontColor"
                 android:textSize="18sp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
                     android:gravity="center_vertical"
-                    android:text="9:00  -  10:00"
                     android:textColor="@color/fontColor"
                     android:textSize="16sp"
                     />

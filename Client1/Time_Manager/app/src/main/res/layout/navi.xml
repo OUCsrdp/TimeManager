@@ -19,8 +19,8 @@
     </LinearLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="20dp"
+        android:layout_height="10dp"
         android:background="@drawable/shadow"
-        android:layout_marginTop="-10dp"
+        android:alpha="0.8"
         />
 </LinearLayout>

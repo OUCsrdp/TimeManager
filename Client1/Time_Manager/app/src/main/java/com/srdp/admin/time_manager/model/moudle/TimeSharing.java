@@ -1,17 +1,15 @@
 package com.srdp.admin.time_manager.model.moudle;
 
-import java.sql.Date;
-
 public class TimeSharing 
 {
-	private long id;
-	private long idUser;
+	private int id;
+	private int idUser;
 	
-	private Date date;
+	private String date;
     
-    private Weekday weekday;
+    private int weekday;
     
-    public TimeSharing(long id, long idUser, Date date, Weekday weekday)
+    public TimeSharing(int id, int idUser, String date, int weekday)
     {
     	this.id = id;
     	this.idUser = idUser;
@@ -19,32 +17,21 @@ public class TimeSharing
     	this.weekday = weekday;
     }
     
-    public long getId() {return id;}
+    public TimeSharing() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public int getId() {return id;}
     
-    public void setIdUser(long idUser) {this.idUser = idUser;}
-    public long getIdUser() {return idUser;}
+    public void setIdUser(int idUser) {this.idUser = idUser;}
+    public int getIdUser() {return idUser;}
     
-    public void setDate(Date date) {this.date = date;}
-    public Date getDate() {return date;}
+    public void setDate(String date) {this.date = date;}
+    public String getDate() {return date;}
     
-    public void setWeekday(Weekday weekday) {this.weekday = weekday;}
+    public void setWeekday(int weekday) {this.weekday = weekday;}
     public int getWeekday()
     {
-    	if(weekday == Weekday.Monday)
-    		return 1;
-    	else if(weekday == Weekday.Tuesday)
-    		return 2;
-    	else if(weekday == Weekday.Wednesday)
-    		return 3;
-    	else if(weekday == Weekday.Thursday)
-    		return 4;
-    	else if(weekday == Weekday.Friday)
-    		return 5;
-    	else if(weekday == Weekday.Saturday)
-    		return 6;
-    	else if(weekday == Weekday.Sunday)
-    		return 7;
-    	else
-    		return -1;//Error
+    	return weekday;
     }
 }

@@ -13,17 +13,18 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">35dp</item>
         <item name="android:orientation">horizontal</item>
-        <item name="android:layout_marginBottom">40dp</item>
+        <item name="android:layout_marginBottom">30dp</item>
     </style>
     <style name="personInforPoint">
-        <item name="android:layout_width">25dp</item>
+        <item name="android:layout_width">23dp</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_marginLeft">25dp</item>
+        <item name="android:layout_marginLeft">23dp</item>
         <item name="android:layout_marginRight">35dp</item>
     </style>
     <style name="personInforLabel">
         <item name="android:layout_width">100dp</item>
         <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_gravity">center_vertical</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:textSize">22sp</item>
         <item name="android:textColor">#ffffff</item>
@@ -32,6 +33,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">42dp</item>
         <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_gravity">center_vertical</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">#ffffff</item>
     </style>
@@ -78,6 +80,17 @@
         <item name="android:layout_marginTop">9dp</item>
         <item name="android:layout_marginRight">9dp</item>
     </style>
+    <style name="timesharingEditButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">44dp</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginBottom">2dp</item>
+        <item name="android:layout_alignParentTop">true</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">#ff0000</item>
+        <item name="android:background">#00000000</item>
+    </style>
    <!-- setting_dialog-->
     <style name="SetTimeLabel">
         <item name="android:layout_marginTop">5dp</item>
@@ -100,6 +113,7 @@
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/fontColor</item>
         <item name="android:gravity">center_vertical</item>
+        <item name="android:singleLine">true</item>
     </style>
     <style name="naviOrange">
         <item name="android:layout_width">match_parent</item>
@@ -110,11 +124,35 @@
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/fontColor</item>
         <item name="android:gravity">center_vertical</item>
+        <item name="android:singleLine">true</item>
     </style>
     <style name="naviShadow">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">6dp</item>
         <item name="android:alpha">0.5</item>
         <item name="android:background">@drawable/shadow_navi</item>
+    </style>
+    <!--lizliz-->
+    <style name="EditTextUnderlineStyle1">
+        <item name="colorControlNormal">#ffffff</item>
+        <item name="colorControlActivated">#ffffff</item>
+    </style>
+
+    <style name="EditTextUnderlineStyle2">
+        <item name="colorControlNormal">#ff8e00</item>
+        <item name="colorControlActivated">#ff8e00</item>
+    </style>
+
+    <style name="EditTextUnderlineStyle3">
+        <item name="colorControlNormal">#ffffff</item>
+        <item name="colorControlActivated">#ff8e00</item>
+    </style>
+    <!--analysiChart-->
+    <style name="AnalaysisChartTipsText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:textColor">@color/chartWhite</item>
+        <item name="android:gravity">center</item>
     </style>
 </resources>

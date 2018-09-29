@@ -1,19 +1,16 @@
 package com.srdp.admin.time_manager.model.moudle;
 
-import java.awt.Color;
-import java.awt.Image;
-
 public class Label 
 {
-	private long id;
+	private int id;
 	
 	private String name;
 	
-	private Image image;
+	private String image;
 	
-	private Color color;
+	private String color;
 	
-	public Label(long id, String name, Image image, Color color)
+	public Label(int id, String name, String image, String color)
 	{
 		this.id = id;
 		this.name = name;
@@ -29,23 +26,23 @@ public class Label
 		this.name = name;
 	}
 
-	public Image getImage() {
+	public String getImage() {
 		return image;
 	}
 
-	public void setImage(Image image) {
+	public void setImage(String image) {
 		this.image = image;
 	}
 
-	public Color getColor() {
+	public String getColor() {
 		return color;
 	}
 
-	public void setColor(Color color) {
+	public void setColor(String color) {
 		this.color = color;
 	}
 
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 }

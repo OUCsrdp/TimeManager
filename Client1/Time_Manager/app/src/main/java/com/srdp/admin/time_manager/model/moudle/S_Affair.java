@@ -1,151 +1,66 @@
 package com.srdp.admin.time_manager.model.moudle;
 
-import java.sql.Time;
-
-public class S_Affair 
+public class S_Affair extends Affair
 {
-	private long id;
-	private long idTS;
-	private long idS;
-	private long idLabel;
+	private int idS;
 	
-	private int satisfaction;
-	
-	private String name;
-	private String tips;
-	
-	private boolean isImportant;
-	
-	private Time timeStart;
-	private Time timeEnd;
-	private Time timeStartPlan;
-	private Time timeEndPlan;
-	private Time timeStartAlarm;
-	private Time timeEndAlarm;
-	
-	public long getId() {
-		return id;
+	private String isImportant;
+	private String timeStartPlan;
+	private String timeStartAlarm;
+	private String timeEndAlarm;
+	public S_Affair(){
+		super();
+	}
+	public S_Affair(int id, int idTS, int idS, int idLabel, int satisfaction, String isImportant, String name, String tips, String timeStart, String timeEnd, String timeStartPlan, String timeEndPlan, String timeStartAlarm, String timeEndAlarm) 
+	{
+		super(id, idTS, idLabel, satisfaction, name, tips, timeStart, timeEnd, timeEndPlan);
+		this.idS = idS;
+		this.isImportant = isImportant;
+		this.timeStartPlan = timeStartPlan;
+		this.timeStartAlarm = timeStartAlarm;
+		this.timeEndAlarm = timeEndAlarm;
+		// TODO Auto-generated constructor stub
 	}
 
-	public long getIdTS() {
-		return idTS;
-	}
-
-	public void setIdTS(long idTS) {
-		this.idTS = idTS;
-	}
-
-	public long getIdS() {
+	public int getIdS() {
 		return idS;
 	}
 
-	public void setIdS(long idS) {
+	public void setIdS(int idS) {
 		this.idS = idS;
 	}
 
-	public long getIdLabel() {
-		return idLabel;
-	}
-
-	public void setIdLabel(long idLabel) {
-		this.idLabel = idLabel;
-	}
-
-	public int getSatisfaction() {
-		return satisfaction;
-	}
-
-	public void setSatisfaction(int satisfaction) {
-		this.satisfaction = satisfaction;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getTips() {
-		return tips;
-	}
-
-	public void setTips(String tips) {
-		this.tips = tips;
-	}
-
-	public boolean isImportant() {
+	public String getIsImportant() {
 		return isImportant;
 	}
 
-	public void setImportant(boolean isImportant) {
+	public void setIsImportant(String isImportant) {
 		this.isImportant = isImportant;
 	}
 
-	public Time getTimeStart() {
-		return timeStart;
-	}
-
-	public void setTimeStart(Time timeStart) {
-		this.timeStart = timeStart;
-	}
-
-	public Time getTimeEnd() {
-		return timeEnd;
-	}
-
-	public void setTimeEnd(Time timeEnd) {
-		this.timeEnd = timeEnd;
-	}
-
-	public Time getTimeStartPlan() {
+	public String getTimeStartPlan() {
 		return timeStartPlan;
 	}
 
-	public void setTimeStartPlan(Time timeStartPlan) {
+	public void setTimeStartPlan(String timeStartPlan) {
 		this.timeStartPlan = timeStartPlan;
 	}
 
-	public Time getTimeEndPlan() {
-		return timeEndPlan;
-	}
-
-	public void setTimeEndPlan(Time timeEndPlan) {
-		this.timeEndPlan = timeEndPlan;
-	}
-
-	public Time getTimeStartAlarm() {
+	public String getTimeStartAlarm() {
 		return timeStartAlarm;
 	}
 
-	public void setTimeStartAlarm(Time timeStartAlarm) {
+	public void setTimeStartAlarm(String timeStartAlarm) {
 		this.timeStartAlarm = timeStartAlarm;
 	}
 
-	public Time getTimeEndAlarm() {
+	public String getTimeEndAlarm() {
 		return timeEndAlarm;
 	}
 
-	public void setTimeEndAlarm(Time timeEndAlarm) {
-		this.timeEndAlarm = timeEndAlarm;
+	public void setTimeEndAlarm(String TimeEndAlarm) {
+		this.timeEndAlarm = TimeEndAlarm;
 	}
-
-	public S_Affair(long id, long idTS, long idS, long idLabel, int satisfaction, String name, String tips, boolean isImportant, Time timeStart, Time timeEnd, Time timeStartPlan, Time timeEndPlan, Time timeStartAlarm, Time timeEndAlarm)
-	{
-		this.id = id;
-		this.idTS = idTS;
-		this.idS = idS;
-		this.idLabel = idLabel;
-		this.satisfaction = satisfaction;
-		this.name = name;
-		this.tips = tips;
-		this.isImportant = isImportant;
-		this.timeStart = timeStart;
-		this.timeEnd = timeEnd;
-		this.timeStartPlan = timeStartPlan;
-		this.timeEndPlan = timeEndPlan;
-		this.timeStartAlarm = timeStartAlarm;
-		this.timeEndAlarm = timeEndAlarm;
-	}
+	
+	
 }

@@ -1,23 +1,21 @@
 package com.srdp.admin.time_manager.model.moudle;
 
-import java.sql.Time;
-
 public class Affair 
 {
-	private long id;
-	private long idTS;
-	private long idLabel;
+	private int id;
+	private int idTS;
+	private int idLabel;
 	
 	private int satisfaction;
 	
 	private String name;
 	private String tips;
 	
-	private Time timeStart;
-	private Time timeEnd;
-	private Time timeEndPlan;
-	
-	public Affair(long id, long idTS, long idLabel, int satisfaction, String name, String tips, Time timeStart, Time timeEnd, Time timeEndPlan)
+	private String timeStart;
+	private String timeEnd;
+	private String timeEndPlan;
+	public Affair(){};
+	public Affair(int id, int idTS, int idLabel, int satisfaction, String name, String tips, String timeStart, String timeEnd, String timeEndPlan)
 	{
 		this.id = id;
 		this.idTS = idTS;
@@ -30,19 +28,19 @@ public class Affair
 		this.timeEndPlan = timeEndPlan;
 	}
 
-	public long getIdTS() {
+	public int getIdTS() {
 		return idTS;
 	}
 
-	public void setIdTS(long idTS) {
+	public void setIdTS(int idTS) {
 		this.idTS = idTS;
 	}
 
-	public long getIdLabel() {
+	public int getIdLabel() {
 		return idLabel;
 	}
 
-	public void setIdLabel(long idLabel) {
+	public void setIdLabel(int idLabel) {
 		this.idLabel = idLabel;
 	}
 
@@ -70,31 +68,32 @@ public class Affair
 		this.tips = tips;
 	}
 
-	public Time getTimeStart() {
+	public String getTimeStart() {
 		return timeStart;
 	}
 
-	public void setTimeStart(Time timeStart) {
+	public void setTimeStart(String timeStart) {
 		this.timeStart = timeStart;
 	}
 
-	public Time getTimeEnd() {
+	public String getTimeEnd() {
 		return timeEnd;
 	}
 
-	public void setTimeEnd(Time timeEnd) {
+	public void setTimeEnd(String timeEnd) {
 		this.timeEnd = timeEnd;
 	}
 
-	public Time getTimeEndPlan() {
+	public String getTimeEndPlan() {
 		return timeEndPlan;
 	}
 
-	public void setTimeEndPlan(Time timeEndPlan) {
+	public void setTimeEndPlan(String timeEndPlan) {
 		this.timeEndPlan = timeEndPlan;
 	}
 
-	public long getId() {
+	public int getId() {
 		return id;
 	}
+	public void setId(int id){this.id=id;}
 }
