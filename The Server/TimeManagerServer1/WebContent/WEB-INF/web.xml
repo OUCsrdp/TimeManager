@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
+  <display-name>TimeManagerServer</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  <!-- 处理操作用户相关信息请求的userServlet -->
+  <servlet>
+  	<servlet-name>UserServlet</servlet-name>
+  	<servlet-class>main.servlet.UserServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>UserServlet</servlet-name>
+  	<url-pattern>/UserServlet</url-pattern>
+  </servlet-mapping>
+  <!-- 处理操作时间分配表请求的TimeSharingServlet -->
+  <servlet>
+  	<servlet-name>TimeSharingServlet</servlet-name>
+  	<servlet-class>main.servlet.TimeSharingServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>TimeSharingServlet</servlet-name>
+  	<url-pattern>/TimeSharingServlet</url-pattern>
+  </servlet-mapping>
+  <!-- 处理操作日程表请求的ScheduleServlet -->
+  <servlet>
+  	<servlet-name>ScheduleServlet</servlet-name>
+  	<servlet-class>main.servlet.ScheduleServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ScheduleServlet</servlet-name>
+  	<url-pattern>/ScheduleServlet</url-pattern>
+  </servlet-mapping>
+  <!-- 处理操作事件请求的AffairServlet -->
+  <servlet>
+  	<servlet-name>AffairServlet</servlet-name>
+  	<servlet-class>main.servlet.AffairServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>AffairServlet</servlet-name>
+  	<url-pattern>/AffairServlet</url-pattern>
+  </servlet-mapping>
+</web-app>
