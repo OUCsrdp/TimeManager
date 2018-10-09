@@ -1,0 +1,736 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0f002f"
+    tools:context="com.srdp.admin.time_manager.ui.ExcellentDistributionListActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!--筛选条件-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp">
+
+            <Button
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="40dp"
+                android:background="@drawable/list_condition03"
+                android:gravity="center"
+                android:text="筛选条件"
+                android:textColor="#ffffff"
+                android:textSize="16dp"/>
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="50dp"
+                android:src="@drawable/list_condition02"
+                android:layout_marginTop="50dp"/>
+
+            <Button
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:background="@drawable/list_condition03"
+                android:layout_marginTop="10dp"
+                android:text="不限学校"
+                android:textColor="#ffffff"
+                android:textSize="25dp"/>
+
+        </LinearLayout>
+
+        <!--列表-->
+        <!--<ListView-->
+            <!--android:id="@+id/distribution_list"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:scrollbars="vertical"-->
+            <!--android:scrollbarThumbVertical="@drawable/scrollbars_style"-->
+            <!--android:scrollbarTrackVertical="@drawable/scrollbars_bg_style"-->
+            <!--android:scrollbarSize="7dp">-->
+        <!--</ListView>-->
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/list_border"
+            android:orientation="horizontal">
+
+            <!--用户信息-->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4.5"
+                android:orientation="horizontal">
+
+
+                <!--头像-->
+                <ImageView
+
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:layout_gravity="center"
+                    android:src="@drawable/login_icon1"
+                    android:paddingHorizontal="10dp"/>
+
+                <!--信息-->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="7"
+                    android:orientation="vertical"
+                    android:paddingVertical="10dp">
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:text="爱吃肉的兔子"
+                        android:textSize="18dp"
+                        android:textColor="#fd8d01"/>
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:text="中国海洋大学"
+                        android:textSize="16dp"
+                        android:textColor="#ffffff"/>
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:text="计算机系"
+                        android:textSize="16dp"
+                        android:textColor="#ffffff"/>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <!--简介与赞-->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5.5"
+                android:orientation="vertical">
+
+                <!--简介与赞-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:id="@+id/list_intro1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="5dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:text="简介："
+                            android:textSize="16dp"
+                            android:textColor="#ffffff"
+                            android:layout_marginBottom="8dp"/>
+
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:maxLines="2"
+                            android:text="新出炉的时间分配表，请君共赏，现在二十个字了"
+                            android:textSize="16dp"
+                            android:textColor="#ffffff"/>
+
+                    </LinearLayout>
+
+                    <!--点赞-->
+                    <Button
+
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/like_button"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:text="129"
+                        android:gravity="center"
+                        android:textSize="14dp"
+                        android:layout_margin="5dp"/>
+
+                    <!--时间-->
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2017-9-6"
+                        android:textSize="16dp"
+                        android:textColor="#ffffff"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@+id/list_intro1"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/list_border"
+            android:orientation="horizontal">
+
+            <!--用户信息-->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4.5"
+                android:orientation="horizontal">
+
+
+                <!--头像-->
+                <ImageView
+
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:layout_gravity="center"
+                    android:src="@drawable/login_icon1"
+                    android:paddingHorizontal="10dp"/>
+
+                <!--信息-->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="7"
+                    android:orientation="vertical"
+                    android:paddingVertical="10dp">
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:text="爱吃肉的兔子"
+                        android:textSize="18dp"
+                        android:textColor="#fd8d01"/>
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:text="中国海洋大学"
+                        android:textSize="16dp"
+                        android:textColor="#ffffff"/>
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:text="计算机系"
+                        android:textSize="16dp"
+                        android:textColor="#ffffff"/>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <!--简介与赞-->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5.5"
+                android:orientation="vertical">
+
+                <!--简介与赞-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+
+                        android:id="@+id/list_intro2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="5dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:text="简介："
+                            android:textSize="16dp"
+                            android:textColor="#ffffff"
+                            android:layout_marginBottom="8dp"/>
+
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:maxLines="2"
+                            android:text="新出炉的时间分配表，请君共赏，现在二十个字了"
+                            android:textSize="16dp"
+                            android:textColor="#ffffff"/>
+
+                    </LinearLayout>
+
+                    <!--点赞-->
+                    <Button
+
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/like_button"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:text="129"
+                        android:gravity="center"
+                        android:textSize="14dp"
+                        android:layout_margin="5dp"/>
+
+                    <!--时间-->
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2017-9-6"
+                        android:textSize="16dp"
+                        android:textColor="#ffffff"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@+id/list_intro2"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/list_border"
+            android:orientation="horizontal">
+
+            <!--用户信息-->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4.5"
+                android:orientation="horizontal">
+
+
+                <!--头像-->
+                <ImageView
+
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:layout_gravity="center"
+                    android:src="@drawable/login_icon1"
+                    android:paddingHorizontal="10dp"/>
+
+                <!--信息-->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="7"
+                    android:orientation="vertical"
+                    android:paddingVertical="10dp">
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:text="爱吃肉的兔子"
+                        android:textSize="18dp"
+                        android:textColor="#fd8d01"/>
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:text="中国海洋大学"
+                        android:textSize="16dp"
+                        android:textColor="#ffffff"/>
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:text="计算机系"
+                        android:textSize="16dp"
+                        android:textColor="#ffffff"/>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <!--简介与赞-->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5.5"
+                android:orientation="vertical">
+
+                <!--简介与赞-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+
+                        android:id="@+id/list_intro3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="5dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:text="简介："
+                            android:textSize="16dp"
+                            android:textColor="#ffffff"
+                            android:layout_marginBottom="8dp"/>
+
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:maxLines="2"
+                            android:text="新出炉的时间分配表，请君共赏，现在二十个字了"
+                            android:textSize="16dp"
+                            android:textColor="#ffffff"/>
+
+                    </LinearLayout>
+
+                    <!--点赞-->
+                    <Button
+
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/like_button"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:text="129"
+                        android:gravity="center"
+                        android:textSize="14dp"
+                        android:layout_margin="5dp"/>
+
+                    <!--时间-->
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2017-9-6"
+                        android:textSize="16dp"
+                        android:textColor="#ffffff"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@+id/list_intro3"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/list_border"
+            android:orientation="horizontal">
+
+            <!--用户信息-->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4.5"
+                android:orientation="horizontal">
+
+
+                <!--头像-->
+                <ImageView
+
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:layout_gravity="center"
+                    android:src="@drawable/login_icon1"
+                    android:paddingHorizontal="10dp"/>
+
+                <!--信息-->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="7"
+                    android:orientation="vertical"
+                    android:paddingVertical="10dp">
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:text="爱吃肉的兔子"
+                        android:textSize="18dp"
+                        android:textColor="#fd8d01"/>
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:text="中国海洋大学"
+                        android:textSize="16dp"
+                        android:textColor="#ffffff"/>
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:text="计算机系"
+                        android:textSize="16dp"
+                        android:textColor="#ffffff"/>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <!--简介与赞-->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5.5"
+                android:orientation="vertical">
+
+                <!--简介与赞-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+
+                        android:id="@+id/list_intro3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="5dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:text="简介："
+                            android:textSize="16dp"
+                            android:textColor="#ffffff"
+                            android:layout_marginBottom="8dp"/>
+
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:maxLines="2"
+                            android:text="新出炉的时间分配表，请君共赏，现在二十个字了"
+                            android:textSize="16dp"
+                            android:textColor="#ffffff"/>
+
+                    </LinearLayout>
+
+                    <!--点赞-->
+                    <Button
+
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/like_button"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:text="129"
+                        android:gravity="center"
+                        android:textSize="14dp"
+                        android:layout_margin="5dp"/>
+
+                    <!--时间-->
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2017-9-6"
+                        android:textSize="16dp"
+                        android:textColor="#ffffff"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@+id/list_intro3"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/list_border"
+            android:orientation="horizontal">
+
+            <!--用户信息-->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4.5"
+                android:orientation="horizontal">
+
+
+                <!--头像-->
+                <ImageView
+
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:layout_gravity="center"
+                    android:src="@drawable/login_icon1"
+                    android:paddingHorizontal="10dp"/>
+
+                <!--信息-->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="7"
+                    android:orientation="vertical"
+                    android:paddingVertical="10dp">
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:text="爱吃肉的兔子"
+                        android:textSize="18dp"
+                        android:textColor="#fd8d01"/>
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:text="中国海洋大学"
+                        android:textSize="16dp"
+                        android:textColor="#ffffff"/>
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:text="计算机系"
+                        android:textSize="16dp"
+                        android:textColor="#ffffff"/>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <!--简介与赞-->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5.5"
+                android:orientation="vertical">
+
+                <!--简介与赞-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+
+                        android:id="@+id/list_intro4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="5dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:text="简介："
+                            android:textSize="16dp"
+                            android:textColor="#ffffff"
+                            android:layout_marginBottom="8dp"/>
+
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:maxLines="2"
+                            android:text="新出炉的时间分配表，请君共赏，现在二十个字了"
+                            android:textSize="16dp"
+                            android:textColor="#ffffff"/>
+
+                    </LinearLayout>
+
+                    <!--点赞-->
+                    <Button
+
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/like_button"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:text="129"
+                        android:gravity="center"
+                        android:textSize="14dp"
+                        android:layout_margin="5dp"/>
+
+                    <!--时间-->
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2017-9-6"
+                        android:textSize="16dp"
+                        android:textColor="#ffffff"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@+id/list_intro4"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="javax.servlet.http.HttpServlet"/>
+<fullyQualifiedTypeName name="javax.servlet.http.HttpServletRequest"/>
+<fullyQualifiedTypeName name="javax.servlet.http.HttpServletResponse"/>
+<fullyQualifiedTypeName name="javax.servlet.ServletException"/>
+<fullyQualifiedTypeName name="java.io.IOException"/>
+<fullyQualifiedTypeName name="java.lang.reflect.Method"/>
+<fullyQualifiedTypeName name="com.alibaba.fastjson.JSONObject"/>
+<fullyQualifiedTypeName name="main.model.moudle.User"/>
+<fullyQualifiedTypeName name="main.util.TokenUtil"/>
+<fullyQualifiedTypeName name="main.model.db.UserManager"/>
+<fullyQualifiedTypeName name="java.util.Arrays"/>
+<fullyQualifiedTypeName name="main.model.services.SharedtableService"/>
+<fullyQualifiedTypeName name="main.model.services.CollectionService"/>
+<fullyQualifiedTypeName name="main.model.services.LikeService"/>
+<fullyQualifiedTypeName name="com.alibaba.fastjson.JSONArray"/>
+<fullyQualifiedTypeName name="org.apache.tomcat.util.codec.binary.Base64"/>
+<fullyQualifiedTypeName name="com.alibaba.fastjson.util.Base64"/>
+<fullyQualifiedTypeName name="org.apache.commons.codec.binary.Base64"/>
+<fullyQualifiedTypeName name="java.util.Base64"/>
+</qualifiedTypeNameHistroy>
