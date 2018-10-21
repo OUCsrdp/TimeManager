@@ -1,4 +1,4 @@
-package com.example.lizliz.timemanager;
+package com.srdp.admin.time_manager.ui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,8 +12,9 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.lizliz.timemanager.model.ExcellentStudentsDistribution;
-import com.example.lizliz.timemanager.widget.adapters.ExcellentDistributionListAdapter;
+import com.srdp.admin.time_manager.R;
+import com.srdp.admin.time_manager.model.moudle.ExcellentStudentsDistribution;
+import com.srdp.admin.time_manager.widget.adapters.ExcellentDistributionListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,19 +28,13 @@ public class ExcellentDistributionListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_excellent_distribution_list);
 
-        //ExcellentStudentsDistribution apple = new ExcellentStudentsDistribution("Apple", R.drawable.login_icon1, "中国海洋大学","计算机系","新出炉的时间分配表，请君共赏，现在二十个字了","2017-9-6",129);
-        //distributionList.add(apple);
-        //distributionList.add(0,apple);
-
         initDistributions(); // 初始化数据
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.distribution_list);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         ExcellentDistributionListAdapter listAdapter = new ExcellentDistributionListAdapter(ExcellentDistributionList);
         recyclerView.setAdapter(listAdapter);
-//        ExcellentDistributionListAdapter adapter = new ExcellentDistributionListAdapter(ExcellentDistributionListActivity.this, R.layout.list_item, distributionList);
-//        ListView listView = (ListView) findViewById(R.id.distribution_list);
-//        listView.setAdapter(adapter);
+
 
     }
 
