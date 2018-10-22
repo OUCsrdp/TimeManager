@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+<<<<<<< HEAD
 		<item value="D:\srdp\TimeManager\The Server\TimeManagerServer"/>
+=======
+>>>>>>> a3eb61b086ac144e9af9751229fdc1ff9c35368e
 		<item value="D:\srdp\server\TimeManagerServer"/>
 	</list>
 	<section name="ExternalProjectImportWizard">
@@ -15,6 +18,7 @@
 			<item value=""/>
 		</list>
 	</section>
+<<<<<<< HEAD
 	<section name="SaveAsDialogSettings">
 		<item value="613" key="DIALOG_WIDTH"/>
 		<item value="1|Microsoft YaHei UI|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|Microsoft YaHei UI" key="DIALOG_FONT_NAME"/>
@@ -22,4 +26,6 @@
 		<item value="663" key="DIALOG_X_ORIGIN"/>
 		<item value="94" key="DIALOG_Y_ORIGIN"/>
 	</section>
+=======
+>>>>>>> a3eb61b086ac144e9af9751229fdc1ff9c35368e
 </section>

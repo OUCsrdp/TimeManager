@@ -6,6 +6,7 @@
 <fullyQualifiedTypeName name="javax.servlet.ServletException"/>
 <fullyQualifiedTypeName name="java.io.IOException"/>
 <fullyQualifiedTypeName name="java.lang.reflect.Method"/>
+<<<<<<< HEAD
 <fullyQualifiedTypeName name="com.alibaba.fastjson.JSONObject"/>
 <fullyQualifiedTypeName name="main.model.moudle.User"/>
 <fullyQualifiedTypeName name="main.util.TokenUtil"/>
@@ -19,4 +20,6 @@
 <fullyQualifiedTypeName name="com.alibaba.fastjson.util.Base64"/>
 <fullyQualifiedTypeName name="org.apache.commons.codec.binary.Base64"/>
 <fullyQualifiedTypeName name="java.util.Base64"/>
+=======
+>>>>>>> a3eb61b086ac144e9af9751229fdc1ff9c35368e
 </qualifiedTypeNameHistroy>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="200dp"
+        android:layout_height="160dp"
+        android:orientation="vertical"
+        android:layout_gravity="center">
+
+
+
+        <cn.forward.androids.views.StringScrollPicker
+            android:visibility="visible"
+            android:id="@+id/select_school"
+            android:layout_width="200dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@drawable/label_bg_style"
+            app:spv_center_item_position="2"
+            app:spv_disallow_intercept_touch="true"
+            app:spv_is_circulation="false"
+            app:spv_max_text_size="22dp"
+            app:spv_min_text_size="16dp"
+            app:spv_start_color="#fd8d01"
+            app:spv_end_color="#000000"
+            app:spv_visible_item_count="5"/>
+
+    </LinearLayout>
+

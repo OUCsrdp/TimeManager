@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.srdp.admin.time_manager.ui.Person_Infor">
+
+    <android.support.percent.PercentRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#0f0125"
+        android:orientation="vertical">
+
+        <com.srdp.admin.time_manager.ui.TitleLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp" />
+
+        <FrameLayout
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_marginTop="60dp">
+
+            <ImageView
+                android:layout_marginLeft="0dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/oneoffour" />
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/tryhead" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_marginTop="200dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                style="@style/personInforItem"
+                >
+                    <ImageView
+                    android:src="@drawable/minipoint"
+                    style="@style/personInforPoint" />
+                    <TextView
+                    android:text="@string/user_name"
+                    style="@style/personInforLabel"
+                    />
+                    <TextView
+                        android:id="@+id/PersonInforName"
+                    style="@style/personInforEdit"></TextView>
+            </LinearLayout>
+            <LinearLayout
+                style="@style/personInforItem"
+                >
+                <ImageView
+                    android:src="@drawable/minipoint"
+                    style="@style/personInforPoint" />
+                <TextView
+                    android:text="@string/user_school"
+                    style="@style/personInforLabel"
+                    />
+                <TextView
+                    style="@style/personInforEdit"
+                    android:id="@+id/userSchool"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/personInforItem"
+                >
+                <ImageView
+                    android:src="@drawable/minipoint"
+                    style="@style/personInforPoint" />
+                <TextView
+                    android:text="@string/user_major"
+                    style="@style/personInforLabel"
+                    />
+                <EditText
+                    android:id="@+id/PersonInforMajor"
+                    style="@style/personInforEdit"></EditText>
+            </LinearLayout>
+            <LinearLayout
+                style="@style/personInforItem"
+                >
+                <ImageView
+                    android:src="@drawable/minipoint"
+                    style="@style/personInforPoint" />
+                <TextView
+                    android:text="@string/user_number"
+                    style="@style/personInforLabel"
+                    />
+                <EditText
+                    android:id="@+id/PersonInforNumber"
+                    android:textColorHint="#ffffff"
+                    style="@style/personInforEdit"></EditText>
+            </LinearLayout>
+            <LinearLayout
+                style="@style/personInforItem"
+                >
+                <ImageView
+                    android:src="@drawable/minipoint"
+                    style="@style/personInforPoint" />
+                <TextView
+                    android:text="@string/user_grade"
+                    style="@style/personInforLabel"
+                    />
+                <TextView
+                    android:id="@+id/PersonInforGpa"
+                    style="@style/personInforEdit"
+                    />
+            </LinearLayout>
+            <Button
+                android:id="@+id/EditPIFinsh"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:text="完成"
+                android:textSize="18sp"
+                android:textColor="#ffffff"
+                android:background="@drawable/button_radius"
+                />
+        </LinearLayout>
+    </android.support.percent.PercentRelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

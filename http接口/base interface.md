@@ -88,17 +88,25 @@
 	"sign1"://1 means modify,0 means create
 	"sign2"://1 means affair,0 means saffair
 	"date":
+<<<<<<< HEAD
 	"username"://修改版本去掉username这一项
+=======
+	"username":
+>>>>>>> a3eb61b086ac144e9af9751229fdc1ff9c35368e
 	//各种affair消息
 	
 }
 {
+<<<<<<< HEAD
 	“id”:1333,//affairid
 
 	"isAffair":true,
 
 	"status":"success"||"fail"||"unlogin"
 
+=======
+	"status":"success"||"fail"||"unlogin"
+>>>>>>> a3eb61b086ac144e9af9751229fdc1ff9c35368e
 }
 
 #### 3.2 删除
@@ -134,12 +142,17 @@
 	"sign2"://1 means affair,0 means saffair
 	"id"://表示要修改的affair或者saffair的id
 
+<<<<<<< HEAD
 	"timeEnd"://什么时候结束该事务
+=======
+​	"timeEnd"://什么时候结束该事务
+>>>>>>> a3eb61b086ac144e9af9751229fdc1ff9c35368e
 
 }
 
 {
 	"status":"success"||"fail"||"unlogin"
+<<<<<<< HEAD
 }
 
 #### 3.5 修改事件时间 
@@ -162,4 +175,6 @@
 
 	"status":"success"||"fail"||"unlogin"
 
+=======
+>>>>>>> a3eb61b086ac144e9af9751229fdc1ff9c35368e
 }

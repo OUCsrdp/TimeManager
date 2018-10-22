@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 INDEX VERSION 1.4+D:\srdp\TimeManager\The Server\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
 1682039626.index
 3106127021.index
@@ -5,3 +6,12 @@ INDEX VERSION 1.4+D:\srdp\TimeManager\The Server\.metadata\.plugins\org.eclipse.
 2579099704.index
 2696621714.index
 3774891772.index
+=======
+INDEX VERSION 1.4+D:\srdp\server\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+1333668136.index
+3331057050.index
+577383589.index
+3632710912.index
+1747113336.index
+798413573.index
+>>>>>>> a3eb61b086ac144e9af9751229fdc1ff9c35368e

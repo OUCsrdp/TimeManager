@@ -1,3 +1,8 @@
+<<<<<<< HEAD
 GitRepositoriesView.GitDirectories=D\:\\srdp\\TimeManager\\The Server\\TimeManagerServer\\.git;D\:\\srdp\\TimeManager\\.git;
 GitRepositoriesView.GitDirectories.relative=TimeManagerServer\\.git;D\:\\srdp\\TimeManager\\.git;
+=======
+GitRepositoriesView.GitDirectories=D\:\\srdp\\server\\TimeManagerServer\\.git;
+GitRepositoriesView.GitDirectories.relative=TimeManagerServer\\.git;
+>>>>>>> a3eb61b086ac144e9af9751229fdc1ff9c35368e
 eclipse.preferences.version=1

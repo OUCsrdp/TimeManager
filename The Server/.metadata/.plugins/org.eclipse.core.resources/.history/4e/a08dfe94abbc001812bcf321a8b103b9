@@ -1,0 +1,5 @@
+package main.servlet;
+
+public class AffairServlet extends BaseServlet{
+	
+}

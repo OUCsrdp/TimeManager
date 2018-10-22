@@ -1,5 +1,8 @@
 INDEX VERSION 1.131
+<<<<<<< HEAD
 D:\srdp\TimeManager\The Server\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3632228767.index
 \TimeManagerServer\src
+=======
+>>>>>>> a3eb61b086ac144e9af9751229fdc1ff9c35368e
 D:\srdp\server\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3632228767.index
 \TimeManagerServer\src
