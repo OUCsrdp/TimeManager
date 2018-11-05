@@ -1,5 +1,5 @@
-package main.model;
-//package main.model.services;  
+package main.model.services;
+//package main.model.services.services;  
 
 import java.awt.Color;
 import java.awt.Font;
@@ -18,8 +18,8 @@ import javax.crypto.NoSuchPaddingException;
 import javax.imageio.ImageIO;
 
 
-import main.model.moudle.*;
-import main.model.db.*;
+import main.model.services.moudle.*;
+import main.model.services.db.*;
 
 public class UserService {
 	private String verify;
