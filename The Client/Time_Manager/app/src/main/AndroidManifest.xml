@@ -22,13 +22,15 @@
         <activity android:name=".ui.Person_Center" />
         <activity android:name=".ui.CreateScheduleActivity" />
         <activity android:name=".ui.CreateTimingActivity" />
-        <activity android:name=".ui.ExcellentDistributionContentActivity" />
-        <activity android:name=".ui.ExcellentDistributionListActivity" />
-        <activity android:name=".ui.LoginActivity">
+        <activity android:name=".ui.ExcellentDistributionContentActivity">
+        </activity>
+        <activity android:name=".ui.ExcellentDistributionListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".ui.LoginActivity">
         </activity>
         <activity android:name=".ui.RegisterActivity" />
         <activity android:name=".ui.RegisterSchoolActivity" />
