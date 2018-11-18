@@ -83,7 +83,7 @@ public class AffairServlet extends BaseServlet{
 				else
 					resJson.put("isAffair", false);
 			}
-				
+				 
 			else
 				resJson.put("status","fail");
 		}

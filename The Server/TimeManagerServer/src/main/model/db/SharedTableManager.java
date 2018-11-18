@@ -412,6 +412,7 @@ public class SharedTableManager extends SqlServerManager
 		}
 		SharedTableManager.Create(stmt);
 		ArrayList<SharedTable> sharedTables = SharedTableManager.findWithNothing();
+		//System.out.println("success");
 		ArrayList<Float> topGPA = new ArrayList<Float>();
 		for(int i = 0; i < Math.ceil((sharedTables.size()-1)/2); i++)
 		{
@@ -429,7 +430,7 @@ public class SharedTableManager extends SqlServerManager
 				{
 					if(UserManager.findWithId(sharedTables.get(i).getIdUser()).getGPA() == topGPA.get(j) && j < topGPA.size() - 1)
 						break;
-					else if(UserManager.findWithId(sharedTables.get(i).getIdUser()).getGPA() <= topGPA.get(j) && j == topGPA.size() - 1)
+					else if(UserManager.findWithId(sharedTables.get(i).getIdUser()).getGPA() < topGPA.get(j) && j == topGPA.size() - 1)
 						topGPA.add(UserManager.findWithId(sharedTables.get(i).getIdUser()).getGPA());
 					else if(UserManager.findWithId(sharedTables.get(i).getIdUser()).getGPA() > topGPA.get(j)) 
 					{
@@ -453,12 +454,17 @@ public class SharedTableManager extends SqlServerManager
 				}
 			}
 		}
+		//System.out.println(topGPA.size());
 		for(int i = 0; i < topGPA.size(); i++)
 		{
 			ArrayList<User> topUsers = UserManager.findWithGPA(topGPA.get(topGPA.size() - 1 -i));
 			for(int j = 0; j < topUsers.size(); j++)
 			{
+				//System.out.println(topUsers.size());
 				ArrayList<SharedTable> topSharedTables = SharedTableManager.findWithIdUser(topUsers.get(j).getId());
+				if(topSharedTables == null)
+					continue;
+				//System.out.println(topSharedTables.size());
 				QuickSort(topSharedTables, 0, topSharedTables.size() - 1);
 				if(topSharedTables.size() > 3)
 				{
@@ -525,7 +531,7 @@ public class SharedTableManager extends SqlServerManager
 				{
 					if(UserManager.findWithId(sharedTables.get(i).getIdUser()).getGPA() == topGPA.get(j) && j < topGPA.size() - 1)
 						break;
-					else if(UserManager.findWithId(sharedTables.get(i).getIdUser()).getGPA() <= topGPA.get(j) && j == topGPA.size() - 1)
+					else if(UserManager.findWithId(sharedTables.get(i).getIdUser()).getGPA() < topGPA.get(j) && j == topGPA.size() - 1)
 						topGPA.add(UserManager.findWithId(sharedTables.get(i).getIdUser()).getGPA());
 					else if(UserManager.findWithId(sharedTables.get(i).getIdUser()).getGPA() > topGPA.get(j)) 
 					{
@@ -555,6 +561,8 @@ public class SharedTableManager extends SqlServerManager
 			for(int j = 0; j < topUsers.size(); j++)
 			{
 				ArrayList<SharedTable> topSharedTables = SharedTableManager.findWithIdUser(topUsers.get(j).getId());
+				if(topSharedTables == null)
+					continue;
 				QuickSort(topSharedTables, 0, topSharedTables.size() - 1);
 				if(topSharedTables.size() > 3)
 				{
@@ -621,7 +629,7 @@ public class SharedTableManager extends SqlServerManager
 				{
 					if(UserManager.findWithId(sharedTables.get(i).getIdUser()).getGPA() == topGPA.get(j) && j < topGPA.size() - 1)
 						break;
-					else if(UserManager.findWithId(sharedTables.get(i).getIdUser()).getGPA() <= topGPA.get(j) && j == topGPA.size() - 1)
+					else if(UserManager.findWithId(sharedTables.get(i).getIdUser()).getGPA() < topGPA.get(j) && j == topGPA.size() - 1)
 						topGPA.add(UserManager.findWithId(sharedTables.get(i).getIdUser()).getGPA());
 					else if(UserManager.findWithId(sharedTables.get(i).getIdUser()).getGPA() > topGPA.get(j)) 
 					{
@@ -651,6 +659,8 @@ public class SharedTableManager extends SqlServerManager
 			for(int j = 0; j < topUsers.size(); j++)
 			{
 				ArrayList<SharedTable> topSharedTables = SharedTableManager.findWithIdUser(topUsers.get(j).getId());
+				if(topSharedTables == null)
+					continue;
 				QuickSort(topSharedTables, 0, topSharedTables.size() - 1);
 				if(topSharedTables.size() > 3)
 				{
@@ -717,7 +727,7 @@ public class SharedTableManager extends SqlServerManager
 				{
 					if(UserManager.findWithId(sharedTables.get(i).getIdUser()).getGPA() <= topGPA.get(j) && j < topGPA.size() - 1)
 						break;
-					else if(UserManager.findWithId(sharedTables.get(i).getIdUser()).getGPA() <= topGPA.get(j) && j == topGPA.size() - 1)
+					else if(UserManager.findWithId(sharedTables.get(i).getIdUser()).getGPA() < topGPA.get(j) && j == topGPA.size() - 1)
 						topGPA.add(UserManager.findWithId(sharedTables.get(i).getIdUser()).getGPA());
 					else if(UserManager.findWithId(sharedTables.get(i).getIdUser()).getGPA() > topGPA.get(j)) 
 					{
@@ -747,6 +757,8 @@ public class SharedTableManager extends SqlServerManager
 			for(int j = 0; j < topUsers.size(); j++)
 			{
 				ArrayList<SharedTable> topSharedTables = SharedTableManager.findWithIdUser(topUsers.get(j).getId());
+				if(topSharedTables == null)
+					continue;
 				QuickSort(topSharedTables, 0, topSharedTables.size() - 1);
 				if(topSharedTables.size() > 3)
 				{
@@ -775,6 +787,8 @@ public class SharedTableManager extends SqlServerManager
 	{
 		int start = startIndex;
 		int end = endIndex;
+		if(start >= end)
+			return;
 		int thumbup = sharedTables.get(start).getThumbup();
 		while(start < end)
 		{
