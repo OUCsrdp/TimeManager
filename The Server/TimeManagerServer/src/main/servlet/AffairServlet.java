@@ -17,12 +17,12 @@ import main.util.GetRequestUtil;
 
 public class AffairServlet extends BaseServlet{
 	private static final long serialVersionUID = 1L;
-	public JSONObject OperateAffair(HttpServletRequest request, HttpServletResponse response,String userId)throws ServletException, IOException{
+	public JSONObject OperateAffair(HttpServletRequest request, HttpServletResponse response,String userId,String jsonString)throws ServletException, IOException{
 		AffairService affairService=new AffairService();
 		UserService userService=new UserService();
 		JSONObject resJson = new JSONObject();
 		JSONObject reqJson = new JSONObject();
-		String jsonString=GetRequestUtil.getRequestJsonString(request);
+		//String jsonString=GetRequestUtil.getRequestJsonString(request);
 		reqJson=JSON.parseObject(jsonString);
 		//获得前端传来的json字符串并且转化成jsonObject
 		int sign1=reqJson.getIntValue("sign1");//1 means modify,0 means create,-1 means delete,-2means guessaffair
@@ -83,21 +83,21 @@ public class AffairServlet extends BaseServlet{
 				else
 					resJson.put("isAffair", false);
 			}
-				 
+				
 			else
 				resJson.put("status","fail");
 		}
 		return resJson;
 	}
-	public JSONObject ChangeAffairTime(HttpServletRequest request, HttpServletResponse response,String userId)throws ServletException, IOException{
+	public JSONObject ChangeAffairTime(HttpServletRequest request, HttpServletResponse response,String userId,String jsonString)throws ServletException, IOException{
 		AffairService affairService=new AffairService();
 		JSONObject resJson = new JSONObject();
 		JSONObject reqJson = new JSONObject();
 		//获得前端传来的json字符串并且转化成jsonObject
-		String jsonString=GetRequestUtil.getRequestJsonString(request);
+		//String jsonString=GetRequestUtil.getRequestJsonString(request);
 		reqJson=JSON.parseObject(jsonString);
 		boolean success=false;
-		//success=affairService.changeAffairById(reqJson.getBooleanValue("isAffair"),reqJson.getIntValue("id"),reqJson.getString("StartTime"),reqJson.getString("EndTime"));
+		success=affairService.changeAffairById(reqJson.getBooleanValue("isAffair"),reqJson.getIntValue("id"),reqJson.getString("StartTime"),reqJson.getString("EndTime"));
 		//这里修改一下service函数，把isAffair的类型改为boolean
 		if(success)
 			resJson.put("status", "success");

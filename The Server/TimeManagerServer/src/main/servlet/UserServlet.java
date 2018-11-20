@@ -23,27 +23,28 @@ public class UserServlet extends BaseServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public JSONObject test(HttpServletRequest request, HttpServletResponse response,String id)throws ServletException, IOException {
+/*	public JSONObject test(HttpServletRequest request, HttpServletResponse response,String id,JSONObject reJson)throws ServletException, IOException {
 		JSONObject resJson = new JSONObject();
 		System.out.println("id"+id);
 		resJson.put("string", id);
 		return resJson;
-	}
-	public JSONObject GetVerify(HttpServletRequest request, HttpServletResponse response,String userId)throws ServletException, IOException {
+	}*/
+	public JSONObject GetVerify(HttpServletRequest request, HttpServletResponse response,String userId,String jsonString)throws ServletException, IOException {
 		JSONObject resJson = new JSONObject();
 		byte[] img;
 		UserService userService=new UserService();
 		img=userService.getVerify();
 		String str=Base64.getEncoder().encodeToString(img);
-		System.out.println("str:"+str);
 		resJson.put("verifyImg",img);
 		return resJson;
 	}
-	public JSONObject OperateUser(HttpServletRequest request, HttpServletResponse response,String userId)throws ServletException, IOException {
+	public JSONObject OperateUser(HttpServletRequest request, HttpServletResponse response,String userId,String jsonString)throws ServletException, IOException {
+		System.out.println("inuserservlet");
 		UserService userService=new UserService();
 		JSONObject resJson = new JSONObject();
-		JSONObject reqJson = new JSONObject();
+		JSONObject reqJson = new JSONObject();/*
 		String jsonString=GetRequestUtil.getRequestJsonString(request);
+		System.out.println("userservletjsonstring:"+jsonString);*/
 		reqJson=JSON.parseObject(jsonString);
 		if(reqJson.getString("operation").equals("register"))//用户注册
 		{
@@ -54,6 +55,7 @@ public class UserServlet extends BaseServlet {
 			String token="";
 			try {
 				token = userService.login(reqJson.getString("name"),reqJson.getString("pwd"),reqJson.getString("verify"),reqJson.getString("token"));
+				System.out.println("token:"+token);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -65,7 +67,7 @@ public class UserServlet extends BaseServlet {
 				HttpSession session = request.getSession();
 				session.setAttribute("token",token);
 				//如果登录成功把token设置入token
-				User user=userService.getUserInfor(Integer.parseInt(userId));
+				User user=userService.getUserInfor(reqJson.getString("name"));
 				resJson =(JSONObject) JSON.toJSON(user);
 				//把user的基本信息传给客户端
 				resJson.put("status","success");

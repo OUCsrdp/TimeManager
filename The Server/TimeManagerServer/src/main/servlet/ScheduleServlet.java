@@ -12,7 +12,7 @@ import main.model.services.ScheduleService;
 
 public class ScheduleServlet extends BaseServlet{
 	private static final long serialVersionUID = 1L;
-	public JSONObject OperateS(HttpServletRequest request, HttpServletResponse response,String userId)throws ServletException, IOException{
+	public JSONObject OperateS(HttpServletRequest request, HttpServletResponse response,String userId,String jsonString)throws ServletException, IOException{
 		JSONObject resJson = new JSONObject();
 		ScheduleService sService=new ScheduleService();
 		//String userId=request.getParameter("userId");

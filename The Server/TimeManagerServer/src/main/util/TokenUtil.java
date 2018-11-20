@@ -47,7 +47,7 @@ public class TokenUtil{
 		}
 		//Ω‚√‹TOKEN
 		public static String  decodeToken(String token) {
-			String sub = token.substring(0, token.indexOf("-"));
+			String sub = token.substring(0, token.indexOf("_"));
 			return sub;
 		}
 }

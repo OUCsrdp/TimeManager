@@ -91,9 +91,9 @@ public class SharedtableService{
 				sharedTable.put("major", user.getMajor());
 				sharedTable.put("summary", sharedTables.get(i).getSummary());
 				sharedTable.put("timeShared", sharedTables.get(i).getTimeShared());
-				sharedTable.put("thumbup", Integer.toString(sharedTables.get(i).getThumbup()));
-				sharedTable.put("idTS", Integer.toString(sharedTables.get(i).getIdTS()));
-				sharedTable.put("idST", Integer.toString(sharedTables.get(i).getId()));
+				sharedTable.put("thumbup", sharedTables.get(i).getThumbup());
+				sharedTable.put("idTS", sharedTables.get(i).getIdTS());
+				sharedTable.put("idST", sharedTables.get(i).getId());
 				sharedTableArray.add(sharedTable);
 			 }
 		 }

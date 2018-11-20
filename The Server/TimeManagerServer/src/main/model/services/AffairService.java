@@ -16,8 +16,8 @@ public class AffairService{
 	//通过id来修改一个affair或sAffair的开始时间，结束时间
 	//isAffair为1表示Affair,为0表示s_affair
 	//成功返回true，失败返回false
-	boolean changeAffairById(int isAffair,int id,String startTime,String endTime) {
-		if(isAffair == 1) {
+	public boolean changeAffairById(boolean isAffair,int id,String startTime,String endTime) {
+		if(isAffair) {
 			Affair affair = AffairManager.findWithId(id);
 			affair.setTimeStart(startTime);
 			affair.setTimeEnd(endTime);
@@ -47,9 +47,11 @@ public class AffairService{
 		//新建事件
 		if(change == 0) {
 			if(affair.getIdTS() == 0) {
-				if(TimeSharingManager.findWithDate(idU,date) != null) {} //数据库findWithDate函数应该返回TimeSharing而不是list
+				TimeSharing ts=TimeSharingManager.findWithDate(idU,date);
+				if(ts != null) {
+					affair.setIdTS(ts.getId());
+				} //数据库findWithDate函数应该返回TimeSharing而不是list
 				else {
-					
 					int idts = TimeSharingManager.add(idU, date, weekday);
 					if(idts != -1) affair.setIdTS(idts);
 					else return 0;
@@ -66,7 +68,15 @@ public class AffairService{
 			String timeStart = affair.getTimeStart();
 			String timeEnd = affair.getTimeEnd();
 			String timeEndPlan = affair.getTimeEndPlan();
-			
+			System.out.println("affairdata");
+			System.out.println(idTS);
+			System.out.println(idLabel);
+			System.out.println(satisfaction);
+			System.out.println(name);
+			System.out.println(tips);
+			System.out.println(timeStart);
+			System.out.println(timeEnd);
+			System.out.println(timeEndPlan);
 			int add_result = managerA.add(idTS, idLabel, satisfaction, name, tips, timeStart, timeEnd,timeEndPlan);
 			if( add_result!= -1) return add_result;
 			else return 0;

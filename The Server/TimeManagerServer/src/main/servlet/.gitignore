@@ -3,3 +3,5 @@
 /TimeSharingServlet.class
 /UserServlet.class
 /SharedTableServlet.class
+/BaseServlet.class
+/ShareTableServlet.class

@@ -45,4 +45,12 @@
   	<servlet-name>AffairServlet</servlet-name>
   	<url-pattern>/AffairServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+  	<servlet-name>ShareTableServlet</servlet-name>
+  	<servlet-class>main.servlet.ShareTableServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ShareTableServlet</servlet-name>
+  	<url-pattern>/ShareTableServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
