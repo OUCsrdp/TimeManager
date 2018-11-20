@@ -1,7 +1,10 @@
 package com.srdp.admin.time_manager.ui;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.ActionBar;
@@ -37,7 +40,9 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.srdp.admin.time_manager.R;
 import com.srdp.admin.time_manager.http.AffairHttp;
+import com.srdp.admin.time_manager.model.Receiver.AlarmReceiver;
 import com.srdp.admin.time_manager.model.moudle.S_Affair;
+import com.srdp.admin.time_manager.util.TimeUtil;
 import com.srdp.admin.time_manager.util.TokenUtil;
 import com.srdp.admin.time_manager.util.UserUtil;
 
@@ -88,6 +93,9 @@ public class CreateScheduleActivity extends AppCompatActivity {
     private TextView schedule_time_end;
 
 
+    //提醒功能
+    private AlarmManager alarmManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +122,8 @@ public class CreateScheduleActivity extends AppCompatActivity {
         schedule_remind_time = (TextView) findViewById(R.id.schedule_remind_time);
         schedule_remind_date = (TextView) findViewById(R.id.schedule_remind_date);
 
+        // alarmManager创建
+        alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
 
         //如果是编辑页面,初始化设置页面
         intent=getIntent();
@@ -317,6 +327,23 @@ public class CreateScheduleActivity extends AppCompatActivity {
                 switch (msg.what) {
                     case 1:
                         Toast.makeText(activity,"创建成功",Toast.LENGTH_SHORT).show();
+                        if(activity.s_affair.getTimeStartAlarm() != null)
+                        {
+                            long timeMills = TimeUtil.getDateMs(activity.schedule_remind_date.getText().toString());
+                            timeMills += TimeUtil.getMs(activity.schedule_remind_time.getText().toString());
+                            Intent intent = new Intent(activity, AlarmReceiver.class);
+                            intent.putExtra("Time", activity.s_affair.getTimeStart());
+                            intent.putExtra("Name", activity.s_affair.getName());
+                            PendingIntent pendingIntent = PendingIntent.getBroadcast(activity, 0, intent,0);
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+                            {
+                                activity.alarmManager.setWindow(AlarmManager.RTC, timeMills, 3000, pendingIntent);
+                            }
+                            else
+                            {
+                                activity.alarmManager.set(AlarmManager.RTC, timeMills, pendingIntent);
+                            }
+                        }
                         activity.finish();break;
                         //创建日程成功后弹出提示并且返回原来页面
                     case 0:

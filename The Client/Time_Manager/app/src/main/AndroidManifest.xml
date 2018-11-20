@@ -22,24 +22,25 @@
         <activity android:name=".ui.Person_Center" />
         <activity android:name=".ui.CreateScheduleActivity" />
         <activity android:name=".ui.CreateTimingActivity" />
-        <activity android:name=".ui.ExcellentDistributionContentActivity">
-        </activity>
-        <activity android:name=".ui.ExcellentDistributionListActivity">
-        </activity>
+        <activity android:name=".ui.ExcellentDistributionContentActivity"></activity>
+        <activity android:name=".ui.ExcellentDistributionListActivity"></activity>
         <activity android:name=".ui.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".ui.RegisterActivity" />
         <activity android:name=".ui.RegisterSchoolActivity" />
-        <activity android:name=".ui.PatternAnalysisPage5">
-        </activity>
-        <activity android:name=".ui.PatternAnalysisPage4">
-        </activity>
-        <activity android:name=".ui.PatternAnalysisPage6">
-        </activity>
+        <activity android:name=".ui.PatternAnalysisPage5"></activity>
+        <activity android:name=".ui.PatternAnalysisPage4"></activity>
+        <activity android:name=".ui.PatternAnalysisPage6"></activity>
+
+        <receiver
+            android:name=".model.Receiver.AlarmReceiver"
+            android:enabled="true"
+            android:exported="true"></receiver>
     </application>
 
 </manifest>
