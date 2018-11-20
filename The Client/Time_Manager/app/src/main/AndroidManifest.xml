@@ -22,8 +22,10 @@
         <activity android:name=".ui.Person_Center" />
         <activity android:name=".ui.CreateScheduleActivity" />
         <activity android:name=".ui.CreateTimingActivity" />
-        <activity android:name=".ui.ExcellentDistributionContentActivity" />
-        <activity android:name=".ui.ExcellentDistributionListActivity" />
+        <activity android:name=".ui.ExcellentDistributionContentActivity">
+        </activity>
+        <activity android:name=".ui.ExcellentDistributionListActivity">
+        </activity>
         <activity android:name=".ui.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,7 +39,6 @@
         <activity android:name=".ui.PatternAnalysisPage4">
         </activity>
         <activity android:name=".ui.PatternAnalysisPage6">
-
         </activity>
     </application>
 

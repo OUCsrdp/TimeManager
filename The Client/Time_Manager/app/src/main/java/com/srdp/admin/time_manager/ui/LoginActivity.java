@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
         if (actionbar != null) {
             actionbar.hide();
         }
-        TokenUtil.initToken(this);
+        //TokenUtil.initToken(this);
         //初始化token
         getVerify();
         //进入页面获取验证码
@@ -160,7 +160,7 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(activity,"登录成功",Toast.LENGTH_SHORT).show();
                         //提示登录成功并去往首页
                         activity.saveUser((JSONObject)msg.obj);
-                        Intent go_activity_page = new Intent(activity,Index_Timing.class);
+                        Intent go_activity_page = new Intent(activity,Index_Timing_Change.class);
                         activity.startActivity(go_activity_page);
                         break;
                     case 2:

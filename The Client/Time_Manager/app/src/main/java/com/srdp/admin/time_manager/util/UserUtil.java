@@ -13,7 +13,7 @@ import static android.content.Context.MODE_PRIVATE;
  */
 
 public class UserUtil {
-    static private User user;
+    static private User user=new User();
     static public User getUser() {
         return user;
     }

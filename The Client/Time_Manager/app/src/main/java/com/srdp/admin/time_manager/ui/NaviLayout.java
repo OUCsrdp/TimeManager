@@ -68,6 +68,14 @@ public class NaviLayout extends LinearLayout {
                 nowContext.startActivity(theIntent);
             }
         });
+        TextView navi5=(TextView) findViewById(R.id.naviMySuggest);
+        navi5.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                theIntent.setClass(nowContext,ExcellentDistributionListActivity.class);
+                nowContext.startActivity(theIntent);
+            }
+        });
         TextView navi6=(TextView) findViewById(R.id.naviMyCenter);
         navi6.setOnClickListener(new OnClickListener() {
             @Override

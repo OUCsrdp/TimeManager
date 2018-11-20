@@ -118,6 +118,19 @@ public class TimeUtil {
         int sec=calendar.get(Calendar.SECOND);
         return hour+":"+min+":"+sec;
     }
+    public static String getNowHourMin()
+    {
+        Calendar calendar=Calendar.getInstance();
+        calendar.setTime(new Date());
+        int hour=calendar.get(Calendar.HOUR_OF_DAY);
+        int min=calendar.get(Calendar.MINUTE);
+        return hour+":"+min;
+    }
+    public static String delSecond(String lasttime)
+    {
+        String[] time=lasttime.split(":");
+        return time[0]+":"+time[1];
+    }
     //比较2个时间，比如10:00与11:19，小于返回1，否则返回0
 //    public static String getTimeDuration(String time1,String time2){
 //        time1=time1.split(" ")[1];

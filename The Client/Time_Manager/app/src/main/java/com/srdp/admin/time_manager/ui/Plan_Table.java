@@ -65,7 +65,7 @@ public class Plan_Table extends AppCompatActivity {
             actionbar.hide();
         }
         //隐藏默认actionbar
-        TokenUtil.initToken(this);
+        //TokenUtil.initToken(this);
         calendar= TimeUtil.createCalendar();
         realCalendar=TimeUtil.createCalendar();
         date=TimeUtil.getDate(realCalendar,0);//获取当前日期

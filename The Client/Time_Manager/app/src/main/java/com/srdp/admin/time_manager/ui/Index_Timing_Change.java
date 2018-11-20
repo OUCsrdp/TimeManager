@@ -9,6 +9,7 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -60,7 +61,8 @@ public class Index_Timing_Change extends AppCompatActivity {
         if(actionbar!=null){
             actionbar.hide();
         }
-        TokenUtil.initToken(this);
+        //AffairUtil.deleteAffairInfor();
+        //TokenUtil.initToken(this);
         //初始化token,测试用
         initData();
         //创建该活动时初始化日期信息
@@ -72,6 +74,7 @@ public class Index_Timing_Change extends AppCompatActivity {
         stopTiming.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!isStart) return;
                 mHandler.removeCallbacks(TimerRunnable);
                 isStop=true;
                 isStart=false;
@@ -80,10 +83,11 @@ public class Index_Timing_Change extends AppCompatActivity {
                 indexTimer.setText(timeStr);
                 endTime=TimeUtil.getNowTime();//获取当前时分作为结束时间
                 //requestCreate();
-                //把记录的当前事务时间信息删除
+                //把记录的当前事务时间信息删除]
+                JSONObject affairStore=AffairUtil.getAffairTime();
                 AffairUtil.deleteAffairInfor();
                 //发起网络请求把时间的修改保存到数据库
-                requestModifyTime();
+                requestModifyTime(affairStore);
             }
         });
         ImageView setTiming=(ImageView) findViewById(R.id.setTiming);
@@ -111,20 +115,22 @@ public class Index_Timing_Change extends AppCompatActivity {
         {
             startTime=AffairUtil.readStartTime();
             Toast.makeText(this,startTime,Toast.LENGTH_SHORT).show();
+            Log.i("timernow",TimeUtil.getNowTime());
+            Log.i("timerstart",startTime);
             timer=TimeUtil.getMs(TimeUtil.getNowTime())-TimeUtil.getMs(startTime);
+            String timeStr = TimeUtil.getFormatTime(timer);
+            indexTimer.setText(timeStr);
+            isStart=true;
+            isStop=false;
+            countTimer();
+            //开始计时
         }
-        else //如果没有记录开始时间，历经时间为0，开启计时器
+        //没有记录开始时间表示并没有创建计时
+        /*else //如果没有记录开始时间，历经时间为0，开启计时器
         {
             startTime = TimeUtil.getNowTime();
             timer=0;
-        }
-        String timeStr = TimeUtil.getFormatTime(timer);
-        indexTimer.setText(timeStr);
-        isStart=true;
-        isStop=false;
-        countTimer();
-
-        //开始计时
+        }*/
     }
     //在activity失去焦点时把开始时间保存到sharedPerfence中并且停止计时器工作,
     @Override
@@ -233,16 +239,18 @@ public class Index_Timing_Change extends AppCompatActivity {
         AffairHttp affairHttp=new AffairHttp(affairjson);
         affairHttp.requestByPost(new TimingHandler(Index_Timing_Change.this));
     }*/
-    private void requestModifyTime()
+    private void requestModifyTime(JSONObject affairStore)
     {
 
         Toast.makeText(this,startTime,Toast.LENGTH_SHORT).show();
         Toast.makeText(this,TimeUtil.getNowTime(),Toast.LENGTH_SHORT).show();
         //从本地文件中读出affair的基本信息
-        JSONObject reqJson=AffairUtil.getAffairTime();
+        JSONObject reqJson=affairStore;
+        //reqJson.put("EndTime",endTime);
         //添加程序结束时间
-        reqJson.put("EndTime",endTime);
-        HttpUtil.request("AffairServlet?method=OperateAffair","post",reqJson,new okhttp3.Callback(){
+        reqJson.put("StartTime",TimeUtil.delSecond(reqJson.getString("StartTime")));
+        reqJson.put("EndTime",TimeUtil.delSecond(endTime));
+        HttpUtil.request("AffairServlet?method=ChangeAffairTime","post",reqJson,new okhttp3.Callback(){
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) {
                 try {
@@ -278,11 +286,11 @@ public class Index_Timing_Change extends AppCompatActivity {
     }
     private void createSuccess()
     {
-        Toast.makeText(this,"计时成功！",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,"计时完成！",Toast.LENGTH_LONG).show();
     }
     private void createFail()
     {
-        Toast.makeText(this,"计时失败！",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,"计时失败！",Toast.LENGTH_LONG).show();
     }
     private void reLogin()
     {
@@ -322,6 +330,14 @@ public class Index_Timing_Change extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent theIntent=new Intent(Index_Timing_Change.this,Plan_Table.class);
+                startActivity(theIntent);
+            }
+        });
+        TextView navi5=(TextView) findViewById(R.id.IndexNaviMySuggest);
+        navi5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent theIntent=new Intent(Index_Timing_Change.this,ExcellentDistributionListActivity.class);
                 startActivity(theIntent);
             }
         });

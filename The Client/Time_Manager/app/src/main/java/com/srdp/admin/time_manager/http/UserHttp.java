@@ -78,7 +78,7 @@ public class UserHttp extends BaseHttp implements GetRequest,PostRequest{
                     Log.i("userrequest",requestJson.toString());
                     HttpURLConnection conn=null;//声明连接对象
                     //String urlStr="http://localhost:8080/TimeManagerServer?token="+token+"&date=";
-                    String urlStr=baseUrl+"TimeManagerServer/UserServlet?method=OperateUser";
+                    String urlStr=baseUrl+"UserServlet?method=OperateUser";
                     InputStream is = null;
                     OutputStream os=null;
                     String resultData = "";
