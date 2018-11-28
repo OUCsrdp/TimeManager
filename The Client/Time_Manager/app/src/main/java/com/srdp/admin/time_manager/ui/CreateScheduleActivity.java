@@ -327,7 +327,7 @@ public class CreateScheduleActivity extends AppCompatActivity {
                 switch (msg.what) {
                     case 1:
                         Toast.makeText(activity,"创建成功",Toast.LENGTH_SHORT).show();
-                        if(activity.s_affair.getTimeStartAlarm() != null)
+                        if(activity.s_affair.getTimeStartAlarm() != "")
                         {
                             long timeMills = TimeUtil.getDateMs(activity.schedule_remind_date.getText().toString());
                             timeMills += TimeUtil.getMs(activity.schedule_remind_time.getText().toString());
