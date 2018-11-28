@@ -40,7 +40,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.srdp.admin.time_manager.R;
 import com.srdp.admin.time_manager.http.AffairHttp;
-import com.srdp.admin.time_manager.model.Receiver.AlarmReceiver;
+import com.srdp.admin.time_manager.model.moudle.Receivers.AlarmReceiver;
 import com.srdp.admin.time_manager.model.moudle.S_Affair;
 import com.srdp.admin.time_manager.util.TimeUtil;
 import com.srdp.admin.time_manager.util.TokenUtil;
@@ -56,6 +56,7 @@ public class CreateScheduleActivity extends AppCompatActivity {
     private LinearLayout schedule_remind_text;
     private TextView schedule_remind_time;
     private TextView schedule_remind_date;
+    private boolean setAlarm=false;//是否设置提醒
 
     //标签选择
     private LinearLayout schedule_label_frame;
@@ -89,13 +90,12 @@ public class CreateScheduleActivity extends AppCompatActivity {
 
 
     //日程时间设置
+    private TextView schedule_date;
     private TextView schedule_time_start;
     private TextView schedule_time_end;
 
-
     //提醒功能
     private AlarmManager alarmManager;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,14 +116,18 @@ public class CreateScheduleActivity extends AppCompatActivity {
         schedule_create_btn = (Button) findViewById(R.id.schedule_create_btn);
         schedule_name = (EditText) findViewById(R.id.schedule_name);
         schedule_ps=(EditText)findViewById(R.id.schedule_create_ps);
+        schedule_date=(TextView)findViewById(R.id.schedule_date);
         //提醒设置
         schedule_switch = (Switch) findViewById(R.id.schedule_remind_btn);
         schedule_remind_text = (LinearLayout) findViewById(R.id.schedule_remind_text);
         schedule_remind_time = (TextView) findViewById(R.id.schedule_remind_time);
         schedule_remind_date = (TextView) findViewById(R.id.schedule_remind_date);
 
-        // alarmManager创建
-        alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+
+        //设置日程日期为今天的日期，默认提醒日期是今天的日期
+        String todayDate=TimeUtil.getNowDate();
+        schedule_remind_date.setText(todayDate);
+        schedule_date.setText(todayDate);
 
         //如果是编辑页面,初始化设置页面
         intent=getIntent();
@@ -137,6 +141,7 @@ public class CreateScheduleActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked){
+                    setAlarm=true;
                     schedule_remind_text.setVisibility(View.VISIBLE);
                     // 锁定屏幕
                     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -164,7 +169,7 @@ public class CreateScheduleActivity extends AppCompatActivity {
                                                     .append((mMonth ) < 10 ? "0"
                                                             + (mMonth ) : (mMonth ))
                                                     .append("月")
-                                                    .append((mDay < 10) ? "0" + mDay : mDay).append("日 "));
+                                                    .append((mDay < 10) ? "0" + mDay : mDay).append("日"));
 
                                         }
 
@@ -207,6 +212,7 @@ public class CreateScheduleActivity extends AppCompatActivity {
 
                 }else {
                     schedule_remind_text.setVisibility(View.INVISIBLE);
+                    setAlarm=false;
                 }
             }
         });
@@ -327,11 +333,10 @@ public class CreateScheduleActivity extends AppCompatActivity {
                 switch (msg.what) {
                     case 1:
                         Toast.makeText(activity,"创建成功",Toast.LENGTH_SHORT).show();
-                        if(activity.s_affair.getTimeStartAlarm() != "")
-                        {
+                        if(activity.setAlarm){
                             long timeMills = TimeUtil.getDateMs(activity.schedule_remind_date.getText().toString());
                             timeMills += TimeUtil.getMs(activity.schedule_remind_time.getText().toString());
-                            Intent intent = new Intent(activity, AlarmReceiver.class);
+                            Intent intent = new Intent(activity,AlarmReceiver.class);
                             intent.putExtra("Time", activity.s_affair.getTimeStart());
                             intent.putExtra("Name", activity.s_affair.getName());
                             PendingIntent pendingIntent = PendingIntent.getBroadcast(activity, 0, intent,0);
@@ -364,8 +369,10 @@ public class CreateScheduleActivity extends AppCompatActivity {
         schedule_ps.setText(s_affair.getTips());
         ((TextView) findViewById(R.id.schedule_time_start)).setText(s_affair.getTimeStartPlan());
         ((TextView) findViewById(R.id.schedule_time_end)).setText(s_affair.getTimeEndPlan());
-        schedule_remind_time.setText(s_affair.getTimeStartAlarm());
-        ((TextView) findViewById(R.id.schedule_date)).setText(intent.getStringExtra("date"));
+        String timeStartAlarm=s_affair.getTimeStartAlarm();
+        if(timeStartAlarm!=null)
+            schedule_remind_time.setText(timeStartAlarm);
+        schedule_date.setText(intent.getStringExtra("date"));
         //初始设置事件名称，事件备注，计划开始时间，计划结束时间，提醒时间
 
     }
@@ -373,9 +380,12 @@ public class CreateScheduleActivity extends AppCompatActivity {
     {
         s_affair.setName(schedule_name.getText().toString());
         s_affair.setTips(schedule_ps.getText().toString());
-        s_affair.setTimeStartAlarm(schedule_remind_time.getText().toString());
         s_affair.setTimeStartPlan(schedule_time_start.getText().toString());
         s_affair.setTimeEndPlan(schedule_time_end.getText().toString());
+        if(setAlarm)
+        {
+            s_affair.setTimeStartAlarm(schedule_remind_date.getText().toString()+schedule_remind_time.getText().toString());
+        }
         if(intent.getStringExtra("type").equals("create"))
         {
             s_affair.setIdS(0);

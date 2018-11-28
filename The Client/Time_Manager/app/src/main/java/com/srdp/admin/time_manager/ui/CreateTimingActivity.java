@@ -85,6 +85,7 @@ public class CreateTimingActivity extends AppCompatActivity {
     private int mMinute;
 
     //创建按钮
+    private boolean hasCreated=false;
     private Button timing_create_btn;
     private EditText timing_name;
     private EditText timing_ps;
@@ -236,6 +237,9 @@ public class CreateTimingActivity extends AppCompatActivity {
         timing_create_btn.setOnClickListener(new OnClickListener(){
             @Override
             public void onClick(View v){
+                if(hasCreated)
+                    return;
+                hasCreated=true;
                 String schedule_name_edit = timing_name.getText().toString();//获取事件名
                 if(TextUtils.isEmpty(schedule_name_edit)){
                     Toast.makeText(CreateTimingActivity.this,"事件名不能为空",Toast.LENGTH_SHORT).show();

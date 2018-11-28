@@ -110,13 +110,11 @@ public class Index_Timing_Change extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Toast.makeText(this,"resume",Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this,"resume",Toast.LENGTH_SHORT).show();
         if(hasRecorded())//如果有记录开始时间，就把开始时间取出来计算经历时间，开启计时器
         {
             startTime=AffairUtil.readStartTime();
             Toast.makeText(this,startTime,Toast.LENGTH_SHORT).show();
-            Log.i("timernow",TimeUtil.getNowTime());
-            Log.i("timerstart",startTime);
             timer=TimeUtil.getMs(TimeUtil.getNowTime())-TimeUtil.getMs(startTime);
             String timeStr = TimeUtil.getFormatTime(timer);
             indexTimer.setText(timeStr);

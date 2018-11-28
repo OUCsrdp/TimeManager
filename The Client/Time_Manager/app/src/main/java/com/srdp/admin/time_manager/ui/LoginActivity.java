@@ -246,7 +246,7 @@ public class LoginActivity extends AppCompatActivity {
     }
     private void createFail()
     {
-        Toast.makeText(this,"计时失败！",Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this,"计时失败！",Toast.LENGTH_SHORT).show();
     }
     private void reLogin()
     {

@@ -27,7 +27,6 @@
         <activity android:name=".ui.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -38,7 +37,7 @@
         <activity android:name=".ui.PatternAnalysisPage6"></activity>
 
         <receiver
-            android:name=".model.Receiver.AlarmReceiver"
+            android:name=".model.moudle.Receivers.AlarmReceiver"
             android:enabled="true"
             android:exported="true"></receiver>
     </application>

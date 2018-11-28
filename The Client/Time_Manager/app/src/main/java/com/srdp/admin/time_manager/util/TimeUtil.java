@@ -1,7 +1,5 @@
 package com.srdp.admin.time_manager.util;
 
-import android.support.annotation.Dimension;
-
 import java.util.Calendar;
 import java.util.Date;
 
@@ -51,19 +49,6 @@ public class TimeUtil {
         String[] times=time.split(":");
         long ms=((Integer.parseInt(times[0])*60+Integer.parseInt(times[1]))*60+Integer.parseInt(times[2]))*1000;
         return ms;
-    }
-
-    public static long getDateMs(String date)
-    {
-        String[] dates1 = date.split("年");
-        int year = Integer.parseInt(dates1[0]);
-        String[] dates2 = dates1[1].split("月");
-        int month = Integer.parseInt(dates2[0]);
-        String[] dates3 = dates2[1].split("日");
-        int day = Integer.parseInt(dates3[0]);
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month,day,0,0,0);
-        return calendar.getTimeInMillis();
     }
     public static int compareTime(String time1,String time2){
         time1=time1.split(" ")[1];
@@ -145,6 +130,18 @@ public class TimeUtil {
     {
         String[] time=lasttime.split(":");
         return time[0]+":"+time[1];
+    }
+    public static long getDateMs(String date)
+    {
+        String[] dates1 = date.split("年");
+        int year = Integer.parseInt(dates1[0]);
+        String[] dates2 = dates1[1].split("月");
+        int month = Integer.parseInt(dates2[0]);
+        String[] dates3 = dates2[1].split("日");
+        int day = Integer.parseInt(dates3[0]);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month,day,0,0,0);
+        return calendar.getTimeInMillis();
     }
     //比较2个时间，比如10:00与11:19，小于返回1，否则返回0
 //    public static String getTimeDuration(String time1,String time2){
