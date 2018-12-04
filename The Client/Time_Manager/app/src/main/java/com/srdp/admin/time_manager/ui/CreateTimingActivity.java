@@ -85,6 +85,7 @@ public class CreateTimingActivity extends AppCompatActivity {
     private int mMinute;
 
     //创建按钮
+    private boolean hasCreated=false;
     private Button timing_create_btn;
     private EditText timing_name;
     private EditText timing_ps;
@@ -236,6 +237,9 @@ public class CreateTimingActivity extends AppCompatActivity {
         timing_create_btn.setOnClickListener(new OnClickListener(){
             @Override
             public void onClick(View v){
+                if(hasCreated)
+                    return;
+                hasCreated=true;
                 String schedule_name_edit = timing_name.getText().toString();//获取事件名
                 if(TextUtils.isEmpty(schedule_name_edit)){
                     Toast.makeText(CreateTimingActivity.this,"事件名不能为空",Toast.LENGTH_SHORT).show();
@@ -410,17 +414,22 @@ public class CreateTimingActivity extends AppCompatActivity {
     }
     private void startTiming(JSONObject resJson)
     {
-        //事务的基本信息保存在服务器端数据库后将返回的Id和isAffair存在本地文件里
-        int id=resJson.getIntValue("id");
-        boolean isAffair=resJson.getBooleanValue("isAffair");
-        AffairUtil.init(id,isAffair);
-        //跳转回首页，并把开始时间传送到首页
-        Intent jump_to_index=new Intent(this,Index_Timing.class);
         Calendar calendar=Calendar.getInstance();
         calendar.setTime(new Date());
         int hour=calendar.get(Calendar.HOUR_OF_DAY);
         int min=calendar.get(Calendar.MINUTE);
-        jump_to_index.putExtra("startTime",hour+":"+min);
+        int sec=calendar.get(Calendar.SECOND);
+        //事务的基本信息保存在服务器端数据库后将返回的Id和isAffair存在本地文件里
+        int id=resJson.getIntValue("id");
+        boolean isAffair=resJson.getBooleanValue("isAffair");
+        AffairUtil.init(id,isAffair);
+        AffairUtil.writeStartTime(hour+":"+min+":"+sec);
+        JSONObject j=AffairUtil.getAffairTime();
+        Log.i("storeaffairid:",String.valueOf(j.getIntValue("id")));
+        Log.i("storestarttime:",j.getString("StartTime"));
+        //跳转回首页，并把开始时间传送到首页
+        Intent jump_to_index=new Intent(this,Index_Timing_Change.class);
+        jump_to_index.putExtra("startTime",hour+":"+min+":"+sec);
         startActivity(jump_to_index);
     }
     private void createFail()

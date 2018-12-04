@@ -13,12 +13,15 @@ import static android.content.Context.MODE_PRIVATE;
  */
 
 public class UserUtil {
-    static private User user;
+    static private User user=new User();
     static public User getUser() {
         return user;
     }
     static public void setUserName(String name) {
         user.setName(name);
+    }
+    static public String getUserMajor() {
+        return user.getMajor();
     }
     static public void setUser(String school,String major,String number){
         user.setSchool(school);

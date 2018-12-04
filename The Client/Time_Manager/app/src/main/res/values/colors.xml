@@ -10,4 +10,7 @@
     <color name="chartWhite">#ffffff</color>
     <color name="chartGrayLight">#b3b3b3</color>
     <color name="chartGray">#4d4d4d</color>
+    <color name="lightOrange">#EAE2B7</color>
+    <color name="orange">#FCBF49</color>
+    <color name="darkOrange">#F77F00</color>
 </resources>

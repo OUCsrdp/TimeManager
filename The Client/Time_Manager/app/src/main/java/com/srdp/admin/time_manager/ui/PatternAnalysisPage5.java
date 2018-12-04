@@ -47,7 +47,7 @@ public class PatternAnalysisPage5 extends AppCompatActivity {
     }
     private void testDrawUtil()
     {
-        int[] colors={R.color.chartWhite,R.color.chartGrayLight,R.color.chartGray};
+        int[] colors={R.color.darkOrange,R.color.orange,R.color.lightOrange};
         DrawAnalysisChartUtil.drawChart(this,R.id.StackBarChartMain,"CompareBarChart",Percents,legendDdata,colors);
     }
     private void initData()
@@ -69,9 +69,9 @@ public class PatternAnalysisPage5 extends AppCompatActivity {
         }
             Percents.put((float)i,every);
         }
-        legendDdata.put(R.color.chartWhite,"少于预定时间的比例");
-        legendDdata.put(R.color.chartGrayLight,"等于预定时间的比例");
-        legendDdata.put(R.color.chartGray,"多于预定时间的比例");
+        legendDdata.put(R.color.darkOrange,"少于预定时间的比例");
+        legendDdata.put(R.color.orange,"等于预定时间的比例");
+        legendDdata.put(R.color.lightOrange,"多于预定时间的比例");
     }
     private void testDraw()
     {

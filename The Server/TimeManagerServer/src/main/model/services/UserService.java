@@ -25,7 +25,7 @@ import main.util.TokenUtil;
 import main.model.db.*;
 
 public class UserService {
-	private String verify;
+	private static String verify="";
 //	private String verifyR;
 	public void test(int id)
 	{
@@ -104,15 +104,15 @@ public class UserService {
 			
 			g2d.dispose();
 			//ImageIO.write(img,"JPG", new FileOutputStream("./verify.jpg"));
-			ImageIO.write(img, "JPG", new FileOutputStream("D:\\srdp\\TimeManager\\The Server\\TimeManagerServer\\verify.jpg")); 
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();   
+			//ImageIO.write(img, "JPG", new FileOutputStream("D:\\srdp\\TimeManager\\The Server\\TimeManagerServer\\verify.jpg")); 
+			ImageIO.write(img, "JPG", new FileOutputStream("D:\\srdp\\TimeManagerNew\\TimeManager\\The Server\\TimeManagerServer\\verify.jpg")); 
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();   
             ImageIO.write(img,"jpg", baos);   
             byte[] bytes = baos.toByteArray(); 
             System.out.println("verify:"+verify);
             for(int i=0;i<bytes.length;i++) {
     			System.out.print(bytes[i]);
     		}
-            System.out.println("");
             return bytes; 
 		}
 		catch(Exception e) {
@@ -161,14 +161,14 @@ public class UserService {
 		else return 0;
 	} //修改用户信息
 	
-	public User getUserInfor(int userId) {
-		if(UserManager.findWithId(userId) != null) { //该用户存在，返回用户信息
-			User user = UserManager.findWithId(userId);
+	public User getUserInfor(String userName) {
+			User user = UserManager.findWithName(userName);
 			return user;
-		}
-		else return null; //该用户不存在，返回null
 	}
-
+	public User getUserInfor(int UserId) {
+		User user = UserManager.findWithId(UserId);
+		return user;
+	}
 	public int logout(int UserId,String token) { //这里我需要该用户的token
 		
 		User user = UserManager.findWithId(UserId);

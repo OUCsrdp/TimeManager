@@ -27,7 +27,9 @@ public abstract class BaseServlet extends HttpServlet{
         response.setContentType("text/html;charset=utf-8");
         request.setCharacterEncoding("utf-8");
         // 获得执行的方法名
-        String methodName = request.getParameter("method");
+        //String methodName = request.getParameter("method");
+        String queryString=request.getQueryString();
+        String methodName=queryString.split("&")[0].split("=")[1];        
         // 没有默认方法
         System.out.println("BaseServlet : 本次所执行方法 :  " + methodName);
         JSONObject reqJson=new JSONObject();
@@ -36,22 +38,34 @@ public abstract class BaseServlet extends HttpServlet{
         	boolean identityPass=false;//使用token验证身份
         	String requestToken="";
         	String id;//用户id
-        	//如果不是请求验证码、计划表、时间分配表，将请求体转化成jsonobject形式
+        	String jsonString="";
+        	if(!methodName.equals("OperateS")&&!methodName.equals("OperateTS"))
+        	{
+        		jsonString=GetRequestUtil.getRequestJsonString(request);
+    			reqJson=JSON.parseObject(jsonString);
+        	}
+        	/*//如果不是请求验证码、计划表、时间分配表，将请求体转化成jsonobject形式
         	if(!methodName.equals("GetVerify")&!methodName.equals("OperateS")&!methodName.equals("OperateTS"))
         	{
         		String jsonString=GetRequestUtil.getRequestJsonString(request);
     			reqJson=JSON.parseObject(jsonString);
-        	}
+    			System.out.println("reqJson:"+reqJson);
+        	}*/
 			//注册登录和获取验证码操作前段无需传token，默认验证通过
-			if(methodName.equals("GetVerify")||reqJson.getString("operation").equals("register")
-					||reqJson.getString("operation").equals("login")
-					){
+			String operation=reqJson.getString("operation");
+			if(operation==null)
+				operation="";
+			if(methodName.equals("GetVerify")||operation.equals("register")
+					||operation.equals("login")
+			){
 				//默认身份验证通过，Id为空
 				identityPass=true;
 				id="";
+				System.out.println("location0");
 			}else {
 				if(methodName.equals("OperateS")||methodName.equals("OperateTS")){
-	        		requestToken=request.getParameter("token");
+	        		//requestToken=request.getParameter("token");
+					requestToken=queryString.split("&")[1].split("=")[1];
 	        	}else {
 	    			requestToken=reqJson.getString("token");
 	        	}
@@ -65,10 +79,10 @@ public abstract class BaseServlet extends HttpServlet{
         	{
         		// 通过反射获得当前运行类中指定方法,形式参数
         		Method executeMethod = this.getClass().getMethod(methodName,
-                        HttpServletRequest.class, HttpServletResponse.class,String.class);
+                        HttpServletRequest.class, HttpServletResponse.class,String.class,String.class);
                 // 反射执行方法
                 resJson = (JSONObject) executeMethod.invoke(this, request,
-                        response,id);
+                        response,id,jsonString);
                 //将json数据返回
         	}else
         	{

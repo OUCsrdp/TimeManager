@@ -1,7 +1,10 @@
 package main.util;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.IOException;
 
+import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 
 public class GetRequestUtil {  
@@ -42,15 +45,26 @@ public class GetRequestUtil {
         }  
         byte buffer[] = new byte[contentLength];  
         for (int i = 0; i < contentLength;) {  
-  
             int readlen = request.getInputStream().read(buffer, i,  
                     contentLength - i);  
             if (readlen == -1) {  
                 break;  
             }  
             i += readlen;  
-        }  
-        return buffer;  
+        } 
+        return buffer;
+    	/*BufferedReader br = request.getReader();
+
+    	String str, wholeStr = "";
+    	while((str = br.readLine()) != null){
+    	wholeStr += str;
+    	}
+    	System.out.println("wholestr:"+wholeStr);
+        int length = request.getContentLength();//获取请求参数长度。
+        byte[] bytes = new byte[length];//定义数组，长度为请求参数的长度
+        ServletInputStream inStream = request.getInputStream();
+        inStream.read(bytes, 0, length);
+        return bytes;*/
     }  
   
     /**       
@@ -68,8 +82,9 @@ public class GetRequestUtil {
         String charEncoding = request.getCharacterEncoding();  
         if (charEncoding == null) {  
             charEncoding = "UTF-8";  
-        }  
-        return new String(buffer, charEncoding);  
+        }
+        String newString=new String(buffer, charEncoding);
+        return newString;  
     }  
   
 }

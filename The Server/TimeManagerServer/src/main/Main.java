@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
@@ -20,7 +21,7 @@ public class Main {
 	public static void main(String[] args) {
 		/*User user=UserManager.findWithId(2);
 		System.out.println("name: "+user.getName());*/
-		UserService userService=new UserService();
+		/*UserService userService=new UserService();
 		byte[] img=userService.getVerify();
 		System.out.println("origin:");
 		for(int i=0;i<img.length;i++) {
@@ -33,7 +34,12 @@ public class Main {
 		System.out.println("change:");
 		for(int i=0;i<img2.length;i++) {
 			System.out.print(img2[i]);
-		}
+		}*/
+		/*TimeSharingService tsService=new TimeSharingService();
+		JSONObject resJson=tsService.getSharingTable("2","2018Äê11ÔÂ14ÈÕ");
+		System.out.println(resJson);*/
+		ArrayList<SharedTable> sharedTables = SharedTableManager.sortWithNothing();
+		System.out.println(JSON.toJSON(sharedTables.get(0)));
 		/*String str = Base64.encodeBase64String(img);
 		j.put("v",str);
 		byte[] img2 =Base64.decodeBase64(JSONObject.parseObject(j.toString()).getString("v"));*/

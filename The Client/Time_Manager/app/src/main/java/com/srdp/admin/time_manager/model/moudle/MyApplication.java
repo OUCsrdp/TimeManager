@@ -3,6 +3,7 @@ package com.srdp.admin.time_manager.model.moudle;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.srdp.admin.time_manager.util.TokenUtil;
@@ -33,6 +34,7 @@ public class MyApplication extends Application {
         String userString=sp.getString("user","");
         //获取字符串形式的token
         String token=sp.getString("token","");
+        Log.i("applicationToken",token);
         //如果已经存了userString,设置userUtil和tokenUtil的值
         if(!userString.equals(""))
         {
