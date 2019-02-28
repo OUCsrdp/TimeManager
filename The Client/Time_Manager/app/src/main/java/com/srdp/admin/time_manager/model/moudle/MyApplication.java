@@ -18,7 +18,7 @@ public class MyApplication extends Application {
     private static Context context;
     private Affair timingAffair=new Affair();
     private S_Affair timingSAffair=new S_Affair();
-    private String baseUrl="http://10.115.235.198:8080/TimeManagerServer/";
+    private String baseUrl="http:/10.0.2.2:8080/TimeManagerServer/";
     private int isAffair=1;
 
     public void onCreate()

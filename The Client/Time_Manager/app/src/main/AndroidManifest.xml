@@ -20,7 +20,7 @@
         <activity android:name=".ui.Plan_Table" />
         <activity android:name=".ui.assign_table" />
         <activity android:name=".ui.Person_Center" />
-        <activity android:name=".ui.CreateScheduleActivity" />
+        <activity android:name=".ui.CreateScheduleActivity"/>
         <activity android:name=".ui.CreateTimingActivity" />
         <activity android:name=".ui.ExcellentDistributionContentActivity"></activity>
         <activity android:name=".ui.ExcellentDistributionListActivity"></activity>

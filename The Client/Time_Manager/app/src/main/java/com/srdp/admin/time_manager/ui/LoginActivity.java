@@ -76,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
                 getVerify();
             }
         });
-
+        Log.d("Image", login_captcha_image.toString());
         //跳转注册
         go_register = (TextView) findViewById(R.id.go_register);
 
@@ -246,6 +246,7 @@ public class LoginActivity extends AppCompatActivity {
     }
     private void createFail()
     {
+        Log.d("CreateFail", "fail");
         //Toast.makeText(this,"计时失败！",Toast.LENGTH_SHORT).show();
     }
     private void reLogin()

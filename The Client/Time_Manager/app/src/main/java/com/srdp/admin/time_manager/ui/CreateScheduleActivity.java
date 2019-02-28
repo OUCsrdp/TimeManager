@@ -13,6 +13,7 @@ import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
 import android.content.DialogInterface;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
@@ -23,6 +24,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.lang.ref.WeakReference;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -334,19 +336,37 @@ public class CreateScheduleActivity extends AppCompatActivity {
                     case 1:
                         Toast.makeText(activity,"创建成功",Toast.LENGTH_SHORT).show();
                         if(activity.setAlarm){
-                            long timeMills = TimeUtil.getDateMs(activity.schedule_remind_date.getText().toString());
-                            timeMills += TimeUtil.getMs(activity.schedule_remind_time.getText().toString());
+                            Date date = new Date();
+                            Calendar calendar = Calendar.getInstance();
+                            String[] date1 = activity.schedule_remind_date.getText().toString().split("年");
+                            String[] date2 = date1[1].split("月");
+                            String[] date3 = date2[1].split("日");
+                            String[] times =  activity.schedule_remind_time.getText().toString().split(":");
+                            int year = Integer.parseInt(date1[0]);
+                            int month = Integer.parseInt(date2[0]);
+                            int day = Integer.parseInt(date3[0]);
+                            int hour = Integer.parseInt(times[0]);
+                            int minute = Integer.parseInt(times[1]);
+                            calendar.set(Calendar.YEAR, year);
+                            calendar.set(Calendar.MONTH, month-1);
+                            calendar.set(Calendar.DAY_OF_MONTH, day);
+                            calendar.set(Calendar.HOUR_OF_DAY, hour);
+                            calendar.set(Calendar.MINUTE, minute);
+                            calendar.set(Calendar.SECOND, 0);
+                            date = calendar.getTime();
+                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日   HH:mm:ss");
+                            Log.d("alarmtime", simpleDateFormat.format(date));
                             Intent intent = new Intent(activity,AlarmReceiver.class);
                             intent.putExtra("Time", activity.s_affair.getTimeStart());
                             intent.putExtra("Name", activity.s_affair.getName());
                             PendingIntent pendingIntent = PendingIntent.getBroadcast(activity, 0, intent,0);
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
                             {
-                                activity.alarmManager.setWindow(AlarmManager.RTC, timeMills, 3000, pendingIntent);
+                                activity.alarmManager.setWindow(AlarmManager.RTC, date.getTime(), 3000, pendingIntent);
                             }
                             else
                             {
-                                activity.alarmManager.set(AlarmManager.RTC, timeMills, pendingIntent);
+                                activity.alarmManager.set(AlarmManager.RTC, date.getTime(), pendingIntent);
                             }
                         }
                         activity.finish();break;
