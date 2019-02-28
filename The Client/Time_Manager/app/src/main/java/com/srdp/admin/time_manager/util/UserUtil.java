@@ -23,6 +23,8 @@ public class UserUtil {
     static public String getUserMajor() {
         return user.getMajor();
     }
+    static public int getUserId() { return user.getId(); }
+    static public float getUserGpa(){return user.getGPA();}
     static public void setUser(String school,String major,String number){
         user.setSchool(school);
         user.setMajor(major);

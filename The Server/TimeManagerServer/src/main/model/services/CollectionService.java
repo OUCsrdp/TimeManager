@@ -18,10 +18,13 @@ public class CollectionService{
 		CollectionManager managerC = new CollectionManager();
 		ArrayList<Collection> findList = managerC.findWithIdTS(idTs);
 		int count = 0;
-		for(Collection a:findList) {
-			if(a.getIdUser() == userId) {
-				count ++;
-				return "fail"; //已经收藏过，不能再次收藏
+		if(findList!=null)
+		{
+			for(Collection a:findList) {
+				if(a.getIdUser() == userId) {
+					count ++;
+					return "fail"; //已经收藏过，不能再次收藏
+				}
 			}
 		}
 		if(count == 0) {

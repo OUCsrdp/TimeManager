@@ -14,15 +14,18 @@ public class LikeService{
 		LikeManager managerL = new LikeManager();
 		ArrayList<Like> findList = managerL.findWithIdTS(idTs);
 		int count = 0;
-		for(Like a:findList) {
-			if(a.getIdUser() == userId) {
-				count ++;
-				return "likedfail"; //已经赞过，不能再次赞
+		if(findList!=null)
+		{
+			for(Like a:findList) {
+				if(a.getIdUser() == userId) {
+					count ++;
+					return "likedfail"; //已经赞过，不能再次赞
+				}
 			}
 		}
 		if(count == 0) {
 			SharedTableManager managerTS =  new SharedTableManager();
-			SharedTable curTS = managerTS.findWithIdTS(idTs); //需要最新版类，idTS
+			SharedTable curTS = managerTS.findWithId(idTs); //需要最新版类，idTS
 			int thumb = curTS.getThumbup();
 			thumb = thumb + 1;
 			curTS.setThumbup(thumb); //点赞数加一

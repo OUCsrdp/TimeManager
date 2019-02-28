@@ -1,14 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingVertical="10dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="79dp">
+
+        <Button
+            android:id="@+id/search_close_btn"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="right"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/close" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -23,8 +36,8 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="搜索专业"
-                android:textSize="20sp"
-                android:textColor="#fd8d01"/>
+                android:textColor="#fd8d01"
+                android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/major_search"
@@ -34,6 +47,8 @@
                 android:layout_marginHorizontal="10dp"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:imeOptions="actionDone"
+                android:inputType="text"
                 android:maxLines="2"
                 android:textColor="#fd8d01"
                 android:textSize="20sp"
@@ -42,7 +57,59 @@
         </LinearLayout>
 
 
+        <!--<LinearLayout-->
+        <!--android:layout_width="250dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:gravity="center"-->
+        <!--android:orientation="vertical">-->
+        <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="海洋科学"-->
+        <!--android:textColor="#fd8d01"-->
+        <!--android:textSize="20sp"/>-->
+        <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="环境科学"-->
+        <!--android:textColor="#fd8d01"-->
+        <!--android:textSize="20sp"/>-->
+        <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="计算机科学与技术"-->
+        <!--android:textColor="#fd8d01"-->
+        <!--android:textSize="20sp"/>-->
+        <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="电子信息科学与技术"-->
+        <!--android:textColor="#fd8d01"-->
+        <!--android:textSize="20sp"/>-->
 
+
+        <!--</LinearLayout>-->
+
+        <cn.forward.androids.views.StringScrollPicker
+            android:id="@+id/select_major"
+            android:layout_width="200dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/label_bg_style"
+            android:visibility="visible"
+            app:spv_center_item_position="0"
+            app:spv_disallow_intercept_touch="true"
+            app:spv_end_color="#000000"
+            app:spv_is_circulation="false"
+            app:spv_max_text_size="22dp"
+            app:spv_min_text_size="16dp"
+            app:spv_start_color="#fd8d01"
+            app:spv_visible_item_count="5"
+            />
 
 
     </LinearLayout>

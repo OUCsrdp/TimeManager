@@ -48,6 +48,7 @@
 
         </LinearLayout>
 
+
         <!--列表-->
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/listswiplayout"

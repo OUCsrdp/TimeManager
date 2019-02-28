@@ -23,7 +23,8 @@
         <activity android:name=".ui.CreateScheduleActivity" />
         <activity android:name=".ui.CreateTimingActivity" />
         <activity android:name=".ui.ExcellentDistributionContentActivity"></activity>
-        <activity android:name=".ui.ExcellentDistributionListActivity"></activity>
+        <activity android:name=".ui.ExcellentDistributionListActivity">
+        </activity>
         <activity android:name=".ui.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

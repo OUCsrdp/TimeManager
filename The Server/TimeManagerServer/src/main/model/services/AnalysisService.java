@@ -1,7 +1,12 @@
 package main.model.services;
 
-import main.model.moudle.*;
+import  main.model.moudle.*;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -47,13 +52,9 @@ public class AnalysisService{
 			return days;
 		}
 	}
-	public String getDelayedTime(int userId,boolean weekday) {
-		return null;}
-	public float getUnfinishedPercent(int userId,boolean weekday) {
-		return userId;};
 	
 	//通过开始时间、结束时间获得事件所在时间段
-		private static float[] getStep(String from,String to) {
+	public static float[] getStep(String from,String to) {
 			
 			String from1 = from.replace(':', '-');
 			String to1 = to.replace(':', '-');
@@ -105,6 +106,7 @@ public class AnalysisService{
 						per[i] = ((float)t-(float)f)/all;
 					}
 				}
+				System.out.println("per"+i+":"+per[i]);
 			}
 			
 			
@@ -113,7 +115,7 @@ public class AnalysisService{
 	
 	
 	//通过开始时间、结束时间获得事件的消耗时间（返回分钟）
-	private static int getSpent(String from,String to) {
+	public static int getSpent(String from,String to) {
 		String from1 = from.replace(':', '-');
 		String to1 = to.replace(':', '-');
 		SimpleDateFormat simple = new SimpleDateFormat("HH-mm");
@@ -211,7 +213,6 @@ public class AnalysisService{
 					 }
 				 }
 				 
-				 
 				 int all = save + equal + over;
 				 float per1 = 0;
 				 float per2 = 0;
@@ -225,8 +226,6 @@ public class AnalysisService{
 						per3 = (float)(Math.round(per3*100))/100;
 				 }
 
-				
-				 
 				 percent.add(per1);
 				 percent.add(per2);
 				 percent.add(per3);
@@ -242,20 +241,20 @@ public class AnalysisService{
 			float[] count = new float[7];
 			float[] count1 = new float[7];
 			long all = 0;
+			long allDays = 0;
 			for(int i = 0;i < 7;i ++) {
 				count[i] = 0;
 			}
+			ArrayList<TimeSharing> tsList = TimeSharingManager.findWithIdUser(userId);
+			allDays = tsList.size();
+			
 			ArrayList<Affair> AList = AffairManager.findWithNothing();
 			for(Affair a:AList) {
 				TimeSharing s = TimeSharingManager.findWithId(a.getIdTS());
 				 if(s.getIdUser() == userId) {
 					 //是当前用户的日程
-					 
 					 count1 = getStep(a.getTimeStart(),a.getTimeEnd());
-					 System.out.println(a.getTimeStart());
-					 System.out.println(a.getTimeEnd());
 					 for(int j = 0;j < 7;j ++) {
-						 System.out.println(count1[j]);
 						 count[j] += count1[j];
 					 }
 					 all ++;
@@ -263,20 +262,19 @@ public class AnalysisService{
 			}
 			
 			float[] per = new float[7];
-			per[0] = count[0] / 6;
-			per[1] = count[1] / 3;
-			per[2] = count[2] / 5;
-			per[3] = (float) (count[3] / 1.5);
-			per[4] = count[4] / 5;
-			per[5] = (float) (count[5] / 4.5);
-			per[6] = count[6] / 2;
+			per[0] = count[0] / (6*allDays);
+			per[1] = count[1] / (3*allDays);
+			per[2] = count[2] / (5*allDays);
+			per[3] = (float) (count[3] / (1.5*allDays));
+			per[4] = count[4] / (5*allDays);
+			per[5] = (float) (count[5] / (4.5*allDays));
+			per[6] = count[6] / (2*allDays);
 
 			float density = 0;
-			try {
-				density = all / (getDays(userId) * 24);
-			} catch (ParseException e) {
-				return null;
-			}
+			density = (float) all/(allDays*24);
+			density = (float)(Math.round(density*100))/100;
+			System.out.println("allDays:" + allDays);
+			System.out.println("density:" + density);
 			
 			//保留两位小数
 			for(int i = 0;i<7;i++) {
@@ -321,7 +319,69 @@ public class AnalysisService{
 			back.put("chartInfor", array);
 		}
 		else return null;
+		
+		System.out.println(testForFile(back,type));
 		return back;
 	}
 	
+	private static String json2string(JSONObject json,String type) {
+		String back = "";
+		if(type.equals("SimpleAnalysis")) {
+			JSONArray array = json.getJSONArray("chartInfor");
+			for(int i=0;i<array.size();i++){
+                JSONObject temp = array.getJSONObject(i);//把每一个对象转成json对象
+                String id = temp.getString("labelid");
+                String percent = temp.getString("percents");
+                String type1 =  temp.getString("type");
+                back += "\n第"+(i+1)+"组数据：\n标签id:"+id+"\n超时或节约比例："+percent+"%\n"+type1+"\n";
+			}
+		}
+		else if(type.equals("detailedAnalysis")) {
+			JSONArray array = json.getJSONArray("chartInfor");
+			for(int i=0;i<array.size();i++){
+                JSONObject temp = array.getJSONObject(i);//把每一个对象转成json对象
+                String id = temp.getString("labelid");
+                JSONArray a = temp.getJSONArray("percents");
+                String less,equal,more;
+                less = a.get(0).toString();
+                equal = a.get(1).toString();
+                more = a.get(2).toString();
+                
+                back += "\n第"+i+"组数据：\n标签id:"+id
+                		+"\n少于预计时间事件数比例："+less
+                		+"%\n等于预计时间事件数比例："+equal
+                		+"%\n多于预计时间事件数比例："+more+"%\n";
+			}
+		}
+		else {
+			String density = json.getString("density");
+			back += "迄今为止，平均每小时完成的事件数:"+density;
+			JSONArray array = json.getJSONArray("chartInfor");
+			for(int i=0;i<array.size();i++){
+                JSONObject temp = array.getJSONObject(i);//把每一个对象转成json对象
+                String period = temp.getString("period");
+                String percent = temp.getString("percents");
+                back += "\n第"+(i+1)+"个时间段：\n时间段名称:"+period+"\n该时间段每小时平均做的事件数："+percent+"\n";
+			}
+		}
+		return back;
+	}
+	
+	private static boolean testForFile(JSONObject json,String type) {
+		boolean back = false;
+		String content = json2string(json,type);
+		System.out.println(content);
+		FileWriter fileWriter;
+		try {
+			fileWriter = new FileWriter("./testForFile.doc");
+			fileWriter.write(content);
+			fileWriter.flush();
+			fileWriter.close();
+			back = true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		
+		return back;
+	}
 }

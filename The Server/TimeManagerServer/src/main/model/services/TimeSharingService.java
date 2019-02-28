@@ -136,7 +136,11 @@ public class TimeSharingService {
 		JSONObject resJson=new JSONObject();
 		ArrayList<Affair> affairList=managerA.findWithIdTS(idTS);//得到属于这个时间分配表的所有事件
 		ArrayList<S_Affair> s_affairList=managerSA.findWithIdTS(idTS);//得到属于这个时间分配表的所有日程
-		affairList.addAll(s_affairList);//将s_affairlist中的日程转化为时间分配表事件全部加入affairList里
+		//将s_affairlist中的日程转化为时间分配表事件全部加入affairList里
+		if(affairList==null)
+			affairList=new ArrayList<Affair>();
+		if(s_affairList!=null)
+			affairList.addAll(s_affairList);
 		if(affairList != null) {
 			affairList = SortService.sortAByTime(affairList);
 		}

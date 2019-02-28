@@ -19,7 +19,7 @@
             android:id="@+id/excellent_list_icon"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="3"
+            android:layout_weight="3.5"
             android:layout_gravity="center"
             android:src="@drawable/login_icon1"
             android:paddingHorizontal="10dp"/>
@@ -28,7 +28,7 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="7"
+            android:layout_weight="6.5"
             android:orientation="vertical"
             android:paddingVertical="10dp">
 

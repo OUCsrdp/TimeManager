@@ -1,35 +1,15 @@
 ```json
-method=getSTDetail
-request
-{
-    "idTS":122
-}
-
-response
-{
-"id":,
-"idUser":,
-"date":,
-"weekday":,
-"affair":[{},{}] ,
-"saffair":[{},{}] ,
-"status":"success"||"fail"||"unlogin" ,
-}
-
-```
-
-```json
 使用Intent跨activity传值(从list页面传到详情页面)
 {
-    “name”:”爱吃肉的兔子”,
-	“userId”://分享的时间分配表用户id
-	“image”://头像地址
-	“school”:”中国海洋大学”,
-	“major”:”计算机系”,
-    “summary”:”今天超超级充实的”,
+    "name":"爱吃肉的兔子",
+	"userId":2,//分享的时间分配表用户id
+	"image":"",//头像地址
+	"school":"中国海洋大学",
+	"major":"计算机系",
+    "summary":"今天超超级充实的",
     "gpa":3.7,
-    “idTS”://时间分配表的id,
-	“idST”://已分享的时间分配表的id
+    "idTS":2,//时间分配表的id
+	"idST":3//已分享的时间分配表的id
 }
 
 
@@ -57,6 +37,9 @@ response
         }
     ]
 }
+
+//后面是测试不用看
+
 	"jsonArray":
 	[{
 	“name”:”爱吃肉的兔子”,
@@ -81,6 +64,18 @@ response
 	“thumbup”:233
 	},
 	]
+}
+
+{
+    "name":"爱吃肉的兔子",
+	"userId":2,
+	"image":"",
+	"school":"中国海洋大学",
+	"major":"计算机系",
+    "summary":"今天超超级充实的",
+    "gpa":3.7,
+    "idTS":2,
+	"idST":3
 }
 ```
 

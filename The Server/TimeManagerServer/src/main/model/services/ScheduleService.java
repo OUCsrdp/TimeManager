@@ -31,8 +31,8 @@ public class ScheduleService {
 				back.put("weekday",Integer.toString(curS.getWeekday()));
 				
 				JSONArray array2 = new JSONArray();
-				JSONObject js2 = new JSONObject();
 				for(S_Affair a:s_affairList) {
+					JSONObject js2 = new JSONObject();
 					int id = a.getId();
 					int idTS = a.getIdTS();
 					int idLabel = a.getIdLabel();

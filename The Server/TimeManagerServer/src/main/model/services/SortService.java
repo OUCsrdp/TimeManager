@@ -78,8 +78,8 @@ public class SortService{
 			@Override
 			public int compare(S_Affair arg0, S_Affair arg1) {
 				// TODO Auto-generated method stub
-				if(compareTime(arg0.getTimeStart(),arg1.getTimeStart())) return 1; //开始时早的放前面
-				else return -1;
+				if(compareTime(arg0.getTimeStartPlan(),arg1.getTimeStartPlan())) return -1; //开始时早的放前面
+				else return 1;
 			}  
         });  
 		

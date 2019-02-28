@@ -17,7 +17,6 @@
 {
 	"userId"://当前用户id
 	"idST":
-	"operation":"collect"
 	"token":
 }
 {
@@ -30,7 +29,6 @@
 {
 	"userId"://当前用户id
 	"idST"://分享的时间分配表id
-	"operation":"like"
 	"token":	
 }
 {
@@ -84,5 +82,22 @@
 	"token":
 }
 返回如上
+```
+
+#### 6. 获取动态搜索专业列表
+
+```json
+method=getSearchMajors
+{
+    "majorKeyword":"电子"
+}
+{
+    "status":"success"||"fail"||"likedfail"||"unlogin"
+    "majorKeyword":"电子",
+    "majors":[
+    {"major":"电子信息"}
+    ,{ "major":"电子信息工程"}
+    ]
+}
 ```
 
