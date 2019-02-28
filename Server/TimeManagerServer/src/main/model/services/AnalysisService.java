@@ -2,6 +2,11 @@ package main.model.services;
 
 import main.model.services.moudle.*;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -16,7 +21,7 @@ public class AnalysisService{
 	
 	public static String getInsDate()
 	{
-		int y,m,d,h,mi,s;    
+		int y,m,d;    
 		Calendar cal=Calendar.getInstance();    
 		y=cal.get(Calendar.YEAR);    
 		m=cal.get(Calendar.MONTH) + 1;    
@@ -25,7 +30,7 @@ public class AnalysisService{
 		return date;
 	}
 	
-	//·µ»ØÖµÎªÓÃ»§Ê¹ÓÃ¸ÃAPPµÄ×ÜÌìÊý
+	//ï¿½ï¿½ï¿½ï¿½ÖµÎªï¿½Ã»ï¿½Ê¹ï¿½Ã¸ï¿½APPï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public static int getDays(int userId) throws ParseException{ 
 		User user = UserManager.findWithId(userId);
 		String now = getInsDate();
@@ -34,13 +39,10 @@ public class AnalysisService{
 		else
 		{
 			String timeR0 = user.getTimeRegister();
-			String timeR1 = timeR0.replace('Äê', '-');
-			String timeR2 = timeR1.replace('ÔÂ', '-');
-			String timeR = timeR2.substring(0,timeR2.length() - 1);
 
-			SimpleDateFormat simple = new SimpleDateFormat("yyyy-MM-dd");
-			
-			long f = simple.parse(timeR).getTime();
+			SimpleDateFormat simple = new SimpleDateFormat("yyyyï¿½ï¿½MMï¿½ï¿½dd");
+			long f = simple.parse(timeR0).getTime();
+			simple = new SimpleDateFormat("yyyy-MM-dd");
 			long t = simple.parse(now).getTime();
 			
 			int days = (int)((t - f)/(1000*60*60*24));
@@ -48,38 +50,15 @@ public class AnalysisService{
 		}
 	}
 	
-	//Í¨¹ý¿ªÊ¼Ê±¼ä¡¢½áÊøÊ±¼ä»ñµÃÊÂ¼þËùÔÚÊ±¼ä¶Î
-		public static float[] getStep(String from,String to) {
-			
-			String from1 = from.replace(':', '-');
-			String to1 = to.replace(':', '-');
-			SimpleDateFormat simple = new SimpleDateFormat("HH-mm");
-			
-			int[] l = new int[8];
-			try {
-				l[0] = (int)((simple.parse("00-00").getTime())/(1000*60));
-				l[1] = (int)((simple.parse("06-00").getTime())/(1000*60));
-				l[2] = (int)((simple.parse("08-00").getTime())/(1000*60));
-				l[3] = (int)((simple.parse("12-00").getTime())/(1000*60));
-
-				l[4] = (int)((simple.parse("13-30").getTime())/(1000*60));
-				l[5] = (int)((simple.parse("17-30").getTime())/(1000*60));
-				l[6] = (int)((simple.parse("22-00").getTime())/(1000*60));
-				l[7] = (int)((simple.parse("24-00").getTime())/(1000*60));
+	//ï¿½ï¿½ï¿½ï¿½ï¿½Å»ï¿½ï¿½ï¿½Í¨ï¿½ï¿½ï¿½ï¿½Ê¼Ê±ï¿½ä¡¢ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½
+	public static float[] getStep(String from,String to, int[] l) {		
+		
+			SimpleDateFormat simple = new SimpleDateFormat("HH:mm");
 				
-			} catch (ParseException e1) {
-				return null;
-			}
-			
-			long f;
+			long f,t;
 			try {
-				f = simple.parse(from1).getTime();
-			} catch (ParseException e) {
-				return null;
-			}
-			long t;
-			try {
-				t = simple.parse(to1).getTime();
+				f = simple.parse(from).getTime();
+				t = simple.parse(to).getTime();
 			} catch (ParseException e) {
 				return null;
 			}
@@ -90,9 +69,9 @@ public class AnalysisService{
 			f = (int)(f/(1000*60));
 			t = (int)(t/(1000*60));
 			
-			//perÊý×éÓÃÀ´×°Ã¿¸ö½×¶ÎµÄµ±Ç°ÊÂ¼þÕ¼±È£¬·Å»ØÔ­º¯ÊýÔÚÃ¿¸ö½×¶ÎÖðÒ»¼ÓÉÏ¼´¿É
+			//perï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×°Ã¿ï¿½ï¿½ï¿½×¶ÎµÄµï¿½Ç°ï¿½Â¼ï¿½Õ¼ï¿½È£ï¿½ï¿½Å»ï¿½Ô­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¿ï¿½ï¿½ï¿½×¶ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½
 			for(int i = 0;i < 7;i ++) {
-				if(f >= l[i]&& f <= l[i+1]) { //ÏÈÕÒµ½¿ªÊ¼Ê±¼äËùÔÚ½×¶Î
+				if(f >= l[i]&& f <= l[i+1]) { //ï¿½ï¿½ï¿½Òµï¿½ï¿½ï¿½Ê¼Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Ú½×¶ï¿½
 					if(t >= l[i+1]) {
 						per[i] = ((float)l[i+1] -(float) f) / all;
 						f = l[i+1];
@@ -101,28 +80,21 @@ public class AnalysisService{
 						per[i] = ((float)t-(float)f)/all;
 					}
 				}
+				System.out.println("per"+i+":"+per[i]);
 			}
-			
 			
 			return per;
 		}
 	
 	
-	//Í¨¹ý¿ªÊ¼Ê±¼ä¡¢½áÊøÊ±¼ä»ñµÃÊÂ¼þµÄÏûºÄÊ±¼ä£¨·µ»Ø·ÖÖÓ£©
+	//Í¨ï¿½ï¿½ï¿½ï¿½Ê¼Ê±ï¿½ä¡¢ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ä£¨ï¿½ï¿½ï¿½Ø·ï¿½ï¿½Ó£ï¿½
 	public static int getSpent(String from,String to) {
-		String from1 = from.replace(':', '-');
-		String to1 = to.replace(':', '-');
-		SimpleDateFormat simple = new SimpleDateFormat("HH-mm");
+		SimpleDateFormat simple = new SimpleDateFormat("HH:mm");
 		
-		long f;
+		long f,t;
 		try {
-			f = simple.parse(from1).getTime();
-		} catch (ParseException e) {
-			return -1;
-		}
-		long t;
-		try {
-			t = simple.parse(to1).getTime();
+			f = simple.parse(from).getTime();
+			t = simple.parse(to).getTime();
 		} catch (ParseException e) {
 			return -1;
 		}
@@ -131,18 +103,19 @@ public class AnalysisService{
 		return mins;
 	}
 	
+	//ï¿½ï¿½ï¿½ï¿½ï¿½Å»ï¿½ï¿½ï¿½
 	public static JSONObject getChart(int userId,boolean weekday,String type) {
 		JSONObject back=new JSONObject();
 		JSONArray array = new JSONArray();
 		if(type.equals("SimpleAnalysis")) {
-			//¶ÔÓ¦ÐÐÎªÄ£Ê½·ÖÎöµÚËÄÒ³(Çë¶ÔÕÕÉè¼Æ¸å)
-			//·µ»ØjsonObject(ÆäÖÐµÄjsonArray×Ü¹²11Ïî£¬¶ÔÓ¦11¸ö±êÇ©¸÷±êÇ©×ÜÊ±¼äÏà±ÈÈÕ³Ì°²ÅÅ¸Ã±êÇ©×ÜÊ±¼äµÄ½ÚÔ¼/³¬Ê±ËùÕ¼±È)
+			//ï¿½ï¿½Ó¦ï¿½ï¿½ÎªÄ£Ê½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò³(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¸ï¿½)
+			//ï¿½ï¿½ï¿½ï¿½jsonObject(ï¿½ï¿½ï¿½Ðµï¿½jsonArrayï¿½Ü¹ï¿½11ï¿½î£¬ï¿½ï¿½Ó¦11ï¿½ï¿½ï¿½ï¿½Ç©ï¿½ï¿½ï¿½ï¿½Ç©ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ³Ì°ï¿½ï¿½Å¸Ã±ï¿½Ç©ï¿½ï¿½Ê±ï¿½ï¿½Ä½ï¿½Ô¼/ï¿½ï¿½Ê±ï¿½ï¿½Õ¼ï¿½ï¿½)
 			 ArrayList<Label> labelList = LabelManager.findWithNothing();
 			 
 			 for(Label label:labelList) {
 				 float percent = 0;
-				 int truth = 0; //±êÇ©ËùÓÐÊÂ¼þÊµ¼ÊÏûºÄÊ±¼ä
-				 int schedule = 0;//±êÇ©ËùÓÐÊÂ¼þ¼Æ»®Ê¹ÓÃÊ±¼ä
+				 int truth = 0; //ï¿½ï¿½Ç©ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
+				 int schedule = 0;//ï¿½ï¿½Ç©ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½Æ»ï¿½Ê¹ï¿½ï¿½Ê±ï¿½ï¿½
 				 
 				 int idLabel = label.getId();
 				 ArrayList<S_Affair> SAList = S_AffairManager.findWithIdLabel(idLabel);
@@ -152,7 +125,7 @@ public class AnalysisService{
 				 if(SAList != null) {
 					 for(S_Affair sa:SAList) {
 						 Schedule s = ScheduleManager.findWithId(sa.getIdS());
-						 if(s.getIdUser() == userId) { //ÊÇµ±Ç°ÓÃ»§µÄÈÕ³Ì
+						 if(s.getIdUser() == userId) { //ï¿½Çµï¿½Ç°ï¿½Ã»ï¿½ï¿½ï¿½ï¿½Õ³ï¿½
 							 truth += getSpent(sa.getTimeStart(),sa.getTimeEnd());
 							 schedule += getSpent(sa.getTimeStartPlan(),sa.getTimeEndPlan());
 						 }
@@ -164,7 +137,6 @@ public class AnalysisService{
 					percent = (float)(Math.round(percent*100))/100;
 				 }
 				 
-
 				 js.put("percents", percent);
 				 if(schedule >= truth) {
 					 js.put("type", "timeSaving");
@@ -178,14 +150,14 @@ public class AnalysisService{
 			 back.put("chartInfor", array);
 		}
 		else if(type.equals("detailedAnalysis")) {
-			//¶ÔÓ¦ÐÐÎªÄ£Ê½·ÖÎöµÚ5Ò³(Çë¶ÔÕÕÉè¼Æ¸å)
-			//·µ»ØjsonObject(Êý×é×Ü¹²11Ïî£¬¶ÔÓ¦11¸ö±êÇ©ËùÓÐÊÂ¼þÖÐÏà±ÈÈÕ³Ì°²ÅÅµÄ½ÚÔ¼³¬Ê±µÄÊÂ¼þÊý±ÈÀý)
+			//ï¿½ï¿½Ó¦ï¿½ï¿½ÎªÄ£Ê½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½5Ò³(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¸ï¿½)
+			//ï¿½ï¿½ï¿½ï¿½jsonObject(ï¿½ï¿½ï¿½ï¿½ï¿½Ü¹ï¿½11ï¿½î£¬ï¿½ï¿½Ó¦11ï¿½ï¿½ï¿½ï¿½Ç©ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ³Ì°ï¿½ï¿½ÅµÄ½ï¿½Ô¼ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
 			ArrayList<Label> labelList = LabelManager.findWithNothing();
 			 
 			 for(Label label:labelList) {
 				 JSONArray percent = new JSONArray();
 			
-				 int save = 0,equal = 0,over = 0; //½ÚÔ¼¡¢Ïà·û¡¢³¬Ê±ÊÂ¼þÊý
+				 int save = 0,equal = 0,over = 0; //ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½Â¼ï¿½ï¿½ï¿½
 				 
 				 int idLabel = label.getId();
 				 ArrayList<S_Affair> SAList = S_AffairManager.findWithIdLabel(idLabel);
@@ -195,9 +167,9 @@ public class AnalysisService{
 				 if(SAList != null) {
 					 for(S_Affair sa:SAList) {
 						 Schedule s = ScheduleManager.findWithId(sa.getIdS());
-						 if(s.getIdUser() == userId) { //ÊÇµ±Ç°ÓÃ»§µÄÈÕ³Ì
-							 int truth = 0; //±êÇ©ËùÓÐÊÂ¼þÊµ¼ÊÏûºÄÊ±¼ä
-							 int schedule = 0;//±êÇ©ËùÓÐÊÂ¼þ¼Æ»®Ê¹ÓÃÊ±¼ä
+						 if(s.getIdUser() == userId) { //ï¿½Çµï¿½Ç°ï¿½Ã»ï¿½ï¿½ï¿½ï¿½Õ³ï¿½
+							 int truth = 0; //ï¿½ï¿½Ç©ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
+							 int schedule = 0;//ï¿½ï¿½Ç©ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½Æ»ï¿½Ê¹ï¿½ï¿½Ê±ï¿½ï¿½
 							 truth = getSpent(sa.getTimeStart(),sa.getTimeEnd());
 							 schedule = getSpent(sa.getTimeStartPlan(),sa.getTimeEndPlan());
 							 if(truth > schedule) {over ++;}
@@ -206,7 +178,6 @@ public class AnalysisService{
 						 }
 					 }
 				 }
-				 
 				 
 				 int all = save + equal + over;
 				 float per1 = 0;
@@ -221,8 +192,6 @@ public class AnalysisService{
 						per3 = (float)(Math.round(per3*100))/100;
 				 }
 
-				
-				 
 				 percent.add(per1);
 				 percent.add(per2);
 				 percent.add(per3);
@@ -233,25 +202,41 @@ public class AnalysisService{
 			 back.put("chartInfor", array);
 		}
 		else if(type.equals("densityAnalysis")) {
-			//¶ÔÓ¦ÐÐÎªÄ£Ê½·ÖÎöµÚ6Ò³(Çë¶ÔÕÕÉè¼Æ¸å)
-			//·µ»ØjsonObject
+			//ï¿½ï¿½Ó¦ï¿½ï¿½ÎªÄ£Ê½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½6Ò³(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¸ï¿½)
+			//ï¿½ï¿½ï¿½ï¿½jsonObject
 			float[] count = new float[7];
 			float[] count1 = new float[7];
+			SimpleDateFormat simple = new SimpleDateFormat("HH-mm");
 			long all = 0;
+			long allDays = 0;
 			for(int i = 0;i < 7;i ++) {
 				count[i] = 0;
 			}
+			ArrayList<TimeSharing> tsList = TimeSharingManager.findWithIdUser(userId);
+			allDays = tsList.size();
+			
+			int[] l = new int[8];
+			try {
+				l[0] = (int)((simple.parse("00-00").getTime())/(1000*60));
+				l[1] = (int)((simple.parse("06-00").getTime())/(1000*60));
+				l[2] = (int)((simple.parse("08-00").getTime())/(1000*60));
+				l[3] = (int)((simple.parse("12-00" ).getTime())/(1000*60));
+				l[4] = (int)((simple.parse("13-30").getTime())/(1000*60));
+				l[5] = (int)((simple.parse("17-30").getTime())/(1000*60));
+				l[6] = (int)((simple.parse("22-00").getTime())/(1000*60));
+				l[7] = (int)((simple.parse("24-00").getTime())/(1000*60));
+				
+			} catch (ParseException e1) {
+				return null;
+			}
+			
 			ArrayList<Affair> AList = AffairManager.findWithNothing();
 			for(Affair a:AList) {
 				TimeSharing s = TimeSharingManager.findWithId(a.getIdTS());
 				 if(s.getIdUser() == userId) {
-					 //ÊÇµ±Ç°ÓÃ»§µÄÈÕ³Ì
-					 
-					 count1 = getStep(a.getTimeStart(),a.getTimeEnd());
-					 System.out.println(a.getTimeStart());
-					 System.out.println(a.getTimeEnd());
+					 //ï¿½Çµï¿½Ç°ï¿½Ã»ï¿½ï¿½ï¿½ï¿½Õ³ï¿½
+					 count1 = getStep(a.getTimeStart(),a.getTimeEnd(),l);
 					 for(int j = 0;j < 7;j ++) {
-						 System.out.println(count1[j]);
 						 count[j] += count1[j];
 					 }
 					 all ++;
@@ -259,65 +244,125 @@ public class AnalysisService{
 			}
 			
 			float[] per = new float[7];
-			per[0] = count[0] / 6;
-			per[1] = count[1] / 3;
-			per[2] = count[2] / 5;
-			per[3] = (float) (count[3] / 1.5);
-			per[4] = count[4] / 5;
-			per[5] = (float) (count[5] / 4.5);
-			per[6] = count[6] / 2;
+			per[0] = count[0] / (6*allDays);
+			per[1] = count[1] / (3*allDays);
+			per[2] = count[2] / (5*allDays);
+			per[3] = (float) (count[3] / (1.5*allDays));
+			per[4] = count[4] / (5*allDays);
+			per[5] = (float) (count[5] / (4.5*allDays));
+			per[6] = count[6] / (2*allDays);
 
 			float density = 0;
-			try {
-				density = all / (getDays(userId) * 24);
-			} catch (ParseException e) {
-				return null;
-			}
+			density = (float) all/(allDays*24);
+			density = (float)(Math.round(density*100))/100;
 			
-			//±£ÁôÁ½Î»Ð¡Êý
+			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»Ð¡ï¿½ï¿½
 			for(int i = 0;i<7;i++) {
 				per[i] = (float)(Math.round(per[i]*100))/100;
 			}
 			back.put("density", density);
 			JSONObject js = new JSONObject();
-			js.put("period", "Áè³¿");
+			js.put("period", "ï¿½è³¿");
 			js.put("percents", per[0]);
 			array.add(js);
 			
 			JSONObject js1 = new JSONObject();
-			js1.put("period", "Ôç³¿");
+			js1.put("period", "ï¿½ç³¿");
 			js1.put("percents", per[1]);
 			array.add(js1);
 			
 			JSONObject js2 = new JSONObject();
-			js2.put("period", "ÉÏÎç");
+			js2.put("period", "ï¿½ï¿½ï¿½ï¿½");
 			js2.put("percents", per[2]);
 			array.add(js2);
 			
 			JSONObject js3 = new JSONObject();
-			js3.put("period", "ÖÐÎç");
+			js3.put("period", "ï¿½ï¿½ï¿½ï¿½");
 			js3.put("percents", per[3]);
 			array.add(js3);
 			
 			JSONObject js4 = new JSONObject();
-			js4.put("period", "ÏÂÎç");
+			js4.put("period", "ï¿½ï¿½ï¿½ï¿½");
 			js4.put("percents", per[4]);
 			array.add(js4);
 			
 			JSONObject js5 = new JSONObject();
-			js5.put("period", "ÍíÉÏ");
+			js5.put("period", "ï¿½ï¿½ï¿½ï¿½");
 			js5.put("percents", per[5]);
 			array.add(js5);
 			
 			JSONObject js6 = new JSONObject();
-			js6.put("period", "ÉîÒ¹");
+			js6.put("period", "ï¿½ï¿½Ò¹");
 			js6.put("percents", per[6]);
 			array.add(js6);
 			
 			back.put("chartInfor", array);
 		}
 		else return null;
+		
+		System.out.println(testForFile(back,type));
 		return back;
 	}
 	
+	//toDOCfile process
+	private static String json2string(JSONObject json,String type) {
+		String back = "";
+		if(type.equals("SimpleAnalysis")) {
+			JSONArray array = json.getJSONArray("chartInfor");
+			for(int i=0;i<array.size();i++){
+                JSONObject temp = array.getJSONObject(i);//ï¿½ï¿½Ã¿Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½jsonï¿½ï¿½ï¿½ï¿½
+                String id = temp.getString("labelid");
+                String percent = temp.getString("percents");
+                String type1 =  temp.getString("type");
+                back += "\nï¿½ï¿½"+(i+1)+"ï¿½ï¿½ï¿½ï¿½ï¿½Ý£ï¿½\nï¿½ï¿½Ç©id:"+id+"\nï¿½ï¿½Ê±ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"+percent+"%\n"+type1+"\n";
+			}
+		}
+		else if(type.equals("detailedAnalysis")) {
+			JSONArray array = json.getJSONArray("chartInfor");
+			for(int i=0;i<array.size();i++){
+                JSONObject temp = array.getJSONObject(i);//ï¿½ï¿½Ã¿Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½jsonï¿½ï¿½ï¿½ï¿½
+                String id = temp.getString("labelid");
+                JSONArray a = temp.getJSONArray("percents");
+                String less,equal,more;
+                less = a.get(0).toString();
+                equal = a.get(1).toString();
+                more = a.get(2).toString();
+                
+                back += "\nï¿½ï¿½"+i+"ï¿½ï¿½ï¿½ï¿½ï¿½Ý£ï¿½\nï¿½ï¿½Ç©id:"+id
+                		+"\nï¿½ï¿½ï¿½ï¿½Ô¤ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"+less
+                		+"%\nï¿½ï¿½ï¿½ï¿½Ô¤ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"+equal
+                		+"%\nï¿½ï¿½ï¿½ï¿½Ô¤ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"+more+"%\n";
+			}
+		}
+		else {
+			String density = json.getString("density");
+			back += "ï¿½ï¿½ï¿½ï¿½ÎªÖ¹ï¿½ï¿½Æ½ï¿½ï¿½Ã¿Ð¡Ê±ï¿½ï¿½Éµï¿½ï¿½Â¼ï¿½ï¿½ï¿½:"+density;
+			JSONArray array = json.getJSONArray("chartInfor");
+			for(int i=0;i<array.size();i++){
+                JSONObject temp = array.getJSONObject(i);//ï¿½ï¿½Ã¿Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½jsonï¿½ï¿½ï¿½ï¿½
+                String period = temp.getString("period");
+                String percent = temp.getString("percents");
+                back += "\nï¿½ï¿½"+(i+1)+"ï¿½ï¿½Ê±ï¿½ï¿½Î£ï¿½\nÊ±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½:"+period+"\nï¿½ï¿½Ê±ï¿½ï¿½ï¿½Ã¿Ð¡Ê±Æ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½"+percent+"\n";
+			}
+		}
+		return back;
+	}
+	
+	private static boolean testForFile(JSONObject json,String type) {
+		boolean back = false;
+		String content = json2string(json,type);
+		System.out.println(content);
+		FileWriter fileWriter;
+		try {
+			fileWriter = new FileWriter("./testForFile.doc");
+			fileWriter.write(content);
+			fileWriter.flush();
+			fileWriter.close();
+			back = true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		
+		return back;
+	}
 }
