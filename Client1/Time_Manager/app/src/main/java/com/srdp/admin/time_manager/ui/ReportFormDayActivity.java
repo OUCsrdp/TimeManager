@@ -13,6 +13,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.graphics.Color;
+import android.widget.Button;
 import android.widget.TextView;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
@@ -60,6 +61,8 @@ public class ReportFormDayActivity extends AppCompatActivity {
     private TextView report_weekday;//星期x
     private TextView report_date;//日期
 
+    private Button week_trans;//周报表日报表切换按钮
+
     private String weekday;//获取的星期x
 
     private int count;//饼图数量
@@ -75,15 +78,30 @@ public class ReportFormDayActivity extends AppCompatActivity {
         }
 
         rep_day_piechart = (PieChart) findViewById(R.id.rep_day_piechart);
-        PieData dayPieData = getPieData(6, 100);
+        PieData dayPieData = getPieData(6, 100,1);
         showChart(rep_day_piechart, dayPieData);
 
         rep_plan_piechart = (PieChart) findViewById(R.id.rep_plan_piechart);
-        PieData planPieData = getPieData(6, 100);
+        PieData planPieData = getPieData(6, 100,2);
         showChart(rep_plan_piechart, planPieData);
 
         report_weekday = (TextView) findViewById(R.id.report_weekday);
         report_date = (TextView) findViewById(R.id.report_date);
+
+        week_trans = (Button) findViewById(R.id.week_trans);
+
+        //切换到日报表
+        week_trans.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                week_trans.setBackgroundResource(R.drawable.week_logo);
+                String today = report_date.getText().toString();
+                Intent intent = new Intent();
+                intent.putExtra("date", today);
+                intent.setClass(ReportFormDayActivity.this, ReportFormActivity.class);//从哪里跳到哪里
+                ReportFormDayActivity.this.startActivity(intent);
+            }
+        });
     }
 
     private void showChart(PieChart pieChart, PieData pieData) {
@@ -143,7 +161,7 @@ public class ReportFormDayActivity extends AppCompatActivity {
      * @param count 分成几部分
      * @param range
      */
-    private PieData getPieData(int count, float range) {
+    private PieData getPieData(int count, float range, final int flag) {
 
         //数据显示操作
         final ArrayList<String> xValues = new ArrayList<>();  //xVals用来表示每个饼块上的内容
@@ -152,6 +170,7 @@ public class ReportFormDayActivity extends AppCompatActivity {
         //从日历页面获取日期数据
         Intent intent=getIntent();
         String today=intent.getStringExtra("today");
+        report_date.setText(today);
 
         //从后端获取数据
         JSONObject reportObject = new JSONObject();
@@ -167,19 +186,35 @@ public class ReportFormDayActivity extends AppCompatActivity {
                     //获得星期x
                     weekday = parseObject(jsonString).getString("weekday");
                     report_weekday.setText(weekday);
-                    //时间分配表
-                    JSONArray  timesharing = parseObject(jsonString).getJSONArray("TimeSharing");
-                    Log.i("timesharing",timesharing.toString());
+                    if(flag==2){
+                        //时间分配表
+                        JSONArray timesharing = parseObject(jsonString).getJSONArray("TimeSharing");
+                        Log.i("timesharing",timesharing.toString());
 
-                    for(int i=0;i<timesharing.size();i++){
-                        JSONObject resJsonItem = timesharing.getJSONObject(i);
-                        int labelid = resJsonItem.getIntValue("labelid");
-                        float percent = resJsonItem.getFloatValue("percent");//所占时间比，以浮点数表示
-                        String duration = resJsonItem.getString("duration");//该天所有该标签的事件总时间
-                        xValues.add("Quarterly" +labelid);
-                        yValues.add(new PieEntry(percent, duration));
-                        //xValues.add("Quarterly" + (i + 1));  //饼块上显示成Quarterly1, Quarterly2, Quarterly3, Quarterly4
+                        for(int i=0;i<timesharing.size();i++){
+                            JSONObject resJsonItem = timesharing.getJSONObject(i);
+                            int labelid = resJsonItem.getIntValue("labelid");
+                            float percent = resJsonItem.getFloatValue("percent");//所占时间比，以浮点数表示
+                            String duration = resJsonItem.getString("duration");//该天所有该标签的事件总时间
+                            xValues.add("Quarterly" +labelid);
+                            yValues.add(new PieEntry(percent, duration));
+                            //xValues.add("Quarterly" + (i + 1));  //饼块上显示成Quarterly1, Quarterly2, Quarterly3, Quarterly4
+                        }
                     }
+                    else if(flag==1){
+                        //日程表
+                        JSONArray Schedule = parseObject(jsonString).getJSONArray("Schedule");
+                        Log.i("Schedule",Schedule.toString());
+
+                        for(int i=0;i<Schedule.size();i++){
+                            JSONObject resJsonItem = Schedule.getJSONObject(i);
+                            int labelid = resJsonItem.getIntValue("labelid");
+                            float percent = resJsonItem.getFloatValue("percent");//所占时间比，以浮点数表示
+                            String duration = resJsonItem.getString("duration");//该天所有该标签的事件总时间
+                        }
+                    }
+
+
 
                 } catch(Exception e){
                     e.printStackTrace();
