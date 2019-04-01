@@ -2,6 +2,7 @@ package com.srdp.admin.time_manager.ui;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.CalendarView;
@@ -24,6 +25,12 @@ public class ReportCalendarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_calendar);
 
+
+        //隐藏默认actionbar
+        ActionBar actionbar = getSupportActionBar();
+        if (actionbar != null) {
+            actionbar.hide();
+        }
 
         weekday_trans_btn = (Switch) findViewById(R.id.weekday_trans_btn);
         //切换周报表和日报表
