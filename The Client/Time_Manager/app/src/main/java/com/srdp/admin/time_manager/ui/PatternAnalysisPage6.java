@@ -40,7 +40,7 @@ public class PatternAnalysisPage6 extends AppCompatActivity {
                 every[0]=12;
             Percents.put((float)i,every);
         }
-        colors[0]=R.color.chartGrayLight;
+        colors[0]=R.color.orange;
     }
     private void drawChart()
     {

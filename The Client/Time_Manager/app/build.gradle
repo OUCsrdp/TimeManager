@@ -35,4 +35,5 @@ dependencies {
     implementation 'com.forward.androids:androids:1.2'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    implementation 'org.litepal.android:java:3.0.0'
 }
