@@ -16,7 +16,7 @@ public class AnalysisService{
 	
 	public static String getInsDate()
 	{
-		int y,m,d,h,mi,s;    
+		int y,m,d;    
 		Calendar cal=Calendar.getInstance();    
 		y=cal.get(Calendar.YEAR);    
 		m=cal.get(Calendar.MONTH) + 1;    
@@ -47,20 +47,128 @@ public class AnalysisService{
 			return days;
 		}
 	}
-	public String getDelayedTime(int userId,boolean weekday) {
-		return null;}
-	public float getUnfinishedPercent(int userId,boolean weekday) {
-		return userId;};
+	
+	// 返回用户平均推迟时间（格式xx时xx分）
+	public static String getDelayedTime(int userId,boolean weekday) 
+	{
+		ArrayList<Schedule> schedules = ScheduleManager.findWithIdUser(userId);
+		
+		int total = 0; // 总事件数
+		int delayMinutes = 0; // 总共推迟了多少时间
+		int delayHours = 0;
+		
+		// Calendar calendar = Calendar.getInstance(); // 获取现在的时间，用来备用（如果没有开始的话）
+		
+		if(weekday)
+		{
+			for(int i = 0; i < schedules.size(); i++)
+			{
+				if(schedules.get(i).getWeekday() == 6 || schedules.get(i).getWeekday() == 7)
+				{
+					schedules.remove(i);
+					i--;
+				}
+			}
+		}
+		
+		for(int i =0; i < schedules.size(); i++)
+		{
+			ArrayList<S_Affair> s_Affairs = S_AffairManager.findWithIdS(schedules.get(i).getId());
+			for(int j = 0; j < s_Affairs.size(); j++)
+			{
+				if(s_Affairs.get(j).getTimeStart() != null)
+				{
+					String timeStart = s_Affairs.get(j).getTimeStart();
+					String timeStartPlan = s_Affairs.get(j).getTimeStartPlan();
+					
+					int startHour = Integer.parseInt(((timeStart.split(":"))[0]));
+					int startMinute = Integer.parseInt(((timeStart.split(":"))[1]));
+					
+					int startHourPlan = Integer.parseInt(((timeStartPlan.split(":"))[0]));
+					int startMinutePlan = Integer.parseInt(((timeStartPlan.split(":"))[1]));
+					
+					if(startHour < startHourPlan || (startHour == startHourPlan && startMinute < startMinutePlan))
+						continue;
+					
+					int delayHour = startHour - startHourPlan;
+					int delayMinute = startMinute - startMinutePlan;
+					
+					if(delayMinute < 0)
+					{
+						delayMinute += 60;
+						delayHour--;
+					}
+					
+					delayMinutes += delayHour * 60 + delayMinute;
+				}
+				else
+				{
+					// 以下时以当天的24：00作为结束
+					
+					String timeStartPlan = s_Affairs.get(j).getTimeStartPlan();
+					
+					int startHourPlan = Integer.parseInt(((timeStartPlan.split(":"))[0]));
+					int startMinutePlan = Integer.parseInt(((timeStartPlan.split(":"))[1]));
+					
+					int delayHour = 24 - startHourPlan;
+					int delayMinute = 0 - startMinutePlan;
+					
+					if(delayMinute < 0)
+					{
+						delayMinute += 60;
+						delayHour--;
+					}
+					
+					delayMinutes += delayHour * 60 + delayMinute;
+				}
+			}
+			total += s_Affairs.size();
+		}
+		
+		delayMinutes /= total;
+		// System.out.println(delayMinutes);
+		delayHours = delayMinutes / 60;
+		delayMinutes = delayMinutes % 60;
+		String delayString = delayHours + "时" + delayMinutes + "分";
+		return delayString;
+	}
+	
+	// 获取没有完成的事件的占比
+	public static int getUnfinishedPercent(int userId,boolean weekday) 
+	{
+		float total = 0; // 所有的事件数
+		float unfinish = 0; // 没有完成的事件数
+		int percent = 0;
+		
+		ArrayList<Schedule> schedules = ScheduleManager.findWithIdUser(userId);
+		
+		for(int i = 0; i < schedules.size(); i++)
+		{
+			if((schedules.get(i).getWeekday() == 6 || schedules.get(i).getWeekday() == 7) && weekday)
+				continue;
+			ArrayList<S_Affair> s_Affairs = S_AffairManager.findWithIdS(schedules.get(i).getId());
+			for(int j = 0; j < s_Affairs.size(); j++)
+			{
+				if(s_Affairs.get(j).getTimeEnd() == null)
+					unfinish++;
+			}
+			total += s_Affairs.size();
+		}
+		
+		percent = (int)((unfinish/total) * 100);
+		
+		return percent;
+	}
 	
 	//通过开始时间、结束时间获得事件所在时间段
-		private static float[] getStep(String from,String to) {
+	private static float[] getStep(String from,String to) {
 			
-			String from1 = from.replace(':', '-');
-			String to1 = to.replace(':', '-');
-			SimpleDateFormat simple = new SimpleDateFormat("HH-mm");
+		String from1 = from.replace(':', '-');
+		String to1 = to.replace(':', '-');
+		SimpleDateFormat simple = new SimpleDateFormat("HH-mm");
 			
-			int[] l = new int[8];
-			try {
+		int[] l = new int[8];
+		try {
 				l[0] = (int)((simple.parse("00-00").getTime())/(1000*60));
 				l[1] = (int)((simple.parse("06-00").getTime())/(1000*60));
 				l[2] = (int)((simple.parse("08-00").getTime())/(1000*60));
@@ -107,9 +215,8 @@ public class AnalysisService{
 				}
 			}
 			
-			
 			return per;
-		}
+	}
 	
 	
 	//通过开始时间、结束时间获得事件的消耗时间（返回分钟）
@@ -134,6 +241,7 @@ public class AnalysisService{
 		int mins = (int)((t - f)/(1000*60));
 		return mins;
 	}
+	
 	
 	public static JSONObject getChart(int userId,boolean weekday,String type) {
 		JSONObject back=new JSONObject();
