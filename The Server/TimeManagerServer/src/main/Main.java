@@ -20,5 +20,7 @@ public class Main {
 
 	@SuppressWarnings("null")
 	public static void main(String[] args) throws ParseException {
+		String delayTime = AnalysisService.getDelayedTime(238, true);
+		System.out.println(delayTime);
 	}
 }

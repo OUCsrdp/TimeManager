@@ -57,8 +57,6 @@ public class AnalysisService{
 		int delayMinutes = 0; // 总共推迟了多少时间
 		int delayHours = 0;
 		
-		// Calendar calendar = Calendar.getInstance(); // 获取现在的时间，用来备用（如果没有开始的话）
-		
 		if(weekday)
 		{
 			for(int i = 0; i < schedules.size(); i++)
@@ -102,13 +100,13 @@ public class AnalysisService{
 					delayMinutes += delayHour * 60 + delayMinute;
 				}
 				else
-				{
-					// 以下时以当天的24：00作为结束
-					
+				{	
 					String timeStartPlan = s_Affairs.get(j).getTimeStartPlan();
 					
 					int startHourPlan = Integer.parseInt(((timeStartPlan.split(":"))[0]));
 					int startMinutePlan = Integer.parseInt(((timeStartPlan.split(":"))[1]));
+					
+					// 以下时以当天的24：00作为结束
 					
 					int delayHour = 24 - startHourPlan;
 					int delayMinute = 0 - startMinutePlan;
@@ -120,6 +118,25 @@ public class AnalysisService{
 					}
 					
 					delayMinutes += delayHour * 60 + delayMinute;
+					
+					// 以下是算上天数的推迟时间
+					
+					/* Calendar now = Calendar.getInstance();
+					
+					String dayStartPlan = schedules.get(i).getDate();
+					
+					int yearPlan = Integer.parseInt((dayStartPlan.split("年"))[0]);
+					dayStartPlan = (dayStartPlan.split("年"))[1];
+					int monthPlan = Integer.parseInt((dayStartPlan.split("月"))[0]);
+					dayStartPlan = (dayStartPlan.split("月"))[1];
+					int dayPlan = Integer.parseInt((dayStartPlan.split("日"))[0]);
+					
+					Calendar plan = Calendar.getInstance();
+					plan.set(yearPlan, monthPlan - 1, dayPlan, startHourPlan, startMinutePlan);
+					
+					long delayTime = now.getTimeInMillis() - plan.getTimeInMillis();
+					
+					delayMinutes += delayTime / (60 * 1000); */
 				}
 			}
 			total += s_Affairs.size();
@@ -129,6 +146,7 @@ public class AnalysisService{
 		// System.out.println(delayMinutes);
 		delayHours = delayMinutes / 60;
 		delayMinutes = delayMinutes % 60;
+		
 		String delayString = delayHours + "时" + delayMinutes + "分";
 		return delayString;
 	}
