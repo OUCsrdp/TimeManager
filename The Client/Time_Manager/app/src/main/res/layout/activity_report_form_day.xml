@@ -26,7 +26,7 @@
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_margin="20dp"
-                android:background="@drawable/button_trans"/>
+                android:background="@drawable/pie_chart_logo"/>
 
             <Button
                 android:id="@+id/week_trans"
@@ -34,7 +34,7 @@
                 android:layout_height="70dp"
                 android:layout_marginLeft="180dp"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/button_trans"/>
+                android:background="@drawable/day_logo"/>
 
         </LinearLayout>
 
@@ -47,323 +47,342 @@
 
         </Button>
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="-40dp"
-            android:background="@drawable/calendar_bg">
-
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:text="2018年10月31日"
                 android:layout_gravity="center"
-                android:gravity="center"
-                android:textColor="#000000"
-                android:layout_marginTop="50dp"/>
+                android:layout_marginTop="-40dp"
+                android:background="@drawable/calendar_bg"
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="星期三"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:textColor="#000000"
-                android:layout_marginTop="10dp"/>
+                <TextView
+                    android:id="@+id/report_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="50dp"
+                    android:gravity="center"
+                    android:text="2018年10月31日"
+                    android:textColor="#000000" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/table_bg"
-                android:text="时间分配表"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:textColor="#000000"
-                android:paddingVertical="5dp"
-                android:paddingHorizontal="10dp"
-                android:layout_marginTop="10dp"/>
+                <TextView
+                    android:id="@+id/report_weekday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:text="星期三"
+                    android:textColor="#000000" />
 
-            <com.github.mikephil.charting.charts.PieChart
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_gravity="center">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/table_bg"
+                    android:gravity="center"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="5dp"
+                    android:text="时间分配表"
+                    android:textColor="#000000" />
 
-            </com.github.mikephil.charting.charts.PieChart>
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/rep_plan_piechart"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center">
 
-            <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="13dp">
+                </com.github.mikephil.charting.charts.PieChart>
 
-                <TableRow
-                    android:background="#928B9A"
-                    android:padding="5dp">
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="13dp">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="总时间"
-                        android:layout_weight="3"
-                        android:textColor="#ffffff"
-                        android:layout_gravity="center"
-                        android:gravity="center"/>
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="xx时xx分"
-                        android:layout_weight="1"
-                        android:textColor="#ffffff"
-                        android:layout_gravity="center"
-                        android:gravity="center"/>
+                    <TableRow
+                        android:background="#928B9A"
+                        android:padding="5dp">
 
-                </TableRow>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_weight="3"
+                            android:gravity="center"
+                            android:text="总时间"
+                            android:textColor="#ffffff" />
 
-                <TableRow
-                    android:background="#ffffff"
-                    android:padding="5dp">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="xx时xx分"
+                            android:textColor="#ffffff" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:background="#ffffff"
+                        android:padding="5dp">
 
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/spot_bg"/>
+                            android:src="@drawable/spot_bg" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="课业"
                             android:layout_gravity="center"
                             android:gravity="center"
-                            android:paddingHorizontal="10dp"/>
+                            android:paddingHorizontal="10dp"
+                            android:text="课业" />
+
                         <ImageView
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:layout_marginHorizontal="10dp"
-                            android:src="@drawable/spot_bg"/>
+                            android:src="@drawable/spot_bg" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="xx时xx分"
+                            android:layout_gravity="center"
                             android:layout_marginLeft="10dp"
                             android:gravity="center"
-                            android:layout_gravity="center"/>
+                            android:text="xx时xx分" />
 
-                </TableRow>
+                    </TableRow>
 
-                <TableRow
-                    android:background="#EFCBA3"
-                    android:padding="5dp">
+                    <TableRow
+                        android:background="#EFCBA3"
+                        android:padding="5dp">
 
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/spot_bg"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="课业"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:paddingHorizontal="10dp"/>
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_marginHorizontal="10dp"
-                        android:src="@drawable/spot_bg"/>
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/spot_bg" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="xx时xx分"
-                        android:layout_marginLeft="10dp"
-                        android:gravity="center"
-                        android:layout_gravity="center"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:paddingHorizontal="10dp"
+                            android:text="课业" />
 
-                </TableRow>
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginHorizontal="10dp"
+                            android:src="@drawable/spot_bg" />
 
-                <TableRow
-                    android:background="#ffffff"
-                    android:padding="5dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:gravity="center"
+                            android:text="xx时xx分" />
 
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/spot_bg"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="课业"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:paddingHorizontal="10dp"/>
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_marginHorizontal="10dp"
-                        android:src="@drawable/spot_bg"/>
+                    </TableRow>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="xx时xx分"
-                        android:layout_marginLeft="10dp"
-                        android:gravity="center"
-                        android:layout_gravity="center"/>
+                    <TableRow
+                        android:background="#ffffff"
+                        android:padding="5dp">
 
-                </TableRow>
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/spot_bg" />
 
-            </TableLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:paddingHorizontal="10dp"
+                            android:text="课业" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/table_bg"
-                android:text="日程表"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:textColor="#000000"
-                android:paddingVertical="5dp"
-                android:paddingHorizontal="10dp"
-                android:layout_marginTop="10dp"/>
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginHorizontal="10dp"
+                            android:src="@drawable/spot_bg" />
 
-            <com.github.mikephil.charting.charts.PieChart
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_gravity="center">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:gravity="center"
+                            android:text="xx时xx分" />
 
-            </com.github.mikephil.charting.charts.PieChart>
+                    </TableRow>
 
-            <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="13dp">
+                </TableLayout>
 
-                <TableRow
-                    android:background="#928B9A"
-                    android:padding="5dp">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="总时间"
-                        android:layout_weight="3"
-                        android:textColor="#ffffff"
-                        android:layout_gravity="center"
-                        android:gravity="center"/>
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="xx时xx分"
-                        android:layout_weight="1"
-                        android:textColor="#ffffff"
-                        android:layout_gravity="center"
-                        android:gravity="center"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/table_bg"
+                    android:gravity="center"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="5dp"
+                    android:text="日程表"
+                    android:textColor="#000000" />
 
-                </TableRow>
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/rep_day_piechart"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center">
 
-                <TableRow
-                    android:background="#ffffff"
-                    android:padding="5dp">
+                </com.github.mikephil.charting.charts.PieChart>
 
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/spot_bg"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="课业"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:paddingHorizontal="10dp"/>
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_marginHorizontal="10dp"
-                        android:src="@drawable/spot_bg"/>
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="13dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="xx时xx分"
-                        android:layout_marginLeft="10dp"
-                        android:gravity="center"
-                        android:layout_gravity="center"/>
+                    <TableRow
+                        android:background="#928B9A"
+                        android:padding="5dp">
 
-                </TableRow>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_weight="3"
+                            android:gravity="center"
+                            android:text="总时间"
+                            android:textColor="#ffffff" />
 
-                <TableRow
-                    android:background="#EFCBA3"
-                    android:padding="5dp">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="xx时xx分"
+                            android:textColor="#ffffff" />
 
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/spot_bg"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="课业"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:paddingHorizontal="10dp"/>
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_marginHorizontal="10dp"
-                        android:src="@drawable/spot_bg"/>
+                    </TableRow>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="xx时xx分"
-                        android:layout_marginLeft="10dp"
-                        android:gravity="center"
-                        android:layout_gravity="center"/>
+                    <TableRow
+                        android:background="#ffffff"
+                        android:padding="5dp">
 
-                </TableRow>
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/spot_bg" />
 
-                <TableRow
-                    android:background="#ffffff"
-                    android:padding="5dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:paddingHorizontal="10dp"
+                            android:text="课业" />
 
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/spot_bg"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="课业"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:paddingHorizontal="10dp"/>
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_marginHorizontal="10dp"
-                        android:src="@drawable/spot_bg"/>
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginHorizontal="10dp"
+                            android:src="@drawable/spot_bg" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="xx时xx分"
-                        android:layout_marginLeft="10dp"
-                        android:gravity="center"
-                        android:layout_gravity="center"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:gravity="center"
+                            android:text="xx时xx分" />
 
-                </TableRow>
+                    </TableRow>
 
-            </TableLayout>
+                    <TableRow
+                        android:background="#EFCBA3"
+                        android:padding="5dp">
 
-        </LinearLayout>
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/spot_bg" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:paddingHorizontal="10dp"
+                            android:text="课业" />
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginHorizontal="10dp"
+                            android:src="@drawable/spot_bg" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:gravity="center"
+                            android:text="xx时xx分" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:background="#ffffff"
+                        android:padding="5dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/spot_bg" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:paddingHorizontal="10dp"
+                            android:text="课业" />
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginHorizontal="10dp"
+                            android:src="@drawable/spot_bg" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:gravity="center"
+                            android:text="xx时xx分" />
+
+                    </TableRow>
+
+                </TableLayout>
+
+            </LinearLayout>
         </LinearLayout>
 
     </ScrollView>

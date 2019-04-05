@@ -19,12 +19,6 @@
             android:layout_marginTop="30dp"
             android:background="@drawable/button_trans"></Button>
 
-        <Switch
-            android:id="@+id/switch1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Switch" />
-
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="350dp"
@@ -37,10 +31,16 @@
                 android:id="@+id/weekday_trans_btn"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:paddingVertical="5dp"
                 android:layout_marginLeft="260dp"
+                android:layout_marginTop="15dp"
                 android:switchMinWidth="40dp"
-                android:text="周 日"
+                android:switchTextAppearance="@drawable/switch_text_selector"
+                android:showText="true"
+                android:textSize="15dp"
+                android:textOn="周"
+                android:textOff="日"
+                android:textColor="#fd8d01"
                 android:thumb="@drawable/schedule_switch_thumb"
                 android:track="@drawable/schedule_switch_track" />
 
