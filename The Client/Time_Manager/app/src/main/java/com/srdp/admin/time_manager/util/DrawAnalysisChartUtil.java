@@ -22,6 +22,7 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.srdp.admin.time_manager.R;
+import com.srdp.admin.time_manager.model.moudle.AnalysisXAxisFormatter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -125,15 +126,18 @@ public class DrawAnalysisChartUtil {
             barData=new BarData(set);
             barData.setBarWidth(0.7f);
             //不在柱上画数据
-            barData.setDrawValues(false);
+            //barData.setDrawValues(false);
         }
         else if(type.equals("DensityBarChart")){
-            set.setDrawValues(true);
+            /*set.setDrawValues(true);
             set.setValueTextColor(R.color.chartGrayLight);
-            set.setValueTextSize(14f);
+            set.setValueTextSize(14f);*/
             barData=new BarData(set);
             //设置每条柱的宽度
             barData.setBarWidth(0.5f);
+            barData.setValueTextColor(R.color.chartWhite);
+            barData.setValueTextSize(14f);
+            barData.setDrawValues(true);
         }
         chart.setData(barData);
         return set;
@@ -189,14 +193,20 @@ public class DrawAnalysisChartUtil {
         xAxis.setDrawGridLines(false);
         //设置x轴的位置在底部
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setTextSize(14f);
 
         //如果是与日程表比较的图表设置x轴0-10 11刻度，不然设置x轴0-6 7个刻度
         if(type.equals("CompareBarChart")) {
             //设置x轴10个刻度
             xAxis.setLabelCount(10);
+            String[] values = new String[]{"课业","自学","社团","娱乐","交通","运动","生活","吃饭","休息","睡觉","其他"};
+            xAxis.setValueFormatter(new AnalysisXAxisFormatter(values));
+            xAxis.setLabelRotationAngle(-90);
         }
         else if(type.equals("DensityBarChart")){
             xAxis.setLabelCount(6);
+            String[] values = new String[]{"凌晨","早晨","上午","中午","下午","晚上","深夜"};
+            xAxis.setValueFormatter(new AnalysisXAxisFormatter(values));
         }
 
         //设置x轴上字和轴的颜色

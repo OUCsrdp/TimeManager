@@ -9,6 +9,8 @@ import com.alibaba.fastjson.JSON;
 import com.srdp.admin.time_manager.util.TokenUtil;
 import com.srdp.admin.time_manager.util.UserUtil;
 
+import org.litepal.LitePal;
+
 /**
  * Created by admin on 2018/5/12.
  */
@@ -24,6 +26,7 @@ public class MyApplication extends Application {
     public void onCreate()
     {
         super.onCreate();
+        LitePal.initialize(this);//配置litepal数据库
         //赋值全局context
         context = getApplicationContext();
         //赋值单例的application

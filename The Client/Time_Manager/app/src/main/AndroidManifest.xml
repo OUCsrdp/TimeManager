@@ -23,19 +23,33 @@
         <activity android:name=".ui.CreateScheduleActivity"/>
         <activity android:name=".ui.CreateTimingActivity" />
         <activity android:name=".ui.ExcellentDistributionContentActivity"></activity>
+<<<<<<< HEAD
         <activity android:name=".ui.ExcellentDistributionListActivity"></activity>
+=======
+        <activity android:name=".ui.ExcellentDistributionListActivity">
+        </activity>
+>>>>>>> 8342845777e737e912c6b21b32707e1561d43aea
         <activity android:name=".ui.LoginActivity">
+        </activity>
+        <activity android:name=".ui.RegisterActivity" />
+        <activity android:name=".ui.RegisterSchoolActivity" />
+<<<<<<< HEAD
+        <activity android:name=".ui.PatternAnalysisPage5"></activity>
+        <activity android:name=".ui.PatternAnalysisPage4"></activity>
+        <activity android:name=".ui.PatternAnalysisPage6"></activity>
+
+=======
+        <activity android:name=".ui.PatternAnalysisPage5">
+        </activity>
+        <activity android:name=".ui.PatternAnalysisPage4">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.RegisterActivity" />
-        <activity android:name=".ui.RegisterSchoolActivity" />
-        <activity android:name=".ui.PatternAnalysisPage5"></activity>
-        <activity android:name=".ui.PatternAnalysisPage4"></activity>
-        <activity android:name=".ui.PatternAnalysisPage6"></activity>
-
+        <activity android:name=".ui.PatternAnalysisPage6">
+        </activity>
+>>>>>>> 8342845777e737e912c6b21b32707e1561d43aea
         <receiver
             android:name=".model.moudle.Receivers.AlarmReceiver"
             android:enabled="true"

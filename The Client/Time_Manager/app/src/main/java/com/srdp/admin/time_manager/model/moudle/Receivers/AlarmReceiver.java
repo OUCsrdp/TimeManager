@@ -33,13 +33,22 @@ public class AlarmReceiver extends BroadcastReceiver {
         notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationBuilder = new NotificationCompat.Builder(context);
         String name = intent.getStringExtra("Name");
+<<<<<<< HEAD
         String date = intent.getStringExtra("Date");
         notificationBuilder.setContentTitle("待办事务提醒");
         notificationBuilder.setContentText("您有一项新的事务正等待处理：\n  " + name + "将于" + date + "开始进行");
+=======
+        String date = intent.getStringExtra("Time");
+        notificationBuilder.setContentTitle("待办事务提醒");
+        notificationBuilder.setContentText("您有一项新的事务:" + name + "将于" + date + "开始");
+>>>>>>> 8342845777e737e912c6b21b32707e1561d43aea
         notificationBuilder.setSmallIcon(android.support.v4.R.drawable.notification_template_icon_bg);
         notificationBuilder.setWhen(System.currentTimeMillis());
         notification = notificationBuilder.build();
         notificationManager.notify(0,notification);
+<<<<<<< HEAD
         throw new UnsupportedOperationException("Not yet implemented");
+=======
+>>>>>>> 8342845777e737e912c6b21b32707e1561d43aea
     }
 }

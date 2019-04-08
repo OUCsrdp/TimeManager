@@ -30,6 +30,7 @@ import com.srdp.admin.time_manager.util.LabelUtil;
 import com.srdp.admin.time_manager.util.TimeUtil;
 import com.srdp.admin.time_manager.util.TokenUtil;
 import com.srdp.admin.time_manager.util.UserUtil;
+import com.srdp.admin.time_manager.widget.adapters.ExcellentDistributionListAdapter;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -114,7 +115,6 @@ public class Index_Timing_Change extends AppCompatActivity {
         if(hasRecorded())//如果有记录开始时间，就把开始时间取出来计算经历时间，开启计时器
         {
             startTime=AffairUtil.readStartTime();
-            Toast.makeText(this,startTime,Toast.LENGTH_SHORT).show();
             timer=TimeUtil.getMs(TimeUtil.getNowTime())-TimeUtil.getMs(startTime);
             String timeStr = TimeUtil.getFormatTime(timer);
             indexTimer.setText(timeStr);
@@ -240,8 +240,8 @@ public class Index_Timing_Change extends AppCompatActivity {
     private void requestModifyTime(JSONObject affairStore)
     {
 
-        Toast.makeText(this,startTime,Toast.LENGTH_SHORT).show();
-        Toast.makeText(this,TimeUtil.getNowTime(),Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this,startTime,Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this,TimeUtil.getNowTime(),Toast.LENGTH_SHORT).show();
         //从本地文件中读出affair的基本信息
         JSONObject reqJson=affairStore;
         //reqJson.put("EndTime",endTime);
@@ -259,9 +259,19 @@ public class Index_Timing_Change extends AppCompatActivity {
                     if(status.equals("unlogin")){
                         reLogin();
                     }else if(status.equals("fail")){
-                        createFail();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                createFail();
+                            }
+                        });
                     }else{
-                        createSuccess();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                createSuccess();
+                            }
+                        });
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -282,10 +292,14 @@ public class Index_Timing_Change extends AppCompatActivity {
         int day=calendar.get(Calendar.DAY_OF_MONTH);
         date=year+"年"+month+"月"+day+"日";
     }
+<<<<<<< HEAD
     private void createSuccess()
     {
         Toast.makeText(this,"计时完成！",Toast.LENGTH_LONG).show();
     }
+=======
+    private void createSuccess(){Toast.makeText(this,"计时完成！",Toast.LENGTH_LONG).show();}
+>>>>>>> 8342845777e737e912c6b21b32707e1561d43aea
     private void createFail()
     {
         Toast.makeText(this,"计时失败！",Toast.LENGTH_LONG).show();
@@ -331,6 +345,18 @@ public class Index_Timing_Change extends AppCompatActivity {
                 startActivity(theIntent);
             }
         });
+<<<<<<< HEAD
+=======
+        TextView navi3=(TextView) findViewById(R.id.IndexNaviMyTable);
+        TextView navi4=(TextView) findViewById(R.id.IndexNaviMyAnalyse);
+        navi4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent theIntent=new Intent(Index_Timing_Change.this,PatternAnalysisPage5.class);
+                startActivity(theIntent);
+            }
+        });
+>>>>>>> 8342845777e737e912c6b21b32707e1561d43aea
         TextView navi5=(TextView) findViewById(R.id.IndexNaviMySuggest);
         navi5.setOnClickListener(new View.OnClickListener() {
             @Override

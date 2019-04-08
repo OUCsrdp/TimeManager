@@ -20,6 +20,7 @@
             android:layout_marginTop="20dp">
 
             <Button
+                android:id="@+id/choose_btn"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginLeft="40dp"
@@ -36,16 +37,18 @@
                 android:layout_marginTop="50dp"/>
 
             <Button
+                android:id="@+id/choose_res"
                 android:layout_width="130dp"
                 android:layout_height="130dp"
                 android:background="@drawable/list_condition03"
                 android:layout_marginTop="10dp"
-                android:text="不限学校"
+                android:text="不限专业"
                 android:textColor="#ffffff"
                 android:textSize="25dp"/>
 
         </LinearLayout>
 
+<<<<<<< HEAD
         <!--列表-->
         <android.support.v7.widget.RecyclerView
             android:id="@+id/distribution_list"
@@ -56,6 +59,26 @@
             android:scrollbarTrackVertical="@drawable/scrollbars_bg_style"
             android:scrollbarSize="7dp">
         </android.support.v7.widget.RecyclerView>
+=======
+
+        <!--列表-->
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/listswiplayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/distribution_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical"
+                android:scrollbarThumbVertical="@drawable/scrollbars_style"
+                android:scrollbarTrackVertical="@drawable/scrollbars_bg_style"
+                android:scrollbarSize="7dp">
+            </android.support.v7.widget.RecyclerView>
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+>>>>>>> 8342845777e737e912c6b21b32707e1561d43aea
 
     </LinearLayout>
 

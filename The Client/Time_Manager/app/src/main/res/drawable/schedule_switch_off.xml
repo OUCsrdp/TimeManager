@@ -2,7 +2,7 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- 高度30   此处设置宽度无效-->
-    <size android:height="15dp"/>
+    <size android:height="20dp"/>
     <!-- 圆角弧度 15 -->
     <corners android:radius="15dp"/>
 

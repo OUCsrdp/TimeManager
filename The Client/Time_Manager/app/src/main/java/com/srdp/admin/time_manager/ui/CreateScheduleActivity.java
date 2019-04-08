@@ -136,7 +136,8 @@ public class CreateScheduleActivity extends AppCompatActivity {
         if(intent.getStringExtra("type").equals("edit"))
             initPage();
 
-
+        // alarmManager创建
+        alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
 
         // 提醒添加监听
         schedule_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -162,7 +163,7 @@ public class CreateScheduleActivity extends AppCompatActivity {
                                                               int month, int day) {
                                             // TODO Auto-generated method stub
                                             mYear = year;
-                                            mMonth = month;
+                                            mMonth = month+1;
                                             mDay = day;
                                             // 更新日期 小于10加0
                                             schedule_remind_date.setText(new StringBuilder()
@@ -357,15 +358,23 @@ public class CreateScheduleActivity extends AppCompatActivity {
                             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日   HH:mm:ss");
                             Log.d("alarmtime", simpleDateFormat.format(date));
                             Intent intent = new Intent(activity,AlarmReceiver.class);
+<<<<<<< HEAD
                             intent.putExtra("Time", activity.s_affair.getTimeStart());
+=======
+                            intent.putExtra("Time", activity.s_affair.getTimeStartPlan());
+>>>>>>> 8342845777e737e912c6b21b32707e1561d43aea
                             intent.putExtra("Name", activity.s_affair.getName());
                             PendingIntent pendingIntent = PendingIntent.getBroadcast(activity, 0, intent,0);
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
                             {
                                 activity.alarmManager.setWindow(AlarmManager.RTC, date.getTime(), 3000, pendingIntent);
                             }
+<<<<<<< HEAD
                             else
                             {
+=======
+                            else {
+>>>>>>> 8342845777e737e912c6b21b32707e1561d43aea
                                 activity.alarmManager.set(AlarmManager.RTC, date.getTime(), pendingIntent);
                             }
                         }
@@ -391,7 +400,15 @@ public class CreateScheduleActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.schedule_time_end)).setText(s_affair.getTimeEndPlan());
         String timeStartAlarm=s_affair.getTimeStartAlarm();
         if(timeStartAlarm!=null)
+<<<<<<< HEAD
             schedule_remind_time.setText(timeStartAlarm);
+=======
+        {
+            int index=timeStartAlarm.indexOf("日");
+            schedule_remind_date.setText(timeStartAlarm.substring(0,index+1));
+            schedule_remind_time.setText(timeStartAlarm.substring(index+1));
+        }
+>>>>>>> 8342845777e737e912c6b21b32707e1561d43aea
         schedule_date.setText(intent.getStringExtra("date"));
         //初始设置事件名称，事件备注，计划开始时间，计划结束时间，提醒时间
 

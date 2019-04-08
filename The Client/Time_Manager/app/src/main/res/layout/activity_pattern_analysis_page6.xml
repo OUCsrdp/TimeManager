@@ -15,7 +15,8 @@
         android:id="@+id/DensityChartMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:clipChildren="false">
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -27,7 +28,15 @@
                 android:layout_gravity="bottom"
                 android:orientation="vertical">
             </LinearLayout>
-            <LinearLayout
+            <com.srdp.admin.time_manager.widget.AnalysisChart.ChartButton
+                android:id="@+id/P6ChartButtion"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical"
+                android:layout_gravity="right"
+                android:layout_marginRight="10dp" />
+           <!-- <LinearLayout
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
@@ -43,14 +52,24 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:text="休息日"/>
-            </LinearLayout>
+            </LinearLayout>-->
         </FrameLayout>
         <com.github.mikephil.charting.charts.BarChart
             android:layout_width="match_parent"
-            android:layout_height="400dp" />
+            android:layout_height="300dp"/>
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            style="@style/AnalaysisChartTipsText"
+            android:text="迄今为止"
+            />
+        <TextView
+            style="@style/AnalaysisChartTipsText"
+            android:text="平均每小时完成的事件数为"
+            />
         </LinearLayout>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

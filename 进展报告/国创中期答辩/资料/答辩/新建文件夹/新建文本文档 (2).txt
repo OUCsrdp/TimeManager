@@ -1,0 +1,7 @@
+systemProp.https.proxyPort=80
+systemProp.http.proxyHost=127.0.0.1
+systemProp.https.proxyHost=127.0.0.1
+systemProp.http.proxyPort=80
+在模拟器上用10.0.2.2访问你的电脑本机
+D:\Microsoft SQL Server\MSSQL13.MSSQLSERVER\MSSQL\DATA\TimeManager.mdf
+D:\Microsoft SQL Server\MSSQL13.MSSQLSERVER\MSSQL\DATA\TimeManager_log.ldf

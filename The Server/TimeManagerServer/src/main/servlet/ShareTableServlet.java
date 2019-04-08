@@ -79,4 +79,14 @@ public class ShareTableServlet extends BaseServlet{
 		//状态标志"success"
 		return resJson;
 	}
+	public JSONObject getgetSearchMajors(HttpServletRequest request, HttpServletResponse response,String userId,String jsonString)throws ServletException, IOException{
+		SharedtableService sharedTableService=new SharedtableService();
+		JSONObject reqJson=getRequestJson(jsonString);
+		JSONObject resJson=new JSONObject();
+		String keyword=reqJson.getString("majorKeyword");
+		resJson=sharedTableService.getMajorList(keyword);
+		resJson.put("status", "success");
+		//状态标志"success"
+		return resJson;
+	}
 }

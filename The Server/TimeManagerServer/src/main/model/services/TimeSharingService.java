@@ -1,6 +1,7 @@
 package main.model.services;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -125,5 +126,36 @@ public class TimeSharingService {
 		else return null;
 		
 		return back;
+	}
+	public JSONObject getSTDetails(int idTS)
+	{
+		if(idTS<=0)//如果传过来的idTS<=0表示所查询的时间分配表不存在
+			return null;
+		AffairManager managerA=new AffairManager();
+		S_AffairManager managerSA=new S_AffairManager();
+		JSONObject resJson=new JSONObject();
+		ArrayList<Affair> affairList=managerA.findWithIdTS(idTS);//得到属于这个时间分配表的所有事件
+		ArrayList<S_Affair> s_affairList=managerSA.findWithIdTS(idTS);//得到属于这个时间分配表的所有日程
+		//将s_affairlist中的日程转化为时间分配表事件全部加入affairList里
+		if(affairList==null)
+			affairList=new ArrayList<Affair>();
+		if(s_affairList!=null)
+			affairList.addAll(s_affairList);
+		if(affairList != null) {
+			affairList = SortService.sortAByTime(affairList);
+		}
+		resJson.put("date",TimeSharingManager.findWithId(idTS).getDate());
+		JSONArray affairs = new JSONArray();
+		for(Affair a:affairList)
+		{
+			JSONObject eachAffair=new JSONObject();
+			eachAffair.put("name",a.getName());
+			eachAffair.put("idLabel", a.getIdLabel());
+			eachAffair.put("timeStart",a.getTimeStart());
+			eachAffair.put("timeEnd",a.getTimeEnd());
+			affairs.add(eachAffair);
+		}
+		resJson.put("affairs",affairs);
+		return resJson;
 	}
 }

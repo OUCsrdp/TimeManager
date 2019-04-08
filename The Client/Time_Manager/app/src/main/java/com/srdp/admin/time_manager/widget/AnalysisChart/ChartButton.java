@@ -14,8 +14,20 @@ import com.srdp.admin.time_manager.R;
  */
 
 public class ChartButton extends LinearLayout {
-    private boolean isWeekday;
+    private boolean isWeekday=true;
     private Context nowContext;
+    //初始化接口变量
+    private TransforWeekday transforWeekday=null;
+    //定义一个接口
+    public interface TransforWeekday{
+        public void onTransforWeekday(boolean isWeekday);
+    }
+    //TransforWeekday transforWeekday=null;
+    //接口回调
+    public void setonClick(TransforWeekday transforWeekday)
+    {
+        this.transforWeekday=transforWeekday;
+    }
     public ChartButton(Context context, AttributeSet attrs) {
         super(context, attrs);
         nowContext=context;
@@ -25,17 +37,23 @@ public class ChartButton extends LinearLayout {
         weekday.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                isWeekday=true;
-                changeBackBtoA(weekday,weekend);
-                changeData(isWeekday);
+                if(!isWeekday)
+                {
+                    isWeekday=true;
+                    changeBackBtoA(weekday,weekend);
+                    changeData(isWeekday);
+                }
             }
         });
         weekend.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                isWeekday=false;
-                changeBackBtoA(weekend,weekday);
-                changeData(isWeekday);
+                if(isWeekday)
+                {
+                    isWeekday=false;
+                    changeBackBtoA(weekend,weekday);
+                    changeData(isWeekday);
+                }
             }
         });
     }
@@ -48,7 +66,10 @@ public class ChartButton extends LinearLayout {
     }
     private void changeData(boolean isWeekday)
     {
-
+        transforWeekday.onTransforWeekday(isWeekday);
+    }
+    public boolean getWeekDay(){
+        return isWeekday;
     }
 
 }

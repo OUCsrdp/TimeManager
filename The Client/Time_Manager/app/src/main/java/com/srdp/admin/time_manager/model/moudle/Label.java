@@ -1,6 +1,8 @@
 package com.srdp.admin.time_manager.model.moudle;
 
-public class Label 
+import org.litepal.crud.LitePalSupport;
+
+public class Label extends LitePalSupport
 {
 	private int id;
 	
@@ -9,7 +11,8 @@ public class Label
 	private String image;
 	
 	private String color;
-	
+
+	public Label(){}
 	public Label(int id, String name, String image, String color)
 	{
 		this.id = id;
@@ -44,5 +47,8 @@ public class Label
 
 	public int getId() {
 		return id;
+	}
+	public void setId(int id) {
+		this.id=id;
 	}
 }

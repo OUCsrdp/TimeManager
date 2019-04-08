@@ -1,0 +1,19 @@
+#Sat Sep 29 21:05:57 GMT+08:00 2018
+path.1=classes.dex
+path.0=classes.dex
+renamed.5=classes6.dex
+renamed.4=classes5.dex
+renamed.3=classes4.dex
+renamed.2=classes3.dex
+renamed.1=classes2.dex
+renamed.0=classes.dex
+base.5=D\:\\srdp\\TimeManager\\The Client\\Time_Manager\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\53
+base.4=D\:\\srdp\\TimeManager\\The Client\\Time_Manager\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\51
+base.3=D\:\\srdp\\TimeManager\\The Client\\Time_Manager\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\54
+base.2=D\:\\srdp\\TimeManager\\The Client\\Time_Manager\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\49
+base.1=D\:\\srdp\\TimeManager\\The Client\\Time_Manager\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\52
+base.0=D\:\\srdp\\TimeManager\\The Client\\Time_Manager\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\50
+path.5=classes.dex
+path.4=classes.dex
+path.3=classes.dex
+path.2=classes.dex

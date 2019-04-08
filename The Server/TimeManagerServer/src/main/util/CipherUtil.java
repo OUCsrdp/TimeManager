@@ -41,4 +41,8 @@ public class CipherUtil {
        } 
 
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 8342845777e737e912c6b21b32707e1561d43aea
