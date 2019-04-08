@@ -1,11 +1,15 @@
 package com.srdp.admin.time_manager.ui;
 
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.LegendEntry;
@@ -18,11 +22,17 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import com.srdp.admin.time_manager.R;
 import com.srdp.admin.time_manager.model.moudle.Label;
 import com.srdp.admin.time_manager.util.DrawAnalysisChartUtil;
+import com.srdp.admin.time_manager.util.HttpUtil;
+import com.srdp.admin.time_manager.widget.AnalysisChart.ChartButton;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import okhttp3.Call;
+import okhttp3.Response;
 
 import static com.github.mikephil.charting.components.Legend.LegendOrientation.VERTICAL;
 import static java.lang.Float.NaN;
@@ -31,6 +41,7 @@ public class PatternAnalysisPage5 extends AppCompatActivity {
     private BarChart chart;
     private Map<Float,float[]> Percents=new HashMap<Float, float[]>();
     private Map<Integer,String> legendDdata=new HashMap<Integer, String>();
+    private boolean weekday=true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,9 +52,66 @@ public class PatternAnalysisPage5 extends AppCompatActivity {
         if (actionbar != null) {
             actionbar.hide();
         }
-        initData();
-        testDrawUtil();
+        //设置统计图颜色
+        final int[] colors={R.color.darkOrange,R.color.orange,R.color.lightOrange};
+        //进入时绘制统计图
+        getDataAndDraw(colors);
+        //使用接口回调在修改weekday的时候重新请求 重新绘制
+        ChartButton chartButton=findViewById(R.id.P5ChartButtion);
+        chartButton.setonClick(new ChartButton.TransforWeekday() {
+            @Override
+            public void onTransforWeekday(boolean isWeekday) {
+                weekday=isWeekday;
+                if(!weekday)
+                Toast.makeText(PatternAnalysisPage5.this,"今天休息哟！",Toast.LENGTH_LONG).show();
+                //切换工作日休息日时重新绘制统计图
+                getDataAndDraw(colors);
+            }
+        });
+        /*initData();
+        testDrawUtil();*/
         //testDraw();
+    }
+    private void getDataAndDraw(final int[] colors)
+    {
+        //设置图例
+        legendDdata.put(colors[0],"少于预定时间的比例");
+        legendDdata.put(colors[1],"等于预定时间的比例");
+        legendDdata.put(colors[2],"多于预定时间的比例");
+        //请求获得统计图数据
+        JSONObject reqJson=new JSONObject();
+        reqJson.put("weekday",true);
+        reqJson.put("type","detailedAnalysis");
+        HttpUtil.request("AnalysisServlet?method=GetChart","post",reqJson,new okhttp3.Callback(){
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) {
+                try {
+                    String ress=response.body().string();
+                    JSONObject resJson = JSONObject.parseObject(ress);
+                    JSONArray chartInfor=resJson.getJSONArray("chartInfor");
+                    for(int i=0;i<chartInfor.size();i++)
+                    {
+                        //设置每个柱体的高度
+                        float[] every=new float[3];
+                        JSONObject nowData=chartInfor.getJSONObject(i);
+                        JSONArray percents=nowData.getJSONArray("percents");
+                        for(int j =0;j<3;j++)
+                            every[j]=percents.getFloatValue(j);
+                        Percents.put((float)i,every);
+                    }
+                    drawChart(colors);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call call,@NonNull IOException e) {
+            }
+        });
+    }
+    private void drawChart(int[] colors)
+    {
+        DrawAnalysisChartUtil.drawChart(this,R.id.StackBarChartMain,"CompareBarChart",Percents,legendDdata,colors);
     }
     private void testDrawUtil()
     {

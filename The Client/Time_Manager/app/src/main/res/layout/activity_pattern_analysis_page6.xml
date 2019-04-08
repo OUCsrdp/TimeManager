@@ -29,6 +29,7 @@
                 android:orientation="vertical">
             </LinearLayout>
             <com.srdp.admin.time_manager.widget.AnalysisChart.ChartButton
+                android:id="@+id/P6ChartButtion"
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"

@@ -187,6 +187,7 @@ public class ReportFormActivity extends AppCompatActivity {
                     for(int i=0;i<durationArray.size();i++){
                         String durationString = durationArray.getString(i);
                         float duration = Float.parseFloat(durationString);
+                        //这个是怎么转化的？
                         lineData.add(new Entry(i+1, duration));
                     }
 

@@ -51,7 +51,6 @@ public class PatternAnalysisPage2Activity extends AppCompatActivity {
                 getData();
             }
         });
-
     }
     //从后端获取平均推迟时间
     private void getData(){

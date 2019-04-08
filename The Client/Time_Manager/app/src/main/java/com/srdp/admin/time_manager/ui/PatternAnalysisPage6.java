@@ -1,20 +1,31 @@
 package com.srdp.admin.time_manager.ui;
 
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.github.mikephil.charting.charts.BarChart;
 import com.srdp.admin.time_manager.R;
 import com.srdp.admin.time_manager.util.DrawAnalysisChartUtil;
+import com.srdp.admin.time_manager.util.HttpUtil;
+import com.srdp.admin.time_manager.widget.AnalysisChart.ChartButton;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import okhttp3.Call;
+import okhttp3.Response;
 
 public class PatternAnalysisPage6 extends AppCompatActivity {
     private BarChart chart;
     private Map<Float,float[]> Percents=new HashMap<Float, float[]>();
     private int[] colors=new int[1];
+    private boolean weekday=true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,8 +35,55 @@ public class PatternAnalysisPage6 extends AppCompatActivity {
         if (actionbar != null) {
             actionbar.hide();
         }
-        initData();
-        drawChart();
+        //初始化颜色
+        colors[0]=R.color.orange;
+        /*initData();
+        drawChart();*/
+        //进入页面时绘制统计图
+        getDataAndDraw(colors);
+        ChartButton chartButton=findViewById(R.id.P6ChartButtion);
+        chartButton.setonClick(new ChartButton.TransforWeekday() {
+            @Override
+            public void onTransforWeekday(boolean isWeekday) {
+                weekday=isWeekday;
+                //切换工作日休息日时重新绘制统计图
+                getDataAndDraw(colors);
+            }
+        });
+    }
+    private void getDataAndDraw(final int[] colors)
+    {
+        //请求获得统计图数据
+        JSONObject reqJson=new JSONObject();
+        reqJson.put("weekday",weekday);
+        reqJson.put("type","densityAnalysis");
+        HttpUtil.request("AnalysisServlet?method=GetChart","post",reqJson,new okhttp3.Callback(){
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) {
+                try {
+                    String ress=response.body().string();
+                    JSONObject resJson = JSONObject.parseObject(ress);
+                    JSONArray chartInfor=resJson.getJSONArray("chartInfor");
+                    for(int i=0;i<chartInfor.size();i++)
+                    {
+                        //设置每个柱体的高度
+                        float[] every=new float[1];
+                        JSONObject nowData=chartInfor.getJSONObject(i);
+                        every[0]=nowData.getFloatValue("percents");
+                        Percents.put((float)i,every);
+                    }
+                    drawChart(colors);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call call,@NonNull IOException e) {
+            }
+        });
+    }
+    private void drawChart(int[] colors){
+        DrawAnalysisChartUtil.drawChart(this,R.id.DensityChartMain,"DensityBarChart",Percents,colors);
     }
     private void initData()
     {

@@ -31,14 +31,14 @@
         <activity android:name=".ui.RegisterSchoolActivity" />
         <activity android:name=".ui.PatternAnalysisPage5">
         </activity>
-        <activity android:name=".ui.PatternAnalysisPage4"></activity>
-        <activity android:name=".ui.PatternAnalysisPage6">
+        <activity android:name=".ui.PatternAnalysisPage4">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity android:name=".ui.PatternAnalysisPage6">
+        </activity>
         <receiver
             android:name=".model.moudle.Receivers.AlarmReceiver"
             android:enabled="true"
