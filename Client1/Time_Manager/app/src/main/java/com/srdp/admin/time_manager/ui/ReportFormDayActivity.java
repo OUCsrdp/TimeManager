@@ -295,7 +295,7 @@ public class ReportFormDayActivity extends AppCompatActivity {
                             yValues.add(new PieEntry(percent, duration));
                             /*表格部分*/
                             //行
-                            TableRow tableRow = new TableRow(day_plan_table.getContext());
+                            TableRow tableRow = new TableRow(day_table.getContext());
                             if(i%2==0) tableRow.setBackgroundResource(R.color.tableBackgroundWhite);
                             else tableRow.setBackgroundResource(R.color.tableBackgroundPink);
                             tableRow.setPadding(5,5,5,5);

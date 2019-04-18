@@ -15,6 +15,8 @@ import android.view.View;
 import android.graphics.Color;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -74,9 +76,13 @@ import static com.alibaba.fastjson.JSON.parseObject;
 
 public class ReportFormActivity extends AppCompatActivity {
 
+    private String[] labelName={"课外拓展","社团","娱乐","交通","吃饭","休息","睡觉","其他","生活","课业","运动"};//标签名
+
     private String[] weekday={"星期一","星期二","星期三","星期四","星期五","星期六","星期日"};
 
-    private TableLayout rep_line_table;//折线图表格
+    private TableLayout rep_line_table;//折线图表格+饼图时间分配表表格
+    private TableLayout rep_pie_table;//饼图日程表表格
+    private TableLayout pie_table;
 
     private PieChart rep_piechart;//饼状图时间分配表
     private PieChart rep_week_piechart;//饼状图日程表
@@ -103,6 +109,9 @@ public class ReportFormActivity extends AppCompatActivity {
 
         rep_line_table = (TableLayout)findViewById(R.id.rep_line_table);
         rep_line_table.setStretchAllColumns(true);
+        rep_pie_table = (TableLayout)findViewById(R.id.rep_pie_table);
+        rep_pie_table.setStretchAllColumns(true);
+        pie_table = (TableLayout)findViewById(R.id.pie_table);
         rep_piechart = (PieChart) findViewById(R.id.rep_piechart);
         rep_week_piechart = (PieChart)findViewById(R.id.rep_week_piechart);
         rep_linechart = (LineChart) findViewById(R.id.rep_lingchart);
@@ -111,24 +120,38 @@ public class ReportFormActivity extends AppCompatActivity {
         pic_trans = (Button) findViewById(R.id.pic_trans);
         week_trans = (Button) findViewById(R.id.week_trans);
 
+
+        PieData planPieData = getPieData(6, 100,2);
+        showChart(rep_piechart, planPieData);
+        PieData weekPieData = getPieData(6, 100,1);
+        showChart(rep_week_piechart,weekPieData);
+
         //切换图表事件
         pic_trans.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(flag_pic == 1){//转换到切线图
+                if(flag_pic == 1){//转换到折线图
                     flag_pic = 0;
                     rep_linechart.setVisibility(View.VISIBLE);
                     rep_piechart.setVisibility(View.GONE);
+                    rep_week_piechart.setVisibility(View.GONE);
+                    rep_pie_table.setVisibility(View.GONE);
+                    pie_table.setVisibility(View.GONE);
                     pic_trans.setBackgroundResource(R.drawable.line_chart_logo);
                     initLineChart(rep_linechart);
                 }
                 else {//转换到饼状图
                     flag_pic = 1;
                     rep_piechart.setVisibility(View.VISIBLE);
-                    rep_linechart.setVisibility(View.GONE);
+                    rep_week_piechart.setVisibility(View.VISIBLE);
+                    rep_pie_table.setVisibility(View.VISIBLE);
+                    pie_table.setVisibility(View.VISIBLE);
+                    rep_linechart.setVisibility(View.VISIBLE);
                     pic_trans.setBackgroundResource(R.drawable.pie_chart_logo);
-                    PieData mPieData = getPieData(6, 100);
-                    showChart(rep_piechart, mPieData);
+                    PieData planPieData = getPieData(6, 100,2);
+                    showChart(rep_piechart, planPieData);
+                    PieData weekPieData = getPieData(6, 100,1);
+                    showChart(rep_week_piechart,weekPieData);
                 }
             }
         });
@@ -405,7 +428,7 @@ public class ReportFormActivity extends AppCompatActivity {
      * @param count 分成几部分
      * @param range
      */
-    private PieData getPieData(int count, float range) {
+    private PieData getPieData(int count, float range,final int flag) {
 
         final ArrayList<String> xValues = new ArrayList<>();  //xVals用来表示每个饼块上的内容
         final ArrayList<PieEntry> yValues = new ArrayList<>();  //yVals用来表示封装每个饼块的实际数据
@@ -428,17 +451,133 @@ public class ReportFormActivity extends AppCompatActivity {
                     //获得第几周
                     week = parseObject(jsonString).getString("week");
                     rep_week.setText(week);
-                    //时间分配表
-                    JSONArray timesharing = parseObject(jsonString).getJSONArray("TimeSharing");
-                    Log.i("timesharing",timesharing.toString());
+                    if(flag==2){
+                        //时间分配表
+                        rep_line_table.removeAllViewsInLayout();//清空时间分配表格
+                        JSONArray timesharing = parseObject(jsonString).getJSONArray("TimeSharing");
+                        Log.i("timesharing",timesharing.toString());
 
-                    for(int i=0;i<timesharing.size();i++){
-                        JSONObject resJsonItem = timesharing.getJSONObject(i);
-                        int labelid = resJsonItem.getIntValue("labelid");
-                        float percent = resJsonItem.getFloatValue("percent");//所占时间比，以浮点数表示
-                        String duration = resJsonItem.getString("duration");//该天所有该标签的事件总时间
-                        xValues.add("Quarterly" +labelid);
-                        yValues.add(new PieEntry(percent, duration));
+                        for(int i=0;i<timesharing.size();i++){
+                            JSONObject resJsonItem = timesharing.getJSONObject(i);
+                            int labelid = resJsonItem.getIntValue("labelid");
+                            float percent = resJsonItem.getFloatValue("percent");//所占时间比，以浮点数表示
+                            String duration = resJsonItem.getString("duration");//该天所有该标签的事件总时间
+                            float satisfaction = resJsonItem.getFloatValue("satisfaction");//该天所有该标签的事件平均满意程度
+                            //图表部分
+                            xValues.add("Quarterly" +labelid);
+                            yValues.add(new PieEntry(percent, duration));
+                            /*表格部分*/
+                            //行
+                            TableRow tableRow = new TableRow(rep_line_table.getContext());
+                            if(i%2==0) tableRow.setBackgroundResource(R.color.tableBackgroundWhite);
+                            else tableRow.setBackgroundResource(R.color.tableBackgroundPink);
+                            tableRow.setPadding(5,5,5,5);
+                            //标签颜色圆点
+                            ImageView img = new ImageView(tableRow.getContext());
+                            img.setMaxWidth(20);
+                            img.setMaxHeight(20);
+                            img.setImageDrawable(getResources().getDrawable(R.drawable.spot_bg));
+                            //标签名
+                            TextView label_name = new TextView(tableRow.getContext());
+                            ViewGroup.LayoutParams label_name_params = label_name.getLayoutParams();
+                            label_name_params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                            label_name_params.width = ViewGroup.LayoutParams.WRAP_CONTENT;
+                            label_name.setGravity(Gravity.CENTER);
+                            label_name.setPadding(10,0,10,0);
+                            label_name.setText(labelName[labelid]);
+                            //标签图标
+                            ImageView label_icon = new ImageView(tableRow.getContext());
+                            label_icon.setMaxWidth(50);
+                            label_icon.setMaxHeight(50);
+                            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                            lp.setMargins(10, 0, 10, 0);
+                            label_icon.setLayoutParams(lp);
+                            label_icon.setImageDrawable(getResources().getDrawable(R.drawable.spot_bg));
+                            //linearlayout
+                            LinearLayout linearLayout = new LinearLayout(tableRow.getContext());
+                            ViewGroup.LayoutParams linearLayout_params = label_name.getLayoutParams();
+                            linearLayout_params.height = ViewGroup.LayoutParams.MATCH_PARENT;
+                            linearLayout_params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                            linearLayout.setGravity(Gravity.CENTER);
+                            linearLayout.setOrientation(LinearLayout.VERTICAL);
+                            //时长
+                            TextView time = new TextView(linearLayout.getContext());
+                            ViewGroup.LayoutParams time_params = label_name.getLayoutParams();
+                            time_params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                            time_params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                            time.setGravity(Gravity.CENTER);
+                            LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                            lp2.setMargins(10, 5, 0, 5);
+                            time.setLayoutParams(lp2);
+                            time.setText(duration.substring(0,1)+"时"+duration.substring(3,4)+"分");
+                            //满意度LinearLayout
+                            LinearLayout linearLayout2 = new LinearLayout(linearLayout.getContext());
+                            linearLayout2.setMinimumHeight(10);
+                            linearLayout2.setMinimumWidth(90);
+                            linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+                            if(i%2==0) linearLayout2.setBackgroundResource(R.drawable.satisfy_bg);
+                            else linearLayout2.setBackgroundResource(R.drawable.satisfy_bg1);
+                            //满意度
+                            TextView satisfy = new TextView(linearLayout2.getContext());
+                            int width = (int)satisfaction/5*90;
+                            satisfy.setWidth(width);
+                            satisfy.setHeight(10);
+                            if(i%2==0) satisfy.setBackgroundResource(R.drawable.satisfy_show);
+                            else satisfy.setBackgroundResource(R.drawable.satisfy_show1);
+                        }
+                    }
+                    else if(flag==1){
+                        //日程表
+                        rep_pie_table.removeAllViewsInLayout();//清空日程表格
+                        JSONArray Schedule = parseObject(jsonString).getJSONArray("Schedule");
+                        Log.i("Schedule",Schedule.toString());
+
+                        for(int i=0;i<Schedule.size();i++){
+                            JSONObject resJsonItem = Schedule.getJSONObject(i);
+                            int labelid = resJsonItem.getIntValue("labelid");
+                            float percent = resJsonItem.getFloatValue("percent");//所占时间比，以浮点数表示
+                            String duration = resJsonItem.getString("duration");//该天所有该标签的事件总时间
+                            //图表部分
+                            xValues.add("Quarterly" +labelid);
+                            yValues.add(new PieEntry(percent, duration));
+                            /*表格部分*/
+                            //行
+                            TableRow tableRow = new TableRow(rep_pie_table.getContext());
+                            if(i%2==0) tableRow.setBackgroundResource(R.color.tableBackgroundWhite);
+                            else tableRow.setBackgroundResource(R.color.tableBackgroundPink);
+                            tableRow.setPadding(5,5,5,5);
+                            //标签颜色圆点
+                            ImageView img = new ImageView(tableRow.getContext());
+                            img.setMaxWidth(20);
+                            img.setMaxHeight(20);
+                            img.setImageDrawable(getResources().getDrawable(R.drawable.spot_bg));
+                            //标签名
+                            TextView label_name = new TextView(tableRow.getContext());
+                            ViewGroup.LayoutParams label_name_params = label_name.getLayoutParams();
+                            label_name_params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                            label_name_params.width = ViewGroup.LayoutParams.WRAP_CONTENT;
+                            label_name.setGravity(Gravity.CENTER);
+                            label_name.setPadding(10,0,10,0);
+                            label_name.setText(labelName[labelid]);
+                            //标签图标
+                            ImageView label_icon = new ImageView(tableRow.getContext());
+                            label_icon.setMaxWidth(50);
+                            label_icon.setMaxHeight(50);
+                            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                            lp.setMargins(10, 0, 10, 0);
+                            label_icon.setLayoutParams(lp);
+                            label_icon.setImageDrawable(getResources().getDrawable(R.drawable.spot_bg));
+                            //时长
+                            TextView time = new TextView(tableRow.getContext());
+                            ViewGroup.LayoutParams time_params = label_name.getLayoutParams();
+                            time_params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                            time_params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                            time.setGravity(Gravity.CENTER);
+                            LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                            lp2.setMargins(10, 5, 0, 5);
+                            time.setLayoutParams(lp2);
+                            time.setText(duration.substring(0,1)+"时"+duration.substring(3,4)+"分");
+                        }
                     }
 
                 } catch(Exception e){
