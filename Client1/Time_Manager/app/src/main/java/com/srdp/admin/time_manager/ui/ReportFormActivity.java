@@ -10,9 +10,13 @@ import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.graphics.Color;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
@@ -70,7 +74,12 @@ import static com.alibaba.fastjson.JSON.parseObject;
 
 public class ReportFormActivity extends AppCompatActivity {
 
-    private PieChart rep_piechart;//饼状图
+    private String[] weekday={"星期一","星期二","星期三","星期四","星期五","星期六","星期日"};
+
+    private TableLayout rep_line_table;//折线图表格
+
+    private PieChart rep_piechart;//饼状图时间分配表
+    private PieChart rep_week_piechart;//饼状图日程表
     private LineChart rep_linechart;//切线图
 
     private TextView rep_week;//第x周
@@ -92,7 +101,10 @@ public class ReportFormActivity extends AppCompatActivity {
             actionbar.hide();
         }
 
+        rep_line_table = (TableLayout)findViewById(R.id.rep_line_table);
+        rep_line_table.setStretchAllColumns(true);
         rep_piechart = (PieChart) findViewById(R.id.rep_piechart);
+        rep_week_piechart = (PieChart)findViewById(R.id.rep_week_piechart);
         rep_linechart = (LineChart) findViewById(R.id.rep_lingchart);
         rep_week = (TextView) findViewById(R.id.rep_week);
         rep_date = (TextView) findViewById(R.id.rep_date);
@@ -180,14 +192,36 @@ public class ReportFormActivity extends AppCompatActivity {
                     //获得第几周
                     week = parseObject(jsonString).getString("week");
                     rep_week.setText(week);
-                    //时间分配表
+                    //获取duration
                     JSONArray durationArray = parseObject(jsonString).getJSONArray("durationArray");
                     Log.i("durationArray",durationArray.toString());
 
+                    rep_line_table.removeAllViewsInLayout();//清空表格
                     for(int i=0;i<durationArray.size();i++){
                         String durationString = durationArray.getString(i);
-                        float duration = Float.parseFloat(durationString);
+                        float duration = Float.parseFloat(durationString.substring(0,1))*60 + Float.parseFloat(durationString.substring(3,4));
                         lineData.add(new Entry(i+1, duration));
+                        /*表格部分*/
+                        TableRow tableRow = new TableRow(rep_line_table.getContext());
+                        if(i%2==0) tableRow.setBackgroundResource(R.color.tableBackgroundWhite);
+                        else tableRow.setBackgroundResource(R.color.tableBackgroundPink);
+                        tableRow.setPadding(5,5,5,5);
+                        //周几
+                        TextView day = new TextView(tableRow.getContext());
+                        ViewGroup.LayoutParams text_params = day.getLayoutParams();
+                        text_params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                        text_params.width = ViewGroup.LayoutParams.WRAP_CONTENT;
+                        day.setGravity(Gravity.CENTER);
+                        day.setTextColor(Color.BLACK);
+                        day.setText(weekday[i]);
+                        //时长
+                        TextView time = new TextView(tableRow.getContext());
+                        ViewGroup.LayoutParams time_params = day.getLayoutParams();
+                        time_params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                        time_params.width = ViewGroup.LayoutParams.WRAP_CONTENT;
+                        time.setGravity(Gravity.CENTER);
+                        time.setTextColor(Color.BLACK);
+                        time.setText(durationString.substring(0,1)+"时"+durationString.substring(3,4)+"分");
                     }
 
                 } catch(Exception e){
@@ -405,7 +439,6 @@ public class ReportFormActivity extends AppCompatActivity {
                         String duration = resJsonItem.getString("duration");//该天所有该标签的事件总时间
                         xValues.add("Quarterly" +labelid);
                         yValues.add(new PieEntry(percent, duration));
-                        //xValues.add("Quarterly" + (i + 1));  //饼块上显示成Quarterly1, Quarterly2, Quarterly3, Quarterly4
                     }
 
                 } catch(Exception e){
