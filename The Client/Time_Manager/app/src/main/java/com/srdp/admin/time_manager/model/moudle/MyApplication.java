@@ -20,8 +20,8 @@ public class MyApplication extends Application {
     private static Context context;
     private Affair timingAffair=new Affair();
     private S_Affair timingSAffair=new S_Affair();
+    //private String baseUrl="http://47.103.6.104:8080/TimeManagerServer/";
     private String baseUrl="http://47.103.6.104:8080/TimeManagerServer/";
-    //private String baseUrl="http://47.103.6.104:8080/";
     private int isAffair=1;
 
     public void onCreate()

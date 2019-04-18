@@ -13,6 +13,8 @@
     <color name="lightOrange">#EAE2B7</color>
     <color name="orange">#FCBF49</color>
     <color name="darkOrange">#F77F00</color>
+    <color name="tableBackgroundWhite">#ffffff</color>
+    <color name="tableBackgroundPink">#4bff8e00</color>
 
     <color name="LabelLearing">#E15244</color>
     <color name="LabelSelfLearing">#C32E52</color>
