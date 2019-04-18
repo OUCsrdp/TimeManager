@@ -2,16 +2,21 @@ package com.srdp.admin.time_manager.ui;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
+import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -28,15 +33,20 @@ import com.srdp.admin.time_manager.model.moudle.Label;
 import com.srdp.admin.time_manager.model.moudle.S_Affair;
 import com.srdp.admin.time_manager.model.moudle.TimeSharing;
 import com.srdp.admin.time_manager.util.DensityUtil;
+import com.srdp.admin.time_manager.util.HttpUtil;
 import com.srdp.admin.time_manager.util.LabelUtil;
 import com.srdp.admin.time_manager.util.TimeUtil;
 import com.srdp.admin.time_manager.util.TokenUtil;
 
+import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Response;
 
 public class assign_table extends AppCompatActivity {
     private boolean isAnimated = false;
@@ -109,6 +119,52 @@ public class assign_table extends AppCompatActivity {
         });
         //创建新的时间分配事件时跳转到该timesharing_edit并且把时间分配表的id传过去
     }
+    private void showShareDialog(){
+        AlertDialog.Builder setshareDialog = new AlertDialog.Builder(this);
+        //获取界面
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.share_pop, null);
+        //将界面填充到AlertDiaLog容器
+        setshareDialog.setView(dialogView);
+        Button shareCancel=dialogView.findViewById(R.id.ShareCancel);
+        Button shareEnsre=dialogView.findViewById(R.id.ShareEnsure);
+        //创建AlertDiaLog
+        setshareDialog.create();
+        //AlertDiaLog显示
+        final AlertDialog shareDialog = setshareDialog.show();
+        //设置自定义事件
+        shareCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shareDialog.dismiss();
+            }
+        });
+        shareEnsre.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               requestShare();
+            }
+        });
+
+
+    }
+    private void requestShare(){
+        JSONObject reqJson=new JSONObject();
+        reqJson.put("idTS",nowTable.getId());
+        HttpUtil.request("UserServlet?method=GetVerify&time="+new Date(),"post",reqJson,new okhttp3.Callback(){
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) {
+                try {
+                    String ress=response.body().string();
+                    JSONObject resJson = JSONObject.parseObject(ress);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call call,@NonNull IOException e) {}
+        });
+    }
 
     // Handler
     private static class TimeSharingHandler extends Handler {
@@ -153,7 +209,7 @@ public class assign_table extends AppCompatActivity {
         affair.clear();
         saffair.clear();
         //进入页面获得消息后清空数组
-        if(j.getString("status").equals("fail"))
+        if(j.getString("status").equals("fail")||j.getIntValue("id")==-1)
         {
             appendAssign();
             return;

@@ -17,7 +17,17 @@ import java.util.List;
 public class LabelUtil {
     static List<Label> labels=new ArrayList<Label>();
     static{
-        //labels.add(new Label(1,"学习", R.drawable.add_timing,R.color.chartWhite));
+        labels.add(new Label(1,"学习",R.drawable.label_learning,R.color.LabelLearing));
+        labels.add(new Label(2,"自学",R.drawable.label_self_learning,R.color.LabelSelfLearing));
+        labels.add(new Label(3,"社团",R.drawable.label_club,R.color.LabelClub));
+        labels.add(new Label(4,"娱乐",R.drawable.label_entertainment,R.color.LabelEntertainment));
+        labels.add(new Label(5,"交通",R.drawable.label_transport,R.color.LabelTransport));
+        labels.add(new Label(6,"吃饭",R.drawable.label_eat,R.color.LabelEat));
+        labels.add(new Label(7,"休息",R.drawable.label_rest,R.color.LabelRest));
+        labels.add(new Label(8,"睡觉",R.drawable.label_sleep,R.color.LabelSleep));
+        labels.add(new Label(9,"生活",R.drawable.label_life,R.color.LabelLife));
+        labels.add(new Label(10,"运动",R.drawable.label_sports,R.color.LabelSports));
+        labels.add(new Label(11,"其他",R.drawable.label_other,R.color.LabelOther));
     }
     public static void setLabels(JSONObject j)
     {

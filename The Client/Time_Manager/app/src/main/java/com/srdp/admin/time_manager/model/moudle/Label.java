@@ -8,12 +8,12 @@ public class Label extends LitePalSupport
 	
 	private String name;
 	
-	private String image;
+	private int image;
 	
-	private String color;
+	private int color;
 
 	public Label(){}
-	public Label(int id, String name, String image, String color)
+	public Label(int id, String name, int image, int color)
 	{
 		this.id = id;
 		this.name = name;
@@ -29,19 +29,19 @@ public class Label extends LitePalSupport
 		this.name = name;
 	}
 
-	public String getImage() {
+	public int getImage() {
 		return image;
 	}
 
-	public void setImage(String image) {
+	public void setImage(int image) {
 		this.image = image;
 	}
 
-	public String getColor() {
+	public int getColor() {
 		return color;
 	}
 
-	public void setColor(String color) {
+	public void setColor(int color) {
 		this.color = color;
 	}
 

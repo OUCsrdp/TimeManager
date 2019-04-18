@@ -13,4 +13,17 @@
     <color name="lightOrange">#EAE2B7</color>
     <color name="orange">#FCBF49</color>
     <color name="darkOrange">#F77F00</color>
+
+    <color name="LabelLearing">#E15244</color>
+    <color name="LabelSelfLearing">#C32E52</color>
+    <color name="LabelClub">#95245C</color>
+    <color name="LabelEntertainment">#722C81</color>
+    <color name="LabelTransport">#48369B</color>
+    <color name="LabelEat">#28CBB3</color>
+    <color name="LabelRest">#3CCB87</color>
+    <color name="LabelSleep">#A9CD3E</color>
+    <color name="LabelLife">#3AB7D9</color>
+    <color name="LabelSports">#0E568F</color>
+    <color name="LabelOther">#FDBD3E</color>
+
 </resources>
