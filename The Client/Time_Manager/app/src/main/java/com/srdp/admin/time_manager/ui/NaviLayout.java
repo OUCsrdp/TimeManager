@@ -68,6 +68,14 @@ public class NaviLayout extends LinearLayout {
                 nowContext.startActivity(theIntent);
             }
         });
+        TextView navi3=(TextView) findViewById(R.id.naviMyTable);
+        navi3.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                theIntent.setClass(nowContext,ReportCalendarActivity.class);
+                nowContext.startActivity(theIntent);
+            }
+        });
         TextView navi4=(TextView) findViewById(R.id.naviMyAnalyse);
         navi4.setOnClickListener(new View.OnClickListener() {
             @Override

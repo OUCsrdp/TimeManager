@@ -196,7 +196,7 @@ public class ReportFormActivity extends AppCompatActivity {
 
         //从日历页面获取日期数据
         Intent intent=getIntent();
-        String today=intent.getStringExtra("today");
+        String today=intent.getStringExtra("date");
         rep_date.setText(today);
         //TODO 获取标签
         int labelId = 1;
@@ -435,8 +435,8 @@ public class ReportFormActivity extends AppCompatActivity {
 
         //从日历页面获取日期数据
         Intent intent=getIntent();
-        String today=intent.getStringExtra("today");
-
+        String today=intent.getStringExtra("date");
+        Log.i("reportToday",today);
         //从后端获取数据
         JSONObject reportObject = new JSONObject();
         reportObject.put("date",today);

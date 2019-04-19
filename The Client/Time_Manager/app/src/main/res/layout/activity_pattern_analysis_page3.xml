@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_color"
+    android:background="@color/blueBackground"
     tools:context="com.srdp.admin.time_manager.ui.PatternAnalysisPage3Activity">
     <com.srdp.admin.time_manager.ui.TitleLayout
         android:layout_width="match_parent"
@@ -48,6 +48,7 @@
             android:paddingVertical="10dp"
             android:background="@drawable/p3_sign"
             android:orientation="vertical">
+
 
             <TextView
                 android:layout_width="220dp"

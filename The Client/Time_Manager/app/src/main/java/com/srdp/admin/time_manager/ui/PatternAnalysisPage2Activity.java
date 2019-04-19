@@ -39,7 +39,7 @@ public class PatternAnalysisPage2Activity extends AppCompatActivity {
             actionbar.hide();
         }
 
-        p2_time_text = (TextView) findViewById(R.id.p2_time_text);
+       /* p2_time_text = (TextView) findViewById(R.id.p2_time_text);
         p2_chartButton = (ChartButton) findViewById(R.id.p2_chartButton);
 
         getData();
@@ -50,7 +50,7 @@ public class PatternAnalysisPage2Activity extends AppCompatActivity {
                 weekDay = p2_chartButton.getWeekDay();
                 getData();
             }
-        });
+        });*/
     }
     //从后端获取平均推迟时间
     private void getData(){

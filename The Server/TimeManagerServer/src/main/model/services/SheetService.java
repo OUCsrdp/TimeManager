@@ -151,7 +151,7 @@ public class SheetService
  		return back;
 	}
 	
-	public JSONObject getWeeklySheet(int userId,String date,int labelid)
+	public JSONObject getWeeklyChange(int userId,String date,int labelid)
 	{
 		JSONObject back = new JSONObject();
 		
@@ -206,6 +206,8 @@ public class SheetService
         	week = (day2 - day1)/7 + 1;
         
         back.put("week", "第" + week + "周");
+        //截至此获取到今天是使用的第几周
+        
         ArrayList<String> durationArray = new ArrayList<String>();
         timeOfDate.add(Calendar.DATE, -timeRegister.get(Calendar.DAY_OF_WEEK));
         for(int i = 0; i < 7; i++)
@@ -344,6 +346,7 @@ public class SheetService
         }
         timeOfDate.add(Calendar.DATE, -7);	
         
+        //分别计算出每一个id所占比例
         JSONArray affairArray = new JSONArray();
         for(int i = 0; i < labels.size(); i++)
         {

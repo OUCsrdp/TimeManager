@@ -50,7 +50,7 @@ public class PatternAnalysisPage3Activity extends AppCompatActivity {
             actionbar.hide();
         }
 
-        p3_chartButton = (ChartButton) findViewById(R.id.p3_chartButton);
+        /*p3_chartButton = (ChartButton) findViewById(R.id.p3_chartButton);
         p3_PieChart = (PieChart) findViewById(R.id.p3_PieChart);
         p3_unfinished = (TextView) findViewById(R.id.p3_unfinished);
 
@@ -65,7 +65,7 @@ public class PatternAnalysisPage3Activity extends AppCompatActivity {
                 getData();
                 initChart(p3_PieChart);
             }
-        });
+        });*/
     }
 
     //从后端获取未完成事件所占比例

@@ -38,10 +38,10 @@ public class ReportCalendarActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if(isChecked){
-                    isWeek = 1;
+                    isWeek = 0;
                 }
                 else {
-                    isWeek = 0;
+                    isWeek = 1;
                 }
             }
         });

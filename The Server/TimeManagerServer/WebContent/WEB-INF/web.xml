@@ -53,4 +53,12 @@
   	<servlet-name>ShareTableServlet</servlet-name>
   	<url-pattern>/ShareTableServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+  	<servlet-name>SheetServlet</servlet-name>
+  	<servlet-class>main.servlet.SheetServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>SheetServlet</servlet-name>
+  	<url-pattern>/SheetServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

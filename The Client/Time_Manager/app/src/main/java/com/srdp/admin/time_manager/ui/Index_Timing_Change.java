@@ -339,6 +339,13 @@ public class Index_Timing_Change extends AppCompatActivity {
             }
         });
         TextView navi3=(TextView) findViewById(R.id.IndexNaviMyTable);
+        navi3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent theIntent=new Intent(Index_Timing_Change.this,ReportCalendarActivity.class);
+                startActivity(theIntent);
+            }
+        });
         TextView navi4=(TextView) findViewById(R.id.IndexNaviMyAnalyse);
         navi4.setOnClickListener(new View.OnClickListener() {
             @Override
