@@ -37,22 +37,15 @@
                 android:layout_marginRight="10dp" />
         </FrameLayout>
 
-        <!--<LinearLayout
-            android:layout_marginTop="50dp"
+        <LinearLayout
+            android:layout_marginTop="100dp"
             android:layout_gravity="center"
             android:layout_width="240dp"
             android:layout_height="wrap_content"
             android:paddingVertical="10dp"
-            android:background="@drawable/pa_page2_sign"
-            android:orientation="vertical">-->
-            <LinearLayout
-                android:layout_marginTop="50dp"
-                android:layout_gravity="center"
-                android:layout_width="240dp"
-                android:layout_height="wrap_content"
-                android:paddingVertical="10dp"
-                android:background="@drawable/pa_page2_sign"
-                android:orientation="vertical">
+            android:background="@drawable/p2_sign"
+            android:orientation="vertical">
+
 
             <TextView
                 android:layout_width="240dp"
