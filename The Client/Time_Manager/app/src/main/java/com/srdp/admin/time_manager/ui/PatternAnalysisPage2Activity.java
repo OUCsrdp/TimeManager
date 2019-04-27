@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -39,7 +40,7 @@ public class PatternAnalysisPage2Activity extends AppCompatActivity {
             actionbar.hide();
         }
 
-       /* p2_time_text = (TextView) findViewById(R.id.p2_time_text);
+        p2_time_text = (TextView) findViewById(R.id.p2_time_text);
         p2_chartButton = (ChartButton) findViewById(R.id.p2_chartButton);
 
         getData();
@@ -48,9 +49,11 @@ public class PatternAnalysisPage2Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 weekDay = p2_chartButton.getWeekDay();
+//                String info = weekDay==true?"true":"false";
+//                Log.i("info",info);
                 getData();
             }
-        });*/
+        });
     }
     //从后端获取平均推迟时间
     private void getData(){

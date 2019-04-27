@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -49,12 +50,14 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 
 import com.srdp.admin.time_manager.R;
+import com.srdp.admin.time_manager.model.moudle.Label;
 import com.srdp.admin.time_manager.model.moudle.TimeSharing;
 import com.srdp.admin.time_manager.util.HttpUtil;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.srdp.admin.time_manager.util.LabelUtil;
 
 import okhttp3.Call;
 import okhttp3.Response;
@@ -78,7 +81,7 @@ public class ReportFormDayActivity extends AppCompatActivity {
 
     private int count;//饼图数量
 
-    private String[] labelName={"课外拓展","社团","娱乐","交通","吃饭","休息","睡觉","其他","生活","课业","运动"};//标签名
+    private LabelUtil labelUtil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +92,9 @@ public class ReportFormDayActivity extends AppCompatActivity {
         if (actionbar != null) {
             actionbar.hide();
         }
+
+        Log.i("info","成功进入日报表页！");
+
 
         day_plan_table = (TableLayout)findViewById(R.id.day_plan_table);
         day_plan_table.setStretchAllColumns(true);
@@ -179,15 +185,17 @@ public class ReportFormDayActivity extends AppCompatActivity {
      * @param count 分成几部分
      * @param range
      */
-    private void appendDailySheet(String jsonString,int flag,ArrayList<String> xValues,ArrayList<PieEntry> yValues)
+    private void appendDailySheet(String jsonString,int flag,ArrayList<String> xValues,ArrayList<PieEntry> yValues,ArrayList<Integer> colors)
     {
         //获得星期x
-        weekday = parseObject(jsonString).getString("weekday");
+        JSONObject resJson=JSONObject.parseObject(jsonString);
+        weekday = resJson.getString("weekday");
+        Log.i("weekday",weekday);
         report_weekday.setText(weekday.toString());
         if(flag==2){
             //时间分配表
             day_plan_table.removeAllViewsInLayout();//清空时间分配表格
-            JSONArray timesharing = parseObject(jsonString).getJSONArray("TimeSharing");
+            JSONArray timesharing = resJson.getJSONArray("TimeSharing");
             Log.i("timesharing",timesharing.toString());
 
             for(int i=0;i<timesharing.size();i++){
@@ -199,70 +207,83 @@ public class ReportFormDayActivity extends AppCompatActivity {
                 //图表部分
                 xValues.add("Quarterly" +labelid);
                 yValues.add(new PieEntry(percent, duration));
+                colors.add(labelUtil.getLabel(labelid).getColor());
                 /*表格部分*/
                 //行
-                TableRow tableRow = new TableRow(day_plan_table.getContext());
+                TableRow tableRow = new TableRow(this);
                 if(i%2==0) tableRow.setBackgroundResource(R.color.tableBackgroundWhite);
                 else tableRow.setBackgroundResource(R.color.tableBackgroundPink);
                 tableRow.setPadding(5,5,5,5);
                 //标签颜色圆点
-                ImageView img = new ImageView(tableRow.getContext());
+                ImageView img = new ImageView(this);
                 img.setMaxWidth(20);
                 img.setMaxHeight(20);
-                img.setImageDrawable(getResources().getDrawable(R.drawable.spot_bg));
+//                ViewGroup.LayoutParams params = img.getLayoutParams();
+//                params.height=20;
+//                params.width =20;
+//                img.setLayoutParams(params);
+                img.setImageResource(labelUtil.getLabel(labelid).getColor());
+                tableRow.addView(img);
                 //标签名
-                TextView label_name = new TextView(tableRow.getContext());
-                ViewGroup.LayoutParams label_name_params = label_name.getLayoutParams();
-                label_name_params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-                label_name_params.width = ViewGroup.LayoutParams.WRAP_CONTENT;
+                TextView label_name = new TextView(this);
                 label_name.setGravity(Gravity.CENTER);
                 label_name.setPadding(10,0,10,0);
-                label_name.setText(labelName[labelid]);
+                label_name.setText(labelUtil.getLabel(labelid).getName());
+                Log.i("name",labelUtil.getLabel(labelid).getName());
+                tableRow.addView(label_name);
                 //标签图标
-                ImageView label_icon = new ImageView(tableRow.getContext());
+                ImageView label_icon = new ImageView(this);
                 label_icon.setMaxWidth(50);
                 label_icon.setMaxHeight(50);
+                int label_iconWidth = label_icon.getWidth();
+                int label_iconHeight = label_icon.getHeight();
+                Log.i("label_icon.width",label_iconWidth+"");
+                Log.i("label_icon.height",label_iconHeight+"");
+//                ViewGroup.LayoutParams params2 = label_icon.getLayoutParams();
+//                params2.height=50;
+//                params2.width =50;
+//                label_icon.setLayoutParams(params2);
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 lp.setMargins(10, 0, 10, 0);
                 label_icon.setLayoutParams(lp);
-                label_icon.setImageDrawable(getResources().getDrawable(R.drawable.spot_bg));
+                label_icon.setImageResource(labelUtil.getLabel(labelid).getImage());
+                tableRow.addView(label_icon);
                 //linearlayout
-                LinearLayout linearLayout = new LinearLayout(tableRow.getContext());
-                ViewGroup.LayoutParams linearLayout_params = label_name.getLayoutParams();
-                linearLayout_params.height = ViewGroup.LayoutParams.MATCH_PARENT;
-                linearLayout_params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                LinearLayout linearLayout = new LinearLayout(this);
                 linearLayout.setGravity(Gravity.CENTER);
                 linearLayout.setOrientation(LinearLayout.VERTICAL);
                 //时长
-                TextView time = new TextView(linearLayout.getContext());
-                ViewGroup.LayoutParams time_params = label_name.getLayoutParams();
-                time_params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-                time_params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                TextView time = new TextView(this);
                 time.setGravity(Gravity.CENTER);
                 LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 lp2.setMargins(10, 5, 0, 5);
                 time.setLayoutParams(lp2);
-                time.setText(duration.substring(0,1)+"时"+duration.substring(3,4)+"分");
+                time.setText(duration.substring(0,2)+"时"+duration.substring(3,5)+"分");
+                linearLayout.addView(time);
                 //满意度LinearLayout
-                LinearLayout linearLayout2 = new LinearLayout(linearLayout.getContext());
-                linearLayout2.setMinimumHeight(10);
-                linearLayout2.setMinimumWidth(90);
-                linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+                LinearLayout linearLayout2 = new LinearLayout(this);
+                linearLayout2.setLayoutParams(new LinearLayout.LayoutParams(200, 20));
+                linearLayout2.setOrientation(LinearLayout.HORIZONTAL);
                 if(i%2==0) linearLayout2.setBackgroundResource(R.drawable.satisfy_bg);
                 else linearLayout2.setBackgroundResource(R.drawable.satisfy_bg1);
                 //满意度
-                TextView satisfy = new TextView(linearLayout2.getContext());
-                int width = (int)satisfaction/5*90;
+                TextView satisfy = new TextView(this);
+                int width = (int)satisfaction*200/5;
+                Log.i("width",width+"");
                 satisfy.setWidth(width);
                 satisfy.setHeight(10);
                 if(i%2==0) satisfy.setBackgroundResource(R.drawable.satisfy_show);
                 else satisfy.setBackgroundResource(R.drawable.satisfy_show1);
+                linearLayout2.addView(satisfy);
+                linearLayout.addView(linearLayout2);
+                tableRow.addView(linearLayout);
+                day_plan_table.addView(tableRow);
             }
         }
         else if(flag==1){
             //日程表
             day_table.removeAllViewsInLayout();//清空日程表格
-            JSONArray Schedule = parseObject(jsonString).getJSONArray("Schedule");
+            JSONArray Schedule = resJson.getJSONArray("Schedule");
             Log.i("Schedule",Schedule.toString());
 
             for(int i=0;i<Schedule.size();i++){
@@ -273,43 +294,44 @@ public class ReportFormDayActivity extends AppCompatActivity {
                 //图表部分
                 xValues.add("Quarterly" +labelid);
                 yValues.add(new PieEntry(percent, duration));
+                colors.add(labelUtil.getLabel(labelid).getColor());
                 /*表格部分*/
                 //行
-                TableRow tableRow = new TableRow(day_table.getContext());
+                TableRow tableRow = new TableRow(this);
                 if(i%2==0) tableRow.setBackgroundResource(R.color.tableBackgroundWhite);
                 else tableRow.setBackgroundResource(R.color.tableBackgroundPink);
                 tableRow.setPadding(5,5,5,5);
                 //标签颜色圆点
-                ImageView img = new ImageView(tableRow.getContext());
+                ImageView img = new ImageView(this);
                 img.setMaxWidth(20);
                 img.setMaxHeight(20);
-                img.setImageDrawable(getResources().getDrawable(R.drawable.spot_bg));
+                img.setImageResource(labelUtil.getLabel(labelid).getColor());
+                tableRow.addView(img);
                 //标签名
-                TextView label_name = new TextView(tableRow.getContext());
-                ViewGroup.LayoutParams label_name_params = label_name.getLayoutParams();
-                label_name_params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-                label_name_params.width = ViewGroup.LayoutParams.WRAP_CONTENT;
+                TextView label_name = new TextView(this);
                 label_name.setGravity(Gravity.CENTER);
                 label_name.setPadding(10,0,10,0);
-                label_name.setText(labelName[labelid]);
+                label_name.setText(labelUtil.getLabel(labelid).getName());
+                Log.i("name",labelUtil.getLabel(labelid).getName());
+                tableRow.addView(label_name);
                 //标签图标
-                ImageView label_icon = new ImageView(tableRow.getContext());
+                ImageView label_icon = new ImageView(this);
                 label_icon.setMaxWidth(50);
                 label_icon.setMaxHeight(50);
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 lp.setMargins(10, 0, 10, 0);
                 label_icon.setLayoutParams(lp);
-                label_icon.setImageDrawable(getResources().getDrawable(R.drawable.spot_bg));
+                label_icon.setImageResource(labelUtil.getLabel(labelid).getImage());
+                tableRow.addView(label_icon);
                 //时长
-                TextView time = new TextView(tableRow.getContext());
-                ViewGroup.LayoutParams time_params = label_name.getLayoutParams();
-                time_params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-                time_params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                TextView time = new TextView(this);
                 time.setGravity(Gravity.CENTER);
                 LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 lp2.setMargins(10, 5, 0, 5);
                 time.setLayoutParams(lp2);
-                time.setText(duration.substring(0,1)+"时"+duration.substring(3,4)+"分");
+                time.setText(duration.substring(0,2)+"时"+duration.substring(3,5)+"分");
+                tableRow.addView(time);
+                day_table.addView(tableRow);
             }
         }
     }
@@ -318,6 +340,7 @@ public class ReportFormDayActivity extends AppCompatActivity {
         //数据显示操作
         final ArrayList<String> xValues = new ArrayList<>();  //xVals用来表示每个饼块上的内容
         final ArrayList<PieEntry> yValues = new ArrayList<>();  //yVals用来表示封装每个饼块的实际数据
+        ArrayList<Integer> colors = new ArrayList<Integer>();
 
         //从日历页面获取日期数据
         Intent intent=getIntent();
@@ -328,32 +351,75 @@ public class ReportFormDayActivity extends AppCompatActivity {
         JSONObject reportObject = new JSONObject();
         reportObject.put("date",today);
 
-        HttpUtil.request("SheetServlet?method=GetDailySheet","post",reportObject,new okhttp3.Callback(){
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response){
-                try{
-                    //获取服务器端响应数据
-                    String jsonString = response.body().string();
-                    Log.i("jsonString",jsonString);
-                    appendDailySheet(jsonString,flag,xValues,yValues);
+//        HttpUtil.request("SheetServlet?method=GetDailySheet","post",reportObject,new okhttp3.Callback(){
+//            @Override
+//            public void onResponse(@NonNull Call call, @NonNull Response response){
+//                try{
+//                    //获取服务器端响应数据
+//                    String jsonString = response.body().string();
+//                    Log.i("jsonString",jsonString);
+//                    appendDailySheet(jsonString,flag,xValues,yValues);
+//
+//
+//                } catch(Exception e){
+//                    e.printStackTrace();
+//                }
+//            }
+//            @Override
+//            public void onFailure(@NonNull Call call, @NonNull IOException e){
+//                //createFail();
+//            }
+//        });
 
 
-
-
-                } catch(Exception e){
-                    e.printStackTrace();
-                }
-            }
-            @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e){
-                //createFail();
-            }
-        });
-
-
-//        for (int i = 0; i < count; i++) {
-//            xValues.add("Quarterly" + (i + 1));  //饼块上显示成Quarterly1, Quarterly2, Quarterly3, Quarterly4
-//        }
+        /*
+         * 数据测试
+         */
+        String jsonString="{\"status\":\"success\",\n" +
+                "\n" +
+                " \"weekday\": \"星期六\",\n" +
+                "\n" +
+                " \"TimeSharing\": [{\n" +
+                "\n" +
+                "                        \"labelid\": \"1\",\n" +
+                "\n" +
+                "                        \"duration\": \"03:33\",\n" +
+                "\n" +
+                "                        \"percent\":0.5,\n" +
+                "\n" +
+                "                        \"satisfaction\": 3.8\n" +
+                "\n" +
+                "               }, {\n" +
+                "\n" +
+                "                        \"labelid\": \"2\",\n" +
+                "\n" +
+                "                        \"duration\": \"03:29\",\n" +
+                "\n" +
+                "                        \"percent\":0.5,\n" +
+                "\n" +
+                "                        \"satisfaction\": 4.8\n" +
+                "\n" +
+                "               }],\n" +
+                "\n" +
+                "   \"Schedule\": [{\n" +
+                "\n" +
+                "                        \"labelid\": \"1\",\n" +
+                "\n" +
+                "                        \"duration\": \"03:50\",\n" +
+                "\n" +
+                "                        \"percent\":0.5,\n" +
+                "\n" +
+                "               }, {\n" +
+                "\n" +
+                "                        \"labelid\": \"2\",\n" +
+                "\n" +
+                "                        \"duration\": \"01:29\",\n" +
+                "\n" +
+                "                        \"percent\":0.5,\n" +
+                "\n" +
+                "               }]}";
+        Log.i("jsonString",jsonString);
+        appendDailySheet(jsonString,flag,xValues,yValues,colors);
 
 
         // 饼图数据
@@ -381,16 +447,16 @@ public class ReportFormDayActivity extends AppCompatActivity {
         PieDataSet pieDataSet = new PieDataSet(yValues, " "/*显示在比例图上*/);
         pieDataSet.setSliceSpace(0f); //设置个饼状图之间的距离
 
-        ArrayList<Integer> colors = new ArrayList<Integer>();
+
 
         // 饼图颜色
-        colors.add(Color.rgb(205, 205, 205));
-        colors.add(Color.rgb(114, 188, 223));
-        colors.add(Color.rgb(255, 123, 124));
-        colors.add(Color.rgb(57, 135, 200));
-        colors.add(Color.rgb(127, 235, 230));
-        colors.add(Color.rgb(247, 35, 20));
-        colors.add(Color.rgb(117, 85, 200));
+//        colors.add(Color.rgb(205, 205, 205));
+//        colors.add(Color.rgb(114, 188, 223));
+//        colors.add(Color.rgb(255, 123, 124));
+//        colors.add(Color.rgb(57, 135, 200));
+//        colors.add(Color.rgb(127, 235, 230));
+//        colors.add(Color.rgb(247, 35, 20));
+//        colors.add(Color.rgb(117, 85, 200));
 
         pieDataSet.setColors(colors);
 

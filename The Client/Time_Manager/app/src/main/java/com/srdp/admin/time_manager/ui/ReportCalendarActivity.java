@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.CalendarView;
 import android.widget.CompoundButton;
 import android.widget.Switch;
@@ -50,9 +51,10 @@ public class ReportCalendarActivity extends AppCompatActivity {
         calendar_rep.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView calendarView, int year, int month, int dayOfMonth) {
-                String today = year + "年" + month + "月" + dayOfMonth + "日";
+                String today = year + "年" + (month+1) + "月" + dayOfMonth + "日";
                 Intent intent = new Intent();
                 intent.putExtra("date", today);
+                Log.i("date",today);
                 if(isWeek==1){//去周报表
                     intent.setClass(ReportCalendarActivity.this, ReportFormActivity.class);//从哪里跳到哪里
                 }else {//去日报表
