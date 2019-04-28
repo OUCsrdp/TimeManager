@@ -1,4 +1,4 @@
-package main.model.services;
+package main.model;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -35,13 +35,13 @@ public class SheetService
 		String weekday_s;
 		switch(timeSharing.getWeekday())
 		{
-			case 1: weekday_s = "����һ"; break;
-			case 2: weekday_s = "���ڶ�"; break;
-			case 3: weekday_s = "������"; break;
-			case 4: weekday_s = "������"; break;
-			case 5: weekday_s = "������"; break;
-			case 6: weekday_s = "������"; break;
-			case 7: weekday_s = "������"; break;
+			case 1: weekday_s = "星期一"; break;
+			case 2: weekday_s = "星期二"; break;
+			case 3: weekday_s = "星期三"; break;
+			case 4: weekday_s = "星期四"; break;
+			case 5: weekday_s = "星期五"; break;
+			case 6: weekday_s = "星期六"; break;
+			case 7: weekday_s = "星期日"; break;
 			default: return null;
 		}
 		back.put("weekday", weekday_s);
@@ -184,25 +184,25 @@ public class SheetService
 		
 		ArrayList<TimeSharing> timeSharings = TimeSharingManager.findWithIdUser(userId);
 		
-		Pattern p = Pattern.compile("��"); 
+		Pattern p = Pattern.compile("年"); 
 		String [] split1 = p.split(date);
 		String yearS = split1[0];
-		p = Pattern.compile("��");
+		p = Pattern.compile("月");
 		String [] split2 = p.split(split1[1]);
 		String monthS = split2[0];
-		p = Pattern.compile("��");
+		p = Pattern.compile("日");
 		String dayS = p.split(split2[1])[0];
 		Calendar timeOfDate = Calendar.getInstance();		
 		timeOfDate.set(Integer.parseInt(yearS), Integer.parseInt(monthS), Integer.parseInt(dayS));
 		
 		String timeRegisterS = UserManager.findWithId(userId).getTimeRegister();
-		p = Pattern.compile("��"); 
+		p = Pattern.compile("年"); 
 		split1 = p.split(timeRegisterS);
 		yearS = split1[0];
-		p = Pattern.compile("��");
+		p = Pattern.compile("月");
 		split2 = p.split(split1[1]);
 		monthS = split2[0];
-		p = Pattern.compile("��");
+		p = Pattern.compile("日");
 		dayS = p.split(split2[1])[0];
 		Calendar timeRegister = Calendar.getInstance();
 		timeRegister.set(Integer.parseInt(yearS), Integer.parseInt(monthS), Integer.parseInt(dayS));
@@ -218,7 +218,7 @@ public class SheetService
         if(timeRegister.get(Calendar.DAY_OF_WEEK) > 1)
         	day1 +=  8 - (timeRegister.get(Calendar.DAY_OF_WEEK));
         if (year1 != year2) 
-        {  //ͬһ��
+        {  //ͬ同一年
             int timeDistance = 0;
             for (int i = year1; i < year2; i++) 
             {
@@ -233,13 +233,13 @@ public class SheetService
         	week = (day2 - day1)/7 + 1;
         
         back.put("week", "��" + week + "��");
-        //�����˻�ȡ��������ʹ�õĵڼ���
+        //截至此获取到今天是使用的第几周
         
         ArrayList<String> durationArray = new ArrayList<String>();
         timeOfDate.add(Calendar.DATE, -timeRegister.get(Calendar.DAY_OF_WEEK));
         for(int i = 0; i < 7; i++)
         {
-        	String newDate = timeOfDate.get(Calendar.YEAR) + "��" + timeOfDate.get(Calendar.MONTH)+ "��" +timeOfDate.get(Calendar.DATE) + "��";
+        	String newDate = timeOfDate.get(Calendar.YEAR) + "年" + timeOfDate.get(Calendar.MONTH)+ "月" +timeOfDate.get(Calendar.DATE) + "日";
         	timeOfDate.add(Calendar.DATE, 1);
         	TimeSharing timeSharing = null;
         	System.out.println(timeSharings.size());
@@ -300,25 +300,25 @@ public class SheetService
 		
 		ArrayList<TimeSharing> timeSharings = TimeSharingManager.findWithIdUser(userId);
 		
-		Pattern p = Pattern.compile("��"); 
+		Pattern p = Pattern.compile("年"); 
 		String [] split1 = p.split(date);
 		String yearS = split1[0];
-		p = Pattern.compile("��");
+		p = Pattern.compile("月");
 		String [] split2 = p.split(split1[1]);
 		String monthS = split2[0];
-		p = Pattern.compile("��");
+		p = Pattern.compile("日");
 		String dayS = p.split(split2[1])[0];
 		Calendar timeOfDate = Calendar.getInstance();		
 		timeOfDate.set(Integer.parseInt(yearS), Integer.parseInt(monthS), Integer.parseInt(dayS));
 		
 		String timeRegisterS = UserManager.findWithId(userId).getTimeRegister();
-		p = Pattern.compile("��"); 
+		p = Pattern.compile("年"); 
 		split1 = p.split(timeRegisterS);
 		yearS = split1[0];
-		p = Pattern.compile("��");
+		p = Pattern.compile("月");
 		split2 = p.split(split1[1]);
 		monthS = split2[0];
-		p = Pattern.compile("��");
+		p = Pattern.compile("日");
 		dayS = p.split(split2[1])[0];
 		Calendar timeRegister = Calendar.getInstance();
 		timeRegister.set(Integer.parseInt(yearS), Integer.parseInt(monthS), Integer.parseInt(dayS));
@@ -348,7 +348,7 @@ public class SheetService
         else 
         	week = (day2 - day1)/7 + 1;
         
-        back.put("week", "��" + week + "��");
+        back.put("week", "第" + week + "周");
         
         timeOfDate.add(Calendar.DATE, -timeRegister.get(Calendar.DAY_OF_WEEK));
         
@@ -362,7 +362,7 @@ public class SheetService
         	TimeSharing timeSharing = null;
         	for(int j = 0; j < timeSharings.size(); j++)
         	{
-        		if(timeSharings.get(j).getDate().equals(timeOfDate.get(Calendar.YEAR) + "��" + timeOfDate.get(Calendar.MONTH) + "��" +timeOfDate.get(Calendar.DATE) + "��"))
+        		if(timeSharings.get(j).getDate().equals(timeOfDate.get(Calendar.YEAR) + "年" + timeOfDate.get(Calendar.MONTH) + "月" +timeOfDate.get(Calendar.DATE) + "日"))
         		{
         			timeSharing = timeSharings.get(j);
             		break;
@@ -403,7 +403,7 @@ public class SheetService
             	TimeSharing timeSharing = null;
             	for(int k = 0; k < timeSharings.size(); k++)
             	{
-            		if(timeSharings.get(k).getDate().equals(timeOfDate.get(Calendar.YEAR) + "��" + timeOfDate.get(Calendar.MONTH) + "��" +timeOfDate.get(Calendar.DATE) + "��"))
+            		if(timeSharings.get(k).getDate().equals(timeOfDate.get(Calendar.YEAR) + "年" + timeOfDate.get(Calendar.MONTH) + "月" +timeOfDate.get(Calendar.DATE) + "日"))
             		{
             			timeSharing = timeSharings.get(k);
                 		break;
@@ -477,7 +477,7 @@ public class SheetService
             	TimeSharing timeSharing = null;
             	for(int k = 0; k < timeSharings.size(); k++)
             	{
-            		if(timeSharings.get(k).getDate().equals(timeOfDate.get(Calendar.YEAR) + "��" + timeOfDate.get(Calendar.MONTH) + "��" +timeOfDate.get(Calendar.DATE) + "��"))
+            		if(timeSharings.get(k).getDate().equals(timeOfDate.get(Calendar.YEAR) + "年" + timeOfDate.get(Calendar.MONTH) + "月" +timeOfDate.get(Calendar.DATE) + "日"))
             		{
             			timeSharing = timeSharings.get(k);
                 		break;
