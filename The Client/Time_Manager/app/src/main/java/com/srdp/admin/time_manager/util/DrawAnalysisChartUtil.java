@@ -73,6 +73,8 @@ public class DrawAnalysisChartUtil {
         //把图例的布局加到图例的父布局里面
         LayoutInflater inflater = LayoutInflater.from(activity);
         //最后一个参数为true，表示默认把第一个参数布局加入到第二个参数布局里
+        //清除所有图例
+        legendContain.removeAllViews();
         for (Map.Entry<Integer,String> entry : legendData.entrySet()) {
             LinearLayout everyLegend=(LinearLayout) inflater.inflate(R.layout.legend,legendContain,false);
             //修改图例的颜色和文字
@@ -98,7 +100,7 @@ public class DrawAnalysisChartUtil {
         //获取初始设置完的图表
         BarChart chart=(BarChart)wholeChart.getChildAt(1);
         //设置图表的背景颜色
-        chart.setBackgroundColor(activity.getResources().getColor(R.color.blueBackground));
+        //chart.setBackgroundColor(activity.getResources().getColor(R.color.blueBackground));
         //设置图表描述为空
         chart.setDescription(null);
         chart.setDoubleTapToZoomEnabled(false);

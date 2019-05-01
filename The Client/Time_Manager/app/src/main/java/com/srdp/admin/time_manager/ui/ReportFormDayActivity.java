@@ -52,6 +52,7 @@ import android.util.DisplayMetrics;
 import com.srdp.admin.time_manager.R;
 import com.srdp.admin.time_manager.model.moudle.Label;
 import com.srdp.admin.time_manager.model.moudle.TimeSharing;
+import com.srdp.admin.time_manager.util.DrawAnalysisChartUtil;
 import com.srdp.admin.time_manager.util.HttpUtil;
 
 import com.alibaba.fastjson.JSON;
@@ -82,6 +83,7 @@ public class ReportFormDayActivity extends AppCompatActivity {
     private int count;//饼图数量
 
     private LabelUtil labelUtil;
+    private String jsonString="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -182,10 +184,8 @@ public class ReportFormDayActivity extends AppCompatActivity {
 
     /**
      *
-     * @param count 分成几部分
-     * @param range
      */
-    private void appendDailySheet(String jsonString,int flag,ArrayList<String> xValues,ArrayList<PieEntry> yValues,ArrayList<Integer> colors)
+    private PieData appendDailySheet(String jsonString,int flag,ArrayList<String> xValues,ArrayList<PieEntry> yValues,ArrayList<Integer> colors)
     {
         //获得星期x
         JSONObject resJson=JSONObject.parseObject(jsonString);
@@ -334,13 +334,39 @@ public class ReportFormDayActivity extends AppCompatActivity {
                 day_table.addView(tableRow);
             }
         }
+
+        //y轴的集合
+        PieDataSet pieDataSet = new PieDataSet(yValues, " "/*显示在比例图上*/);
+        pieDataSet.setSliceSpace(0f); //设置个饼状图之间的距离
+
+
+
+        // 饼图颜色
+//        colors.add(Color.rgb(205, 205, 205));
+//        colors.add(Color.rgb(114, 188, 223));
+//        colors.add(Color.rgb(255, 123, 124));
+//        colors.add(Color.rgb(57, 135, 200));
+//        colors.add(Color.rgb(127, 235, 230));
+//        colors.add(Color.rgb(247, 35, 20));
+//        colors.add(Color.rgb(117, 85, 200));
+
+        pieDataSet.setColors(colors);
+
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        float px = 5 * (metrics.densityDpi / 160f);
+        pieDataSet.setSelectionShift(px); // 选中态多出的长度
+
+        PieData pieData = new PieData(pieDataSet);
+        return pieData;
     }
     private PieData getPieData(int count, float range, final int flag) {
+
+        final PieData pieData;
 
         //数据显示操作
         final ArrayList<String> xValues = new ArrayList<>();  //xVals用来表示每个饼块上的内容
         final ArrayList<PieEntry> yValues = new ArrayList<>();  //yVals用来表示封装每个饼块的实际数据
-        ArrayList<Integer> colors = new ArrayList<Integer>();
+        final ArrayList<Integer> colors = new ArrayList<Integer>();
 
         //从日历页面获取日期数据
         Intent intent=getIntent();
@@ -351,31 +377,37 @@ public class ReportFormDayActivity extends AppCompatActivity {
         JSONObject reportObject = new JSONObject();
         reportObject.put("date",today);
 
-//        HttpUtil.request("SheetServlet?method=GetDailySheet","post",reportObject,new okhttp3.Callback(){
-//            @Override
-//            public void onResponse(@NonNull Call call, @NonNull Response response){
-//                try{
-//                    //获取服务器端响应数据
-//                    String jsonString = response.body().string();
-//                    Log.i("jsonString",jsonString);
-//                    appendDailySheet(jsonString,flag,xValues,yValues);
-//
-//
-//                } catch(Exception e){
-//                    e.printStackTrace();
-//                }
-//            }
-//            @Override
-//            public void onFailure(@NonNull Call call, @NonNull IOException e){
-//                //createFail();
-//            }
-//        });
+        HttpUtil.request("SheetServlet?method=GetDailySheet","post",reportObject,new okhttp3.Callback(){
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response){
+                try{
+                    //获取服务器端响应数据
+                    jsonString = response.body().string();
+                    Log.i("jsonString",jsonString);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            pieData = appendDailySheet(jsonString,flag,xValues,yValues,colors);
+                        }
+                    });
+
+
+
+                } catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e){
+                //createFail();
+            }
+        });
 
 
         /*
          * 数据测试
          */
-        String jsonString="{\"status\":\"success\",\n" +
+        /*String jsonString="{\"status\":\"success\",\n" +
                 "\n" +
                 " \"weekday\": \"星期六\",\n" +
                 "\n" +
@@ -419,7 +451,7 @@ public class ReportFormDayActivity extends AppCompatActivity {
                 "\n" +
                 "               }]}";
         Log.i("jsonString",jsonString);
-        appendDailySheet(jsonString,flag,xValues,yValues,colors);
+        appendDailySheet(jsonString,flag,xValues,yValues,colors);*/
 
 
         // 饼图数据
@@ -444,27 +476,27 @@ public class ReportFormDayActivity extends AppCompatActivity {
 //        yValues.add(new PieEntry(quarterly7, 6));
 
         //y轴的集合
-        PieDataSet pieDataSet = new PieDataSet(yValues, " "/*显示在比例图上*/);
-        pieDataSet.setSliceSpace(0f); //设置个饼状图之间的距离
-
-
-
-        // 饼图颜色
-//        colors.add(Color.rgb(205, 205, 205));
-//        colors.add(Color.rgb(114, 188, 223));
-//        colors.add(Color.rgb(255, 123, 124));
-//        colors.add(Color.rgb(57, 135, 200));
-//        colors.add(Color.rgb(127, 235, 230));
-//        colors.add(Color.rgb(247, 35, 20));
-//        colors.add(Color.rgb(117, 85, 200));
-
-        pieDataSet.setColors(colors);
-
-        DisplayMetrics metrics = getResources().getDisplayMetrics();
-        float px = 5 * (metrics.densityDpi / 160f);
-        pieDataSet.setSelectionShift(px); // 选中态多出的长度
-
-        PieData pieData = new PieData(pieDataSet);
+//        PieDataSet pieDataSet = new PieDataSet(yValues, " "/*显示在比例图上*/);
+//        pieDataSet.setSliceSpace(0f); //设置个饼状图之间的距离
+//
+//
+//
+//        // 饼图颜色
+////        colors.add(Color.rgb(205, 205, 205));
+////        colors.add(Color.rgb(114, 188, 223));
+////        colors.add(Color.rgb(255, 123, 124));
+////        colors.add(Color.rgb(57, 135, 200));
+////        colors.add(Color.rgb(127, 235, 230));
+////        colors.add(Color.rgb(247, 35, 20));
+////        colors.add(Color.rgb(117, 85, 200));
+//
+//        pieDataSet.setColors(colors);
+//
+//        DisplayMetrics metrics = getResources().getDisplayMetrics();
+//        float px = 5 * (metrics.densityDpi / 160f);
+//        pieDataSet.setSelectionShift(px); // 选中态多出的长度
+//
+//        PieData pieData = new PieData(pieDataSet);
 
         return pieData;
     }

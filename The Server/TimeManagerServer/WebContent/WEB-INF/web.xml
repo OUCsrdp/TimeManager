@@ -61,4 +61,12 @@
   	<servlet-name>SheetServlet</servlet-name>
   	<url-pattern>/SheetServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+  	<servlet-name>AnalysisServlet</servlet-name>
+  	<servlet-class>main.servlet.AnalysisServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>AnalysisServlet</servlet-name>
+  	<url-pattern>/AnalysisServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

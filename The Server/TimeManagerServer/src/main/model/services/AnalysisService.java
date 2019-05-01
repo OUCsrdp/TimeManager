@@ -1,12 +1,7 @@
 package main.model.services;
 
-import  main.model.moudle.*;
+import main.model.moudle.*;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,7 +16,7 @@ public class AnalysisService{
 	
 	public static String getInsDate()
 	{
-		int y,m,d,h,mi,s;    
+		int y,m,d;    
 		Calendar cal=Calendar.getInstance();    
 		y=cal.get(Calendar.YEAR);    
 		m=cal.get(Calendar.MONTH) + 1;    
@@ -53,15 +48,145 @@ public class AnalysisService{
 		}
 	}
 	
+	// 返回用户平均推迟时间（格式xx时xx分）
+	public static String getDelayedTime(int userId,boolean weekday) 
+	{
+		ArrayList<Schedule> schedules = ScheduleManager.findWithIdUser(userId);
+		
+		int total = 0; // 总事件数
+		int delayMinutes = 0; // 总共推迟了多少时间
+		int delayHours = 0;
+		
+		if(weekday)
+		{
+			for(int i = 0; i < schedules.size(); i++)
+			{
+				if(schedules.get(i).getWeekday() == 6 || schedules.get(i).getWeekday() == 7)
+				{
+					schedules.remove(i);
+					i--;
+				}
+			}
+		}
+		
+		for(int i =0; i < schedules.size(); i++)
+		{
+			ArrayList<S_Affair> s_Affairs = S_AffairManager.findWithIdS(schedules.get(i).getId());
+			for(int j = 0; j < s_Affairs.size(); j++)
+			{
+				if(s_Affairs.get(j).getTimeStart() != null)
+				{
+					String timeStart = s_Affairs.get(j).getTimeStart();
+					String timeStartPlan = s_Affairs.get(j).getTimeStartPlan();
+					
+					int startHour = Integer.parseInt(((timeStart.split(":"))[0]));
+					int startMinute = Integer.parseInt(((timeStart.split(":"))[1]));
+					
+					int startHourPlan = Integer.parseInt(((timeStartPlan.split(":"))[0]));
+					int startMinutePlan = Integer.parseInt(((timeStartPlan.split(":"))[1]));
+					
+					if(startHour < startHourPlan || (startHour == startHourPlan && startMinute < startMinutePlan))
+						continue;
+					
+					int delayHour = startHour - startHourPlan;
+					int delayMinute = startMinute - startMinutePlan;
+					
+					if(delayMinute < 0)
+					{
+						delayMinute += 60;
+						delayHour--;
+					}
+					
+					delayMinutes += delayHour * 60 + delayMinute;
+				}
+				else
+				{	
+					String timeStartPlan = s_Affairs.get(j).getTimeStartPlan();
+					
+					int startHourPlan = Integer.parseInt(((timeStartPlan.split(":"))[0]));
+					int startMinutePlan = Integer.parseInt(((timeStartPlan.split(":"))[1]));
+					
+					// 以下时以当天的24：00作为结束
+					
+					int delayHour = 24 - startHourPlan;
+					int delayMinute = 0 - startMinutePlan;
+					
+					if(delayMinute < 0)
+					{
+						delayMinute += 60;
+						delayHour--;
+					}
+					
+					delayMinutes += delayHour * 60 + delayMinute;
+					
+					// 以下是算上天数的推迟时间
+					
+					/* Calendar now = Calendar.getInstance();
+					
+					String dayStartPlan = schedules.get(i).getDate();
+					
+					int yearPlan = Integer.parseInt((dayStartPlan.split("年"))[0]);
+					dayStartPlan = (dayStartPlan.split("年"))[1];
+					int monthPlan = Integer.parseInt((dayStartPlan.split("月"))[0]);
+					dayStartPlan = (dayStartPlan.split("月"))[1];
+					int dayPlan = Integer.parseInt((dayStartPlan.split("日"))[0]);
+					
+					Calendar plan = Calendar.getInstance();
+					plan.set(yearPlan, monthPlan - 1, dayPlan, startHourPlan, startMinutePlan);
+					
+					long delayTime = now.getTimeInMillis() - plan.getTimeInMillis();
+					
+					delayMinutes += delayTime / (60 * 1000); */
+				}
+			}
+			total += s_Affairs.size();
+		}
+		
+		delayMinutes /= total;
+		// System.out.println(delayMinutes);
+		delayHours = delayMinutes / 60;
+		delayMinutes = delayMinutes % 60;
+		
+		String delayString = delayHours + "时" + delayMinutes + "分";
+		return delayString;
+	}
+	
+	// 获取没有完成的事件的占比
+	public static int getUnfinishedPercent(int userId,boolean weekday) 
+	{
+		float total = 0; // 所有的事件数
+		float unfinish = 0; // 没有完成的事件数
+		int percent = 0;
+		
+		ArrayList<Schedule> schedules = ScheduleManager.findWithIdUser(userId);
+		
+		for(int i = 0; i < schedules.size(); i++)
+		{
+			if((schedules.get(i).getWeekday() == 6 || schedules.get(i).getWeekday() == 7) && weekday)
+				continue;
+			ArrayList<S_Affair> s_Affairs = S_AffairManager.findWithIdS(schedules.get(i).getId());
+			for(int j = 0; j < s_Affairs.size(); j++)
+			{
+				if(s_Affairs.get(j).getTimeEnd() == null)
+					unfinish++;
+			}
+			total += s_Affairs.size();
+		}
+		
+		percent = (int)((unfinish/total) * 100);
+		
+		return percent;
+	}
+	
 	//通过开始时间、结束时间获得事件所在时间段
-	public static float[] getStep(String from,String to) {
+	private static float[] getStep(String from,String to) {
 			
-			String from1 = from.replace(':', '-');
-			String to1 = to.replace(':', '-');
-			SimpleDateFormat simple = new SimpleDateFormat("HH-mm");
+		String from1 = from.replace(':', '-');
+		String to1 = to.replace(':', '-');
+		SimpleDateFormat simple = new SimpleDateFormat("HH-mm");
 			
-			int[] l = new int[8];
-			try {
+		int[] l = new int[8];
+		try {
 				l[0] = (int)((simple.parse("00-00").getTime())/(1000*60));
 				l[1] = (int)((simple.parse("06-00").getTime())/(1000*60));
 				l[2] = (int)((simple.parse("08-00").getTime())/(1000*60));
@@ -106,16 +231,14 @@ public class AnalysisService{
 						per[i] = ((float)t-(float)f)/all;
 					}
 				}
-				System.out.println("per"+i+":"+per[i]);
 			}
 			
-			
 			return per;
-		}
+	}
 	
 	
 	//通过开始时间、结束时间获得事件的消耗时间（返回分钟）
-	public static int getSpent(String from,String to) {
+	private static int getSpent(String from,String to) {
 		String from1 = from.replace(':', '-');
 		String to1 = to.replace(':', '-');
 		SimpleDateFormat simple = new SimpleDateFormat("HH-mm");
@@ -136,6 +259,7 @@ public class AnalysisService{
 		int mins = (int)((t - f)/(1000*60));
 		return mins;
 	}
+	
 	
 	public static JSONObject getChart(int userId,boolean weekday,String type) {
 		JSONObject back=new JSONObject();
@@ -213,6 +337,7 @@ public class AnalysisService{
 					 }
 				 }
 				 
+				 
 				 int all = save + equal + over;
 				 float per1 = 0;
 				 float per2 = 0;
@@ -226,6 +351,8 @@ public class AnalysisService{
 						per3 = (float)(Math.round(per3*100))/100;
 				 }
 
+				
+				 
 				 percent.add(per1);
 				 percent.add(per2);
 				 percent.add(per3);
@@ -241,20 +368,20 @@ public class AnalysisService{
 			float[] count = new float[7];
 			float[] count1 = new float[7];
 			long all = 0;
-			long allDays = 0;
 			for(int i = 0;i < 7;i ++) {
 				count[i] = 0;
 			}
-			ArrayList<TimeSharing> tsList = TimeSharingManager.findWithIdUser(userId);
-			allDays = tsList.size();
-			
 			ArrayList<Affair> AList = AffairManager.findWithNothing();
 			for(Affair a:AList) {
 				TimeSharing s = TimeSharingManager.findWithId(a.getIdTS());
 				 if(s.getIdUser() == userId) {
 					 //是当前用户的日程
+					 
 					 count1 = getStep(a.getTimeStart(),a.getTimeEnd());
+					 System.out.println(a.getTimeStart());
+					 System.out.println(a.getTimeEnd());
 					 for(int j = 0;j < 7;j ++) {
+						 System.out.println(count1[j]);
 						 count[j] += count1[j];
 					 }
 					 all ++;
@@ -262,19 +389,20 @@ public class AnalysisService{
 			}
 			
 			float[] per = new float[7];
-			per[0] = count[0] / (6*allDays);
-			per[1] = count[1] / (3*allDays);
-			per[2] = count[2] / (5*allDays);
-			per[3] = (float) (count[3] / (1.5*allDays));
-			per[4] = count[4] / (5*allDays);
-			per[5] = (float) (count[5] / (4.5*allDays));
-			per[6] = count[6] / (2*allDays);
+			per[0] = count[0] / 6;
+			per[1] = count[1] / 3;
+			per[2] = count[2] / 5;
+			per[3] = (float) (count[3] / 1.5);
+			per[4] = count[4] / 5;
+			per[5] = (float) (count[5] / 4.5);
+			per[6] = count[6] / 2;
 
 			float density = 0;
-			density = (float) all/(allDays*24);
-			density = (float)(Math.round(density*100))/100;
-			System.out.println("allDays:" + allDays);
-			System.out.println("density:" + density);
+			try {
+				density = all / (getDays(userId) * 24);
+			} catch (ParseException e) {
+				return null;
+			}
 			
 			//保留两位小数
 			for(int i = 0;i<7;i++) {
@@ -319,69 +447,7 @@ public class AnalysisService{
 			back.put("chartInfor", array);
 		}
 		else return null;
-		
-		System.out.println(testForFile(back,type));
 		return back;
 	}
 	
-	private static String json2string(JSONObject json,String type) {
-		String back = "";
-		if(type.equals("SimpleAnalysis")) {
-			JSONArray array = json.getJSONArray("chartInfor");
-			for(int i=0;i<array.size();i++){
-                JSONObject temp = array.getJSONObject(i);//把每一个对象转成json对象
-                String id = temp.getString("labelid");
-                String percent = temp.getString("percents");
-                String type1 =  temp.getString("type");
-                back += "\n第"+(i+1)+"组数据：\n标签id:"+id+"\n超时或节约比例："+percent+"%\n"+type1+"\n";
-			}
-		}
-		else if(type.equals("detailedAnalysis")) {
-			JSONArray array = json.getJSONArray("chartInfor");
-			for(int i=0;i<array.size();i++){
-                JSONObject temp = array.getJSONObject(i);//把每一个对象转成json对象
-                String id = temp.getString("labelid");
-                JSONArray a = temp.getJSONArray("percents");
-                String less,equal,more;
-                less = a.get(0).toString();
-                equal = a.get(1).toString();
-                more = a.get(2).toString();
-                
-                back += "\n第"+i+"组数据：\n标签id:"+id
-                		+"\n少于预计时间事件数比例："+less
-                		+"%\n等于预计时间事件数比例："+equal
-                		+"%\n多于预计时间事件数比例："+more+"%\n";
-			}
-		}
-		else {
-			String density = json.getString("density");
-			back += "迄今为止，平均每小时完成的事件数:"+density;
-			JSONArray array = json.getJSONArray("chartInfor");
-			for(int i=0;i<array.size();i++){
-                JSONObject temp = array.getJSONObject(i);//把每一个对象转成json对象
-                String period = temp.getString("period");
-                String percent = temp.getString("percents");
-                back += "\n第"+(i+1)+"个时间段：\n时间段名称:"+period+"\n该时间段每小时平均做的事件数："+percent+"\n";
-			}
-		}
-		return back;
-	}
-	
-	private static boolean testForFile(JSONObject json,String type) {
-		boolean back = false;
-		String content = json2string(json,type);
-		System.out.println(content);
-		FileWriter fileWriter;
-		try {
-			fileWriter = new FileWriter("./testForFile.doc");
-			fileWriter.write(content);
-			fileWriter.flush();
-			fileWriter.close();
-			back = true;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-		
-		return back;
-	}
 }

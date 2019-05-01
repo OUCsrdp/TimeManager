@@ -6,7 +6,12 @@
     android:layout_height="match_parent"
     tools:context="com.srdp.admin.time_manager.ui.ReportFormDayActivity">
 
+    <com.srdp.admin.time_manager.ui.TitleLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
     <ScrollView
+        android:layout_marginTop="50dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

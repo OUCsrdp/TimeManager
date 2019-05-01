@@ -26,14 +26,14 @@
         <activity android:name=".ui.ExcellentDistributionListActivity">
         </activity>
         <activity android:name=".ui.LoginActivity">
-        </activity>
-        <activity android:name=".ui.RegisterActivity" />
-        <activity android:name=".ui.RegisterSchoolActivity" />
-        <activity android:name=".ui.ReportCalendarActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".ui.RegisterActivity" />
+        <activity android:name=".ui.RegisterSchoolActivity" />
+        <activity android:name=".ui.ReportCalendarActivity">
         </activity>
         <activity android:name=".ui.PatternAnalysisPage5">
 

@@ -40,6 +40,7 @@ import static java.lang.Float.NaN;
 public class PatternAnalysisPage5 extends AppCompatActivity {
     private BarChart chart;
     private Map<Float,float[]> Percents=new HashMap<Float, float[]>();
+    private int[] colors={R.color.darkOrange,R.color.orange,R.color.lightOrange};
     private Map<Integer,String> legendDdata=new HashMap<Integer, String>();
     private boolean weekday=true;
     @Override
@@ -53,9 +54,9 @@ public class PatternAnalysisPage5 extends AppCompatActivity {
             actionbar.hide();
         }
         //设置统计图颜色
-        final int[] colors={R.color.darkOrange,R.color.orange,R.color.lightOrange};
+        //final int[] colors={R.color.darkOrange,R.color.orange,R.color.lightOrange};
         //进入时绘制统计图
-        getDataAndDraw(colors);
+        getDataAndDraw();
         //使用接口回调在修改weekday的时候重新请求 重新绘制
         ChartButton chartButton=findViewById(R.id.P5ChartButtion);
         chartButton.setonClick(new ChartButton.TransforWeekday() {
@@ -65,14 +66,14 @@ public class PatternAnalysisPage5 extends AppCompatActivity {
                 if(!weekday)
                 Toast.makeText(PatternAnalysisPage5.this,"今天休息哟！",Toast.LENGTH_LONG).show();
                 //切换工作日休息日时重新绘制统计图
-                getDataAndDraw(colors);
+                getDataAndDraw();
             }
         });
         /*initData();
         testDrawUtil();*/
         //testDraw();
     }
-    private void getDataAndDraw(final int[] colors)
+    private void getDataAndDraw()
     {
         //设置图例
         legendDdata.put(colors[0],"少于预定时间的比例");
@@ -80,7 +81,7 @@ public class PatternAnalysisPage5 extends AppCompatActivity {
         legendDdata.put(colors[2],"多于预定时间的比例");
         //请求获得统计图数据
         JSONObject reqJson=new JSONObject();
-        reqJson.put("weekday",true);
+        reqJson.put("weekday",weekday);
         reqJson.put("type","detailedAnalysis");
         HttpUtil.request("AnalysisServlet?method=GetChart","post",reqJson,new okhttp3.Callback(){
             @Override
@@ -96,10 +97,10 @@ public class PatternAnalysisPage5 extends AppCompatActivity {
                         JSONObject nowData=chartInfor.getJSONObject(i);
                         JSONArray percents=nowData.getJSONArray("percents");
                         for(int j =0;j<3;j++)
-                            every[j]=percents.getFloatValue(j);
+                            every[j]=percents.getFloatValue(j)/100;
                         Percents.put((float)i,every);
                     }
-                    drawChart(colors);
+                    drawChart();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -109,16 +110,24 @@ public class PatternAnalysisPage5 extends AppCompatActivity {
             }
         });
     }
-    private void drawChart(int[] colors)
+    private void drawChart()
     {
-        DrawAnalysisChartUtil.drawChart(this,R.id.StackBarChartMain,"CompareBarChart",Percents,legendDdata,colors);
+        //Log.i("A5Percents1",Percents.get(0).toString());
+       //Log.i("A5Percents2",Percents.get(1).toString());
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                DrawAnalysisChartUtil.drawChart(PatternAnalysisPage5.this,R.id.StackBarChartMain,"CompareBarChart",Percents,legendDdata,colors);
+            }
+        });
+        //DrawAnalysisChartUtil.drawChart(this,R.id.StackBarChartMain,"CompareBarChart",Percents,legendDdata,colors);
     }
-    private void testDrawUtil()
+    /*private void testDrawUtil()
     {
         int[] colors={R.color.darkOrange,R.color.orange,R.color.lightOrange};
         DrawAnalysisChartUtil.drawChart(this,R.id.StackBarChartMain,"CompareBarChart",Percents,legendDdata,colors);
-    }
-    private void initData()
+    }*/
+    /*private void initData()
     {
         for(int i=0;i<11;i++)
         {
@@ -140,8 +149,8 @@ public class PatternAnalysisPage5 extends AppCompatActivity {
         legendDdata.put(R.color.darkOrange,"少于预定时间的比例");
         legendDdata.put(R.color.orange,"等于预定时间的比例");
         legendDdata.put(R.color.lightOrange,"多于预定时间的比例");
-    }
-    private void testDraw()
+    }*/
+    /*private void testDraw()
     {
         chart.setBackgroundColor(getResources().getColor(R.color.blueBackground));
         chart.setDescription(null);
@@ -161,7 +170,7 @@ public class PatternAnalysisPage5 extends AppCompatActivity {
         chart.setData(barData);
         setAxis();
         chart.invalidate();
-    }
+    }*/
     private void setAxis()
         {
         YAxis leftAxis = chart.getAxisLeft();

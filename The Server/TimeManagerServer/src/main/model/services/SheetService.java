@@ -6,8 +6,8 @@ import java.util.regex.Pattern;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import main.model.db.*;
 import main.model.moudle.*;
+import main.model.db.*;
 
 public class SheetService 
 {
@@ -35,13 +35,13 @@ public class SheetService
 		String weekday_s;
 		switch(timeSharing.getWeekday())
 		{
-			case 1: weekday_s = "ĞÇÆÚÒ»"; break;
-			case 2: weekday_s = "ĞÇÆÚ¶ş"; break;
-			case 3: weekday_s = "ĞÇÆÚÈı"; break;
-			case 4: weekday_s = "ĞÇÆÚËÄ"; break;
-			case 5: weekday_s = "ĞÇÆÚÎå"; break;
-			case 6: weekday_s = "ĞÇÆÚÁù"; break;
-			case 7: weekday_s = "ĞÇÆÚÈÕ"; break;
+			case 1: weekday_s = "æ˜ŸæœŸä¸€"; break;
+			case 2: weekday_s = "æ˜ŸæœŸäºŒ"; break;
+			case 3: weekday_s = "æ˜ŸæœŸä¸‰"; break;
+			case 4: weekday_s = "æ˜ŸæœŸå››"; break;
+			case 5: weekday_s = "æ˜ŸæœŸäº”"; break;
+			case 6: weekday_s = "æ˜ŸæœŸå…­"; break;
+			case 7: weekday_s = "æ˜ŸæœŸæ—¥"; break;
 			default: return null;
 		}
 		back.put("weekday", weekday_s);
@@ -51,6 +51,7 @@ public class SheetService
 		int minutesAll = 0;
 		for(int i = 0; i < affairs.size(); i++)
 		{
+			if(affairs.get(i).getTimeEnd() == null || affairs.get(i).getTimeStart() == null) continue;
 			int minutes = Integer.parseInt(affairs.get(i).getTimeEnd().substring(3, 5)) - Integer.parseInt(affairs.get(i).getTimeStart().substring(3, 5));
 			int hours = Integer.parseInt(affairs.get(i).getTimeEnd().substring(0, 2)) - Integer.parseInt(affairs.get(i).getTimeStart().substring(0, 2));
 			if(minutes < 0)
@@ -73,6 +74,7 @@ public class SheetService
 			{
 				if(affairs.get(j).getIdLabel() == labels.get(i).getId())
 				{
+					if(affairs.get(j).getTimeEnd() == null || affairs.get(j).getTimeStart() == null) continue;
 					int minutes = Integer.parseInt(affairs.get(j).getTimeEnd().substring(3, 5)) - Integer.parseInt(affairs.get(j).getTimeStart().substring(3, 5));
 					int hours = Integer.parseInt(affairs.get(j).getTimeEnd().substring(0, 2)) - Integer.parseInt(affairs.get(j).getTimeStart().substring(0, 2));
 					if(minutes < 0)
@@ -86,10 +88,18 @@ public class SheetService
 				}
 			}
 			duration = String.valueOf(minutesPerLabel/60) + ":" + String.valueOf(minutesPerLabel%60);
-			if(minutesPerLabel/60 < 10)
-				duration = "0" + String.valueOf(minutesPerLabel/60) + ":" + String.valueOf(minutesPerLabel%60);
-			else
-				duration = String.valueOf(minutesPerLabel/60) + ":" + String.valueOf(minutesPerLabel%60);
+			if(minutesPerLabel/60 < 10) {
+				if(minutesPerLabel%60 < 10) 
+					duration = "0" + String.valueOf(minutesPerLabel/60) + ":0" + String.valueOf(minutesPerLabel%60);
+				else
+					duration = "0" + String.valueOf(minutesPerLabel/60) + ":" + String.valueOf(minutesPerLabel%60);
+			}
+			else {
+				if(minutesPerLabel%60 < 10) 
+					duration = String.valueOf(minutesPerLabel/60) + ":0" + String.valueOf(minutesPerLabel%60);
+				else
+					duration = String.valueOf(minutesPerLabel/60) + ":" + String.valueOf(minutesPerLabel%60);
+			}
 			if(minutesAll != 0)
 				percent = (float)minutesPerLabel/(float)minutesAll;
 			else percent = 0;
@@ -97,7 +107,10 @@ public class SheetService
 			labelAffair.put("duration", duration);
 			labelAffair.put("percent", percent);
 			labelAffair.put("satisfaction", satisfaction);
-			affairArray.add(labelAffair);
+			if(percent != 0) {
+				affairArray.add(labelAffair);
+			}
+			
 		}
 		back.put("TimeSharing", affairArray);
 		
@@ -105,8 +118,9 @@ public class SheetService
 		minutesAll = 0;
 		for(int i = 0; i < s_Affairs.size(); i++)
 		{
-			int minutes = Integer.parseInt(affairs.get(i).getTimeEnd().substring(3, 5)) - Integer.parseInt(affairs.get(i).getTimeStart().substring(3, 5));
-			int hours = Integer.parseInt(affairs.get(i).getTimeEnd().substring(0, 2)) - Integer.parseInt(affairs.get(i).getTimeStart().substring(0, 2));
+			if(s_Affairs.get(i).getTimeEnd() == null || s_Affairs.get(i).getTimeStart() == null) continue;
+			int minutes = Integer.parseInt(s_Affairs.get(i).getTimeEnd().substring(3, 5)) - Integer.parseInt(s_Affairs.get(i).getTimeStart().substring(3, 5));
+			int hours = Integer.parseInt(s_Affairs.get(i).getTimeEnd().substring(0, 2)) - Integer.parseInt(s_Affairs.get(i).getTimeStart().substring(0, 2));
 			if(minutes < 0)
 			{
 				minutes += 60;
@@ -125,6 +139,7 @@ public class SheetService
 			{
 				if(s_Affairs.get(j).getIdLabel() == labels.get(i).getId())
 				{
+					if(s_Affairs.get(j).getTimeEnd() == null || s_Affairs.get(j).getTimeStart() == null) continue;
 					int minutes = Integer.parseInt(s_Affairs.get(j).getTimeEnd().substring(3, 5)) - Integer.parseInt(s_Affairs.get(j).getTimeStart().substring(3, 5));
 					int hours = Integer.parseInt(s_Affairs.get(j).getTimeEnd().substring(0, 2)) - Integer.parseInt(s_Affairs.get(j).getTimeStart().substring(0, 2));
 					if(minutes < 0)
@@ -135,17 +150,29 @@ public class SheetService
 					minutesPerLabel += (minutes + hours*60);
 				}
 			}
-			if(minutesPerLabel/60 < 10)
-				duration = "0" + String.valueOf(minutesPerLabel/60) + ":" + String.valueOf(minutesPerLabel%60);
-			else
-				duration = String.valueOf(minutesPerLabel/60) + ":" + String.valueOf(minutesPerLabel%60);
+			if(minutesPerLabel/60 < 10) {
+				if(minutesPerLabel%60 < 10) 
+					duration = "0" + String.valueOf(minutesPerLabel/60) + ":0" + String.valueOf(minutesPerLabel%60);
+				else
+					duration = "0" + String.valueOf(minutesPerLabel/60) + ":" + String.valueOf(minutesPerLabel%60);
+			}
+			else {
+				if(minutesPerLabel%60 < 10) 
+					duration = String.valueOf(minutesPerLabel/60) + ":0" + String.valueOf(minutesPerLabel%60);
+				else
+					duration = String.valueOf(minutesPerLabel/60) + ":" + String.valueOf(minutesPerLabel%60);
+			}
+				
 			if(minutesAll == 0)
 				percent = 0;
 			else
 				percent = (float)minutesPerLabel/(float)minutesAll;
 			labelS_Affair.put("duration", duration);
 			labelS_Affair.put("percent", percent);
-			s_AffairArray.add(labelS_Affair);
+			if(percent != 0) {
+				s_AffairArray.add(labelS_Affair);
+			}
+			
 		}
 		back.put("Schedule", s_AffairArray);
  		return back;
@@ -157,25 +184,25 @@ public class SheetService
 		
 		ArrayList<TimeSharing> timeSharings = TimeSharingManager.findWithIdUser(userId);
 		
-		Pattern p = Pattern.compile("Äê"); 
+		Pattern p = Pattern.compile("å¹´"); 
 		String [] split1 = p.split(date);
 		String yearS = split1[0];
-		p = Pattern.compile("ÔÂ");
+		p = Pattern.compile("æœˆ");
 		String [] split2 = p.split(split1[1]);
 		String monthS = split2[0];
-		p = Pattern.compile("ÈÕ");
+		p = Pattern.compile("æ—¥");
 		String dayS = p.split(split2[1])[0];
 		Calendar timeOfDate = Calendar.getInstance();		
 		timeOfDate.set(Integer.parseInt(yearS), Integer.parseInt(monthS), Integer.parseInt(dayS));
 		
 		String timeRegisterS = UserManager.findWithId(userId).getTimeRegister();
-		p = Pattern.compile("Äê"); 
+		p = Pattern.compile("å¹´"); 
 		split1 = p.split(timeRegisterS);
 		yearS = split1[0];
-		p = Pattern.compile("ÔÂ");
+		p = Pattern.compile("æœˆ");
 		split2 = p.split(split1[1]);
 		monthS = split2[0];
-		p = Pattern.compile("ÈÕ");
+		p = Pattern.compile("æ—¥");
 		dayS = p.split(split2[1])[0];
 		Calendar timeRegister = Calendar.getInstance();
 		timeRegister.set(Integer.parseInt(yearS), Integer.parseInt(monthS), Integer.parseInt(dayS));
@@ -191,11 +218,11 @@ public class SheetService
         if(timeRegister.get(Calendar.DAY_OF_WEEK) > 1)
         	day1 +=  8 - (timeRegister.get(Calendar.DAY_OF_WEEK));
         if (year1 != year2) 
-        {  //Í¬Ò»Äê
+        {  //åŒéšå±¼ç«´éªï¿½
             int timeDistance = 0;
             for (int i = year1; i < year2; i++) 
             {
-                if (i % 4 == 0 && i % 100 != 0 || i % 400 == 0) //ÈòÄê
+                if (i % 4 == 0 && i % 100 != 0 || i % 400 == 0) //é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
                     timeDistance += 366;
                 else
                     timeDistance += 365;
@@ -205,19 +232,21 @@ public class SheetService
         else 
         	week = (day2 - day1)/7 + 1;
         
-        back.put("week", "µÚ" + week + "ÖÜ");
-        //½ØÖÁ´Ë»ñÈ¡µ½½ñÌìÊÇÊ¹ÓÃµÄµÚ¼¸ÖÜ
-        
+        back.put("week", "ç¬¬" + week + "å‘¨");
+        //æˆªè‡³æ­¤è·å–åˆ°ä»Šå¤©æ˜¯ä½¿ç”¨çš„ç¬¬å‡ å‘¨        
         ArrayList<String> durationArray = new ArrayList<String>();
         timeOfDate.add(Calendar.DATE, -timeRegister.get(Calendar.DAY_OF_WEEK));
         for(int i = 0; i < 7; i++)
         {
+        	String newDate = timeOfDate.get(Calendar.YEAR) + "å¹´" + timeOfDate.get(Calendar.MONTH)+ "æœˆ" +timeOfDate.get(Calendar.DATE) + "æ—¥";
         	timeOfDate.add(Calendar.DATE, 1);
         	TimeSharing timeSharing = null;
+        	System.out.println(timeSharings.size());
         	for(int j = 0; j < timeSharings.size(); j++)
         	{
-        		if(timeSharings.get(j).getDate().equals(timeOfDate.get(Calendar.YEAR) + "Äê" + timeOfDate.get(Calendar.MONTH)+1 + "ÔÂ" +timeOfDate.get(Calendar.DATE) + "ÈÕ"));
+        		if(timeSharings.get(j).getDate().equals(newDate))
         		{
+        			System.out.println(timeSharings.get(j).getDate());
         			timeSharing = timeSharings.get(j);
             		break;
         		}
@@ -235,6 +264,7 @@ public class SheetService
 			{
 				if(affairs.get(j).getIdLabel() == labelid)
 				{
+					if(affairs.get(j).getTimeEnd() == null || affairs.get(j).getTimeStart() == null) continue;
 					int minutes = Integer.parseInt(affairs.get(j).getTimeEnd().substring(3, 5)) - Integer.parseInt(affairs.get(j).getTimeStart().substring(3, 5));
 					int hours = Integer.parseInt(affairs.get(j).getTimeEnd().substring(0, 2)) - Integer.parseInt(affairs.get(j).getTimeStart().substring(0, 2));
 					if(minutes < 0)
@@ -243,9 +273,17 @@ public class SheetService
 						hours--;
 					}
 					if(hours < 10)
-						duration = "0" + String.valueOf(hours) + ":" + String.valueOf(minutes);
-					else
-						duration = String.valueOf(hours) + ":" + String.valueOf(minutes);
+						if(minutes < 10)
+							duration ="0"+ String.valueOf(hours) + ":0" + String.valueOf(minutes);
+						else 
+							duration = "0"+String.valueOf(hours) + ":" + String.valueOf(minutes);
+					else {
+						if(minutes < 10)
+							duration = String.valueOf(hours) + ":0" + String.valueOf(minutes);
+						else 
+							duration = String.valueOf(hours) + ":" + String.valueOf(minutes);
+					}
+						
 					durationArray.add(duration);
 				}
 			}
@@ -261,25 +299,25 @@ public class SheetService
 		
 		ArrayList<TimeSharing> timeSharings = TimeSharingManager.findWithIdUser(userId);
 		
-		Pattern p = Pattern.compile("Äê"); 
+		Pattern p = Pattern.compile("å¹´"); 
 		String [] split1 = p.split(date);
 		String yearS = split1[0];
-		p = Pattern.compile("ÔÂ");
+		p = Pattern.compile("æœˆ");
 		String [] split2 = p.split(split1[1]);
 		String monthS = split2[0];
-		p = Pattern.compile("ÈÕ");
+		p = Pattern.compile("æ—¥");
 		String dayS = p.split(split2[1])[0];
 		Calendar timeOfDate = Calendar.getInstance();		
 		timeOfDate.set(Integer.parseInt(yearS), Integer.parseInt(monthS), Integer.parseInt(dayS));
 		
 		String timeRegisterS = UserManager.findWithId(userId).getTimeRegister();
-		p = Pattern.compile("Äê"); 
+		p = Pattern.compile("å¹´"); 
 		split1 = p.split(timeRegisterS);
 		yearS = split1[0];
-		p = Pattern.compile("ÔÂ");
+		p = Pattern.compile("æœˆ");
 		split2 = p.split(split1[1]);
 		monthS = split2[0];
-		p = Pattern.compile("ÈÕ");
+		p = Pattern.compile("æ—¥");
 		dayS = p.split(split2[1])[0];
 		Calendar timeRegister = Calendar.getInstance();
 		timeRegister.set(Integer.parseInt(yearS), Integer.parseInt(monthS), Integer.parseInt(dayS));
@@ -295,11 +333,11 @@ public class SheetService
         if(timeRegister.get(Calendar.DAY_OF_WEEK) > 1)
         	day1 +=  8 - (timeRegister.get(Calendar.DAY_OF_WEEK));
         if (year1 != year2) 
-        {  //Í¬Ò»Äê
+        {  //åŒä¸€å¹´
             int timeDistance = 0;
             for (int i = year1; i < year2; i++) 
             {
-                if (i % 4 == 0 && i % 100 != 0 || i % 400 == 0) //ÈòÄê
+                if (i % 4 == 0 && i % 100 != 0 || i % 400 == 0) //é—°å¹´åˆ¤æ–­
                     timeDistance += 366;
                 else
                     timeDistance += 365;
@@ -309,13 +347,11 @@ public class SheetService
         else 
         	week = (day2 - day1)/7 + 1;
         
-        back.put("week", "µÚ" + week + "ÖÜ");
+        back.put("week", "ç¬¬" + week + "å‘¨");
         
         timeOfDate.add(Calendar.DATE, -timeRegister.get(Calendar.DAY_OF_WEEK));
         
         ArrayList<Label> labels = LabelManager.findWithNothing();
-        
-        //Ëã³ö7ÌìËùÓĞÊÂ¼şµÄÊ±¼ä
         int minutesAll = 0;
         for(int i = 0; i < 7; i++)
         {
@@ -323,7 +359,7 @@ public class SheetService
         	TimeSharing timeSharing = null;
         	for(int j = 0; j < timeSharings.size(); j++)
         	{
-        		if(timeSharings.get(j).getDate().equals(timeOfDate.get(Calendar.YEAR) + "Äê" + timeOfDate.get(Calendar.MONTH)+1 + "ÔÂ" +timeOfDate.get(Calendar.DATE) + "ÈÕ"));
+        		if(timeSharings.get(j).getDate().equals(timeOfDate.get(Calendar.YEAR) + "å¹´" + timeOfDate.get(Calendar.MONTH) + "æœˆ" +timeOfDate.get(Calendar.DATE) + "æ—¥"))
         		{
         			timeSharing = timeSharings.get(j);
             		break;
@@ -334,6 +370,7 @@ public class SheetService
     		ArrayList<Affair> affairs = AffairManager.findWithIdTS(timeSharing.getId());
     		for(int j = 0; j < affairs.size(); j++)
     		{
+    			if(affairs.get(j).getTimeEnd() == null || affairs.get(j).getTimeStart() == null) continue;
     			int minutes = Integer.parseInt(affairs.get(j).getTimeEnd().substring(3, 5)) - Integer.parseInt(affairs.get(j).getTimeStart().substring(3, 5));
     			int hours = Integer.parseInt(affairs.get(j).getTimeEnd().substring(0, 2)) - Integer.parseInt(affairs.get(j).getTimeStart().substring(0, 2));
     			if(minutes < 0)
@@ -346,7 +383,6 @@ public class SheetService
         }
         timeOfDate.add(Calendar.DATE, -7);	
         
-        //·Ö±ğ¼ÆËã³öÃ¿Ò»¸öidËùÕ¼±ÈÀı
         JSONArray affairArray = new JSONArray();
         for(int i = 0; i < labels.size(); i++)
         {
@@ -363,7 +399,7 @@ public class SheetService
             	TimeSharing timeSharing = null;
             	for(int k = 0; k < timeSharings.size(); k++)
             	{
-            		if(timeSharings.get(k).getDate().equals(timeOfDate.get(Calendar.YEAR) + "Äê" + timeOfDate.get(Calendar.MONTH)+1 + "ÔÂ" +timeOfDate.get(Calendar.DATE) + "ÈÕ"));
+            		if(timeSharings.get(k).getDate().equals(timeOfDate.get(Calendar.YEAR) + "å¹´" + timeOfDate.get(Calendar.MONTH) + "æœˆ" +timeOfDate.get(Calendar.DATE) + "æ—¥"))
             		{
             			timeSharing = timeSharings.get(k);
                 		break;
@@ -379,6 +415,7 @@ public class SheetService
     			{
     				if(affairs.get(k).getIdLabel() == labels.get(i).getId())
     				{
+    					if(affairs.get(k).getTimeEnd() == null || affairs.get(k).getTimeStart() == null) continue;
     					int minutes = Integer.parseInt(affairs.get(k).getTimeEnd().substring(3, 5)) - Integer.parseInt(affairs.get(k).getTimeStart().substring(3, 5));
     					int hours = Integer.parseInt(affairs.get(k).getTimeEnd().substring(0, 2)) - Integer.parseInt(affairs.get(k).getTimeStart().substring(0, 2));
     					if(minutes < 0)
@@ -392,10 +429,19 @@ public class SheetService
     				}
     			}
             }
-        	duration = String.valueOf(minutesPerLabel/60) + ":" + String.valueOf(minutesPerLabel%60);if(minutesPerLabel/60 < 10)
-				duration = "0" + String.valueOf(minutesPerLabel/60) + ":" + String.valueOf(minutesPerLabel%60);
-			else
-				duration = String.valueOf(minutesPerLabel/60) + ":" + String.valueOf(minutesPerLabel%60);
+        	duration = String.valueOf(minutesPerLabel/60) + ":" + String.valueOf(minutesPerLabel%60);
+        	if(minutesPerLabel/60 < 10) {
+				if(minutesPerLabel%60 < 10) 
+					duration = "0" + String.valueOf(minutesPerLabel/60) + ":0" + String.valueOf(minutesPerLabel%60);
+				else
+					duration = "0" + String.valueOf(minutesPerLabel/60) + ":" + String.valueOf(minutesPerLabel%60);
+			}
+			else {
+				if(minutesPerLabel%60 < 10) 
+					duration = String.valueOf(minutesPerLabel/60) + ":0" + String.valueOf(minutesPerLabel%60);
+				else
+					duration = String.valueOf(minutesPerLabel/60) + ":" + String.valueOf(minutesPerLabel%60);
+			}
         	if(minutesAll != 0)
         		percent = (float)minutesPerLabel/(float)minutesAll;
         	else percent = 0;
@@ -403,8 +449,9 @@ public class SheetService
 			labelAffair.put("duration", duration);
 			labelAffair.put("percent", percent);
 			labelAffair.put("satisfaction", satisfaction);
-			affairArray.add(labelAffair);
-			//»ØËİµ½ÆßÌìÇ°
+			if(percent != 0) {
+				affairArray.add(labelAffair);
+			}
         	timeOfDate.add(Calendar.DATE, -7);
         }
         back.put("TimeSharing", affairArray);
@@ -425,7 +472,7 @@ public class SheetService
             	TimeSharing timeSharing = null;
             	for(int k = 0; k < timeSharings.size(); k++)
             	{
-            		if(timeSharings.get(k).getDate().equals(timeOfDate.get(Calendar.YEAR) + "Äê" + timeOfDate.get(Calendar.MONTH)+1 + "ÔÂ" +timeOfDate.get(Calendar.DATE) + "ÈÕ"));
+            		if(timeSharings.get(k).getDate().equals(timeOfDate.get(Calendar.YEAR) + "éªï¿½" + timeOfDate.get(Calendar.MONTH) + "éˆï¿½" +timeOfDate.get(Calendar.DATE) + "éƒï¿½"))
             		{
             			timeSharing = timeSharings.get(k);
                 		break;
@@ -441,6 +488,7 @@ public class SheetService
     			{
     				if(s_Affairs.get(k).getIdLabel() == labels.get(i).getId())
     				{
+    					if(s_Affairs.get(k).getTimeEnd() == null || s_Affairs.get(k).getTimeStart() == null) continue;
     					int minutes = Integer.parseInt(s_Affairs.get(k).getTimeEnd().substring(3, 5)) - Integer.parseInt(s_Affairs.get(k).getTimeStart().substring(3, 5));
     					int hours = Integer.parseInt(s_Affairs.get(k).getTimeEnd().substring(0, 2)) - Integer.parseInt(s_Affairs.get(k).getTimeStart().substring(0, 2));
     					if(minutes < 0)
@@ -454,10 +502,19 @@ public class SheetService
     				}
     			}
             }
-        	duration = String.valueOf(minutesPerLabel/60) + ":" + String.valueOf(minutesPerLabel%60);if(minutesPerLabel/60 < 10)
-				duration = "0" + String.valueOf(minutesPerLabel/60) + ":" + String.valueOf(minutesPerLabel%60);
-			else
-				duration = String.valueOf(minutesPerLabel/60) + ":" + String.valueOf(minutesPerLabel%60);
+        	duration = String.valueOf(minutesPerLabel/60) + ":" + String.valueOf(minutesPerLabel%60);
+        	if(minutesPerLabel/60 < 10) {
+				if(minutesPerLabel%60 < 10) 
+					duration = "0" + String.valueOf(minutesPerLabel/60) + ":0" + String.valueOf(minutesPerLabel%60);
+				else
+					duration = "0" + String.valueOf(minutesPerLabel/60) + ":" + String.valueOf(minutesPerLabel%60);
+			}
+			else {
+				if(minutesPerLabel%60 < 10) 
+					duration = String.valueOf(minutesPerLabel/60) + ":0" + String.valueOf(minutesPerLabel%60);
+				else
+					duration = String.valueOf(minutesPerLabel/60) + ":" + String.valueOf(minutesPerLabel%60);
+			}
         	if(minutesAll != 0)
         		percent = (float)minutesPerLabel/(float)minutesAll;
         	else percent = 0;
@@ -465,8 +522,10 @@ public class SheetService
 			labelS_Affair.put("duration", duration);
 			labelS_Affair.put("percent", percent);
 			labelS_Affair.put("satisfaction", satisfaction);
-			affairArray.add(labelS_Affair);
-			//»ØËİµ½ÆßÌìÇ°
+			if(percent != 0) {
+				s_AffairArray.add(labelS_Affair);
+			}
+		
         	timeOfDate.add(Calendar.DATE, -7);
         }
         back.put("Schedule", s_AffairArray);

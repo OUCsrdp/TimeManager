@@ -525,73 +525,73 @@ public class ReportFormActivity extends AppCompatActivity {
         reportObject.put("date",today);
         Log.i("reportObject",reportObject.toString());
 
-//        HttpUtil.request("SheetServlet?method=GetWeeklySheet","post",reportObject,new okhttp3.Callback(){
-//            @Override
-//            public void onResponse(@NonNull Call call, @NonNull Response response){
-//                try{
-//                    //获取服务器端响应数据
-//                    String jsonString = response.body().string();
-//                    Log.i("jsonString",jsonString);
-//                    appendPieTable(jsonString,flag,xValues,yValues,colors);
-//
-//                } catch(Exception e){
-//                    e.printStackTrace();
-//                }
-//            }
-//            @Override
-//            public void onFailure(@NonNull Call call, @NonNull IOException e){
-//                //createFail();
-//            }
-//        });
+        HttpUtil.request("SheetServlet?method=GetWeeklySheet","post",reportObject,new okhttp3.Callback(){
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response){
+                try{
+                    //获取服务器端响应数据
+                    String jsonString = response.body().string();
+                    Log.i("jsonString",jsonString);
+                    appendPieTable(jsonString,flag,xValues,yValues,colors);
+
+                } catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e){
+                //createFail();
+            }
+        });
 
         /*
          * 数据测试
          */
-        String jsonString="{\"status\":\"success\",\n" +
-                "\n" +
-                " \"week\": \"第八周\",\n" +
-                "\n" +
-                " \"TimeSharing\": [{\n" +
-                "\n" +
-                "                        \"labelid\": \"1\",\n" +
-                "\n" +
-                "                        \"duration\": \"03:33\",\n" +
-                "\n" +
-                "                        \"percent\":0.5,\n" +
-                "\n" +
-                "                        \"satisfaction\": 3.8\n" +
-                "\n" +
-                "               }, {\n" +
-                "\n" +
-                "                        \"labelid\": \"2\",\n" +
-                "\n" +
-                "                        \"duration\": \"03:29\",\n" +
-                "\n" +
-                "                        \"percent\":0.5,\n" +
-                "\n" +
-                "                        \"satisfaction\": 4.8\n" +
-                "\n" +
-                "               }],\n" +
-                "\n" +
-                "   \"Schedule\": [{\n" +
-                "\n" +
-                "                        \"labelid\": \"1\",\n" +
-                "\n" +
-                "                        \"duration\": \"03:50\",\n" +
-                "\n" +
-                "                        \"percent\":0.5,\n" +
-                "\n" +
-                "               }, {\n" +
-                "\n" +
-                "                        \"labelid\": \"2\",\n" +
-                "\n" +
-                "                        \"duration\": \"01:29\",\n" +
-                "\n" +
-                "                        \"percent\":0.5,\n" +
-                "\n" +
-                "               }]}";
-        Log.i("jsonString",jsonString);
-        appendPieTable(jsonString,flag,xValues,yValues,colors);
+//        String jsonString="{\"status\":\"success\",\n" +
+//                "\n" +
+//                " \"week\": \"第八周\",\n" +
+//                "\n" +
+//                " \"TimeSharing\": [{\n" +
+//                "\n" +
+//                "                        \"labelid\": \"1\",\n" +
+//                "\n" +
+//                "                        \"duration\": \"03:33\",\n" +
+//                "\n" +
+//                "                        \"percent\":0.5,\n" +
+//                "\n" +
+//                "                        \"satisfaction\": 3.8\n" +
+//                "\n" +
+//                "               }, {\n" +
+//                "\n" +
+//                "                        \"labelid\": \"2\",\n" +
+//                "\n" +
+//                "                        \"duration\": \"03:29\",\n" +
+//                "\n" +
+//                "                        \"percent\":0.5,\n" +
+//                "\n" +
+//                "                        \"satisfaction\": 4.8\n" +
+//                "\n" +
+//                "               }],\n" +
+//                "\n" +
+//                "   \"Schedule\": [{\n" +
+//                "\n" +
+//                "                        \"labelid\": \"1\",\n" +
+//                "\n" +
+//                "                        \"duration\": \"03:50\",\n" +
+//                "\n" +
+//                "                        \"percent\":0.5,\n" +
+//                "\n" +
+//                "               }, {\n" +
+//                "\n" +
+//                "                        \"labelid\": \"2\",\n" +
+//                "\n" +
+//                "                        \"duration\": \"01:29\",\n" +
+//                "\n" +
+//                "                        \"percent\":0.5,\n" +
+//                "\n" +
+//                "               }]}";
+//        Log.i("jsonString",jsonString);
+//        appendPieTable(jsonString,flag,xValues,yValues,colors);
 
 
 
