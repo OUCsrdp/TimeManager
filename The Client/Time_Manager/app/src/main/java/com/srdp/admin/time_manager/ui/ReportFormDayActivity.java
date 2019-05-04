@@ -52,7 +52,6 @@ import android.util.DisplayMetrics;
 import com.srdp.admin.time_manager.R;
 import com.srdp.admin.time_manager.model.moudle.Label;
 import com.srdp.admin.time_manager.model.moudle.TimeSharing;
-import com.srdp.admin.time_manager.util.DrawAnalysisChartUtil;
 import com.srdp.admin.time_manager.util.HttpUtil;
 
 import com.alibaba.fastjson.JSON;
@@ -83,6 +82,7 @@ public class ReportFormDayActivity extends AppCompatActivity {
     private int count;//饼图数量
 
     private LabelUtil labelUtil;
+    private int flag;
     private String jsonString="";
 
     @Override
@@ -108,12 +108,11 @@ public class ReportFormDayActivity extends AppCompatActivity {
         week_trans = (Button) findViewById(R.id.week_trans);
 
         rep_day_piechart = (PieChart) findViewById(R.id.rep_day_piechart);
-        PieData dayPieData = getPieData(6, 100,1);
-        showChart(rep_day_piechart, dayPieData);
-
+        flag=1;
+        getPieData(6, 100);
         rep_plan_piechart = (PieChart) findViewById(R.id.rep_plan_piechart);
-        PieData planPieData = getPieData(6, 100,2);
-        showChart(rep_plan_piechart, planPieData);
+        flag=2;
+        getPieData(6, 100);
 
 
         //切换到周报表
@@ -185,8 +184,12 @@ public class ReportFormDayActivity extends AppCompatActivity {
     /**
      *
      */
-    private PieData appendDailySheet(String jsonString,int flag,ArrayList<String> xValues,ArrayList<PieEntry> yValues,ArrayList<Integer> colors)
+    private void appendDailySheet(String jsonString)
     {
+        //数据显示操作
+        ArrayList<String> xValues = new ArrayList<>();  //xVals用来表示每个饼块上的内容
+        ArrayList<PieEntry> yValues = new ArrayList<>();  //yVals用来表示封装每个饼块的实际数据
+        ArrayList<Integer> colors = new ArrayList<Integer>();
         //获得星期x
         JSONObject resJson=JSONObject.parseObject(jsonString);
         weekday = resJson.getString("weekday");
@@ -334,7 +337,13 @@ public class ReportFormDayActivity extends AppCompatActivity {
                 day_table.addView(tableRow);
             }
         }
-
+        PieData pieData=setPieData(xValues,yValues,colors);
+        if(flag==1)
+            showChart(rep_day_piechart,pieData);
+        else if(flag==2)
+            showChart(rep_plan_piechart,pieData);
+    }
+    private PieData setPieData(ArrayList<String> xValues,ArrayList<PieEntry> yValues,ArrayList<Integer> colors){
         //y轴的集合
         PieDataSet pieDataSet = new PieDataSet(yValues, " "/*显示在比例图上*/);
         pieDataSet.setSliceSpace(0f); //设置个饼状图之间的距离
@@ -357,16 +366,10 @@ public class ReportFormDayActivity extends AppCompatActivity {
         pieDataSet.setSelectionShift(px); // 选中态多出的长度
 
         PieData pieData = new PieData(pieDataSet);
-        return pieData;
+        return  pieData;
     }
-    private PieData getPieData(int count, float range, final int flag) {
+    private void getPieData(int count, float range) {
 
-        final PieData pieData;
-
-        //数据显示操作
-        final ArrayList<String> xValues = new ArrayList<>();  //xVals用来表示每个饼块上的内容
-        final ArrayList<PieEntry> yValues = new ArrayList<>();  //yVals用来表示封装每个饼块的实际数据
-        final ArrayList<Integer> colors = new ArrayList<Integer>();
 
         //从日历页面获取日期数据
         Intent intent=getIntent();
@@ -387,7 +390,7 @@ public class ReportFormDayActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            pieData = appendDailySheet(jsonString,flag,xValues,yValues,colors);
+                            appendDailySheet(jsonString);
                         }
                     });
 
@@ -407,51 +410,51 @@ public class ReportFormDayActivity extends AppCompatActivity {
         /*
          * 数据测试
          */
-        /*String jsonString="{\"status\":\"success\",\n" +
-                "\n" +
-                " \"weekday\": \"星期六\",\n" +
-                "\n" +
-                " \"TimeSharing\": [{\n" +
-                "\n" +
-                "                        \"labelid\": \"1\",\n" +
-                "\n" +
-                "                        \"duration\": \"03:33\",\n" +
-                "\n" +
-                "                        \"percent\":0.5,\n" +
-                "\n" +
-                "                        \"satisfaction\": 3.8\n" +
-                "\n" +
-                "               }, {\n" +
-                "\n" +
-                "                        \"labelid\": \"2\",\n" +
-                "\n" +
-                "                        \"duration\": \"03:29\",\n" +
-                "\n" +
-                "                        \"percent\":0.5,\n" +
-                "\n" +
-                "                        \"satisfaction\": 4.8\n" +
-                "\n" +
-                "               }],\n" +
-                "\n" +
-                "   \"Schedule\": [{\n" +
-                "\n" +
-                "                        \"labelid\": \"1\",\n" +
-                "\n" +
-                "                        \"duration\": \"03:50\",\n" +
-                "\n" +
-                "                        \"percent\":0.5,\n" +
-                "\n" +
-                "               }, {\n" +
-                "\n" +
-                "                        \"labelid\": \"2\",\n" +
-                "\n" +
-                "                        \"duration\": \"01:29\",\n" +
-                "\n" +
-                "                        \"percent\":0.5,\n" +
-                "\n" +
-                "               }]}";
-        Log.i("jsonString",jsonString);
-        appendDailySheet(jsonString,flag,xValues,yValues,colors);*/
+//        String jsonString="{\"status\":\"success\",\n" +
+//                "\n" +
+//                " \"weekday\": \"星期六\",\n" +
+//                "\n" +
+//                " \"TimeSharing\": [{\n" +
+//                "\n" +
+//                "                        \"labelid\": \"1\",\n" +
+//                "\n" +
+//                "                        \"duration\": \"03:33\",\n" +
+//                "\n" +
+//                "                        \"percent\":0.5,\n" +
+//                "\n" +
+//                "                        \"satisfaction\": 3.8\n" +
+//                "\n" +
+//                "               }, {\n" +
+//                "\n" +
+//                "                        \"labelid\": \"2\",\n" +
+//                "\n" +
+//                "                        \"duration\": \"03:29\",\n" +
+//                "\n" +
+//                "                        \"percent\":0.5,\n" +
+//                "\n" +
+//                "                        \"satisfaction\": 4.8\n" +
+//                "\n" +
+//                "               }],\n" +
+//                "\n" +
+//                "   \"Schedule\": [{\n" +
+//                "\n" +
+//                "                        \"labelid\": \"1\",\n" +
+//                "\n" +
+//                "                        \"duration\": \"03:50\",\n" +
+//                "\n" +
+//                "                        \"percent\":0.5,\n" +
+//                "\n" +
+//                "               }, {\n" +
+//                "\n" +
+//                "                        \"labelid\": \"2\",\n" +
+//                "\n" +
+//                "                        \"duration\": \"01:29\",\n" +
+//                "\n" +
+//                "                        \"percent\":0.5,\n" +
+//                "\n" +
+//                "               }]}";
+//        Log.i("jsonString",jsonString);
+//        appendDailySheet(jsonString,flag,xValues,yValues,colors);
 
 
         // 饼图数据
@@ -475,29 +478,5 @@ public class ReportFormDayActivity extends AppCompatActivity {
 //        yValues.add(new PieEntry(quarterly6, 5));
 //        yValues.add(new PieEntry(quarterly7, 6));
 
-        //y轴的集合
-//        PieDataSet pieDataSet = new PieDataSet(yValues, " "/*显示在比例图上*/);
-//        pieDataSet.setSliceSpace(0f); //设置个饼状图之间的距离
-//
-//
-//
-//        // 饼图颜色
-////        colors.add(Color.rgb(205, 205, 205));
-////        colors.add(Color.rgb(114, 188, 223));
-////        colors.add(Color.rgb(255, 123, 124));
-////        colors.add(Color.rgb(57, 135, 200));
-////        colors.add(Color.rgb(127, 235, 230));
-////        colors.add(Color.rgb(247, 35, 20));
-////        colors.add(Color.rgb(117, 85, 200));
-//
-//        pieDataSet.setColors(colors);
-//
-//        DisplayMetrics metrics = getResources().getDisplayMetrics();
-//        float px = 5 * (metrics.densityDpi / 160f);
-//        pieDataSet.setSelectionShift(px); // 选中态多出的长度
-//
-//        PieData pieData = new PieData(pieDataSet);
-
-        return pieData;
     }
 }

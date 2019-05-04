@@ -218,11 +218,11 @@ public class SheetService
         if(timeRegister.get(Calendar.DAY_OF_WEEK) > 1)
         	day1 +=  8 - (timeRegister.get(Calendar.DAY_OF_WEEK));
         if (year1 != year2) 
-        {  //同鍚屼竴骞�
+        {  //同一年
             int timeDistance = 0;
             for (int i = year1; i < year2; i++) 
             {
-                if (i % 4 == 0 && i % 100 != 0 || i % 400 == 0) //锟斤拷锟斤拷
+                if (i % 4 == 0 && i % 100 != 0 || i % 400 == 0) //闰年
                     timeDistance += 366;
                 else
                     timeDistance += 365;
@@ -233,7 +233,8 @@ public class SheetService
         	week = (day2 - day1)/7 + 1;
         
         back.put("week", "第" + week + "周");
-        //截至此获取到今天是使用的第几周        
+        //截至此获取到今天是使用的第几周
+        
         ArrayList<String> durationArray = new ArrayList<String>();
         timeOfDate.add(Calendar.DATE, -timeRegister.get(Calendar.DAY_OF_WEEK));
         for(int i = 0; i < 7; i++)
@@ -309,6 +310,8 @@ public class SheetService
 		String dayS = p.split(split2[1])[0];
 		Calendar timeOfDate = Calendar.getInstance();		
 		timeOfDate.set(Integer.parseInt(yearS), Integer.parseInt(monthS), Integer.parseInt(dayS));
+      
+
 		
 		String timeRegisterS = UserManager.findWithId(userId).getTimeRegister();
 		p = Pattern.compile("年"); 
@@ -337,7 +340,7 @@ public class SheetService
             int timeDistance = 0;
             for (int i = year1; i < year2; i++) 
             {
-                if (i % 4 == 0 && i % 100 != 0 || i % 400 == 0) //闰年判断
+                if (i % 4 == 0 && i % 100 != 0 || i % 400 == 0) //闰年
                     timeDistance += 366;
                 else
                     timeDistance += 365;
@@ -349,13 +352,21 @@ public class SheetService
         
         back.put("week", "第" + week + "周");
         
-        timeOfDate.add(Calendar.DATE, -timeRegister.get(Calendar.DAY_OF_WEEK));
+        
+
+        int w = timeOfDate.get(Calendar.DAY_OF_WEEK);
+        timeOfDate.add(Calendar.DATE, -w);       
         
         ArrayList<Label> labels = LabelManager.findWithNothing();
+        
+      //算出7天所有事件的时间
         int minutesAll = 0;
+        
         for(int i = 0; i < 7; i++)
         {
         	//bug
+        	timeOfDate.add(Calendar.DATE, 1);
+
         	TimeSharing timeSharing = null;
         	for(int j = 0; j < timeSharings.size(); j++)
         	{
@@ -383,6 +394,7 @@ public class SheetService
         }
         timeOfDate.add(Calendar.DATE, -7);	
         
+      //分别计算出每一个id所占比例
         JSONArray affairArray = new JSONArray();
         for(int i = 0; i < labels.size(); i++)
         {
@@ -452,6 +464,7 @@ public class SheetService
 			if(percent != 0) {
 				affairArray.add(labelAffair);
 			}
+			//回溯到七天前
         	timeOfDate.add(Calendar.DATE, -7);
         }
         back.put("TimeSharing", affairArray);
@@ -472,7 +485,7 @@ public class SheetService
             	TimeSharing timeSharing = null;
             	for(int k = 0; k < timeSharings.size(); k++)
             	{
-            		if(timeSharings.get(k).getDate().equals(timeOfDate.get(Calendar.YEAR) + "骞�" + timeOfDate.get(Calendar.MONTH) + "鏈�" +timeOfDate.get(Calendar.DATE) + "鏃�"))
+            		if(timeSharings.get(k).getDate().equals(timeOfDate.get(Calendar.YEAR) + "年" + timeOfDate.get(Calendar.MONTH) + "月" +timeOfDate.get(Calendar.DATE) + "日"))
             		{
             			timeSharing = timeSharings.get(k);
                 		break;
@@ -526,6 +539,7 @@ public class SheetService
 				s_AffairArray.add(labelS_Affair);
 			}
 		
+			//回溯到七天前
         	timeOfDate.add(Calendar.DATE, -7);
         }
         back.put("Schedule", s_AffairArray);

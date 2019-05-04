@@ -61,6 +61,7 @@ public class DrawAnalysisChartUtil {
     {
         BarChart chart=basicSet(activity,pid);
         //给柱状图的set赋值，赋颜色
+        chart.setDrawValueAboveBar(true);
         BarDataSet set=setBarSet(activity,chart,Percents,colors,type);
         //设置轴
         setAxis(chart,type);
@@ -128,7 +129,7 @@ public class DrawAnalysisChartUtil {
             barData=new BarData(set);
             barData.setBarWidth(0.7f);
             //不在柱上画数据
-            //barData.setDrawValues(false);
+            barData.setDrawValues(false);
         }
         else if(type.equals("DensityBarChart")){
             /*set.setDrawValues(true);
@@ -162,8 +163,7 @@ public class DrawAnalysisChartUtil {
         YAxis rightAxis = chart.getAxisRight();
         XAxis xAxis=chart.getXAxis();
         //如果是与日程表比较的图表绘制左y轴，不然不绘制左y轴
-        if(type.equals("CompareBarChart")) {
-            //设置左y轴从0-100总共10个刻度
+        //设置左y轴从0-100总共10个刻度
             leftAxis.setLabelCount(10, false);
             //设置左y轴在最高刻度上还有5个单位
             leftAxis.setSpaceTop(5f);
@@ -175,6 +175,8 @@ public class DrawAnalysisChartUtil {
             leftAxis.setTextSize(12f);
             //设置y轴宽度
             leftAxis.setAxisLineWidth(2f);
+
+        if(type.equals("CompareBarChart")){
             //设置y轴上网格线的宽度
             leftAxis.setGridLineWidth(1f);
             leftAxis.setValueFormatter(new IAxisValueFormatter() {
@@ -186,7 +188,8 @@ public class DrawAnalysisChartUtil {
         }
         else if(type.equals("DensityBarChart")) {
             leftAxis.setSpaceBottom(0f);
-            leftAxis.setEnabled(false);
+            leftAxis.setDrawGridLines(false);
+            //leftAxis.setEnabled(false);
         }
         //不画右边的y轴
         rightAxis.setEnabled(false);

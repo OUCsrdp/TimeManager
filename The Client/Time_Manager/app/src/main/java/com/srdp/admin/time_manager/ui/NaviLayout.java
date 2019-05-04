@@ -80,7 +80,7 @@ public class NaviLayout extends LinearLayout {
         navi4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                theIntent.setClass(nowContext,PatternAnalysisPage5.class);
+                theIntent.setClass(nowContext,PatternAnalysisPage1Activity.class);
                 nowContext.startActivity(theIntent);
             }
         });

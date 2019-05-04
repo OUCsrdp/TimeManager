@@ -6,6 +6,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONArray;
@@ -22,6 +24,7 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import com.srdp.admin.time_manager.R;
 import com.srdp.admin.time_manager.model.moudle.Label;
 import com.srdp.admin.time_manager.util.DrawAnalysisChartUtil;
+import com.srdp.admin.time_manager.util.GestureDetectorUtil;
 import com.srdp.admin.time_manager.util.HttpUtil;
 import com.srdp.admin.time_manager.widget.AnalysisChart.ChartButton;
 
@@ -43,6 +46,11 @@ public class PatternAnalysisPage5 extends AppCompatActivity {
     private int[] colors={R.color.darkOrange,R.color.orange,R.color.lightOrange};
     private Map<Integer,String> legendDdata=new HashMap<Integer, String>();
     private boolean weekday=true;
+    private GestureDetector mGestureDetector;
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return mGestureDetector.onTouchEvent(event);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +77,8 @@ public class PatternAnalysisPage5 extends AppCompatActivity {
                 getDataAndDraw();
             }
         });
+        //初始化手势监测器
+        mGestureDetector=new GestureDetectorUtil(this,PatternAnalysisPage6.class).getDetector();
         /*initData();
         testDrawUtil();*/
         //testDraw();
@@ -76,6 +86,7 @@ public class PatternAnalysisPage5 extends AppCompatActivity {
     private void getDataAndDraw()
     {
         //设置图例
+        legendDdata.clear();
         legendDdata.put(colors[0],"少于预定时间的比例");
         legendDdata.put(colors[1],"等于预定时间的比例");
         legendDdata.put(colors[2],"多于预定时间的比例");

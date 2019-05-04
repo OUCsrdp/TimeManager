@@ -4,6 +4,9 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONArray;
@@ -11,6 +14,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.mikephil.charting.charts.BarChart;
 import com.srdp.admin.time_manager.R;
 import com.srdp.admin.time_manager.util.DrawAnalysisChartUtil;
+import com.srdp.admin.time_manager.util.GestureDetectorUtil;
 import com.srdp.admin.time_manager.util.HttpUtil;
 import com.srdp.admin.time_manager.widget.AnalysisChart.ChartButton;
 
@@ -26,6 +30,13 @@ public class PatternAnalysisPage6 extends AppCompatActivity {
     private Map<Float,float[]> Percents=new HashMap<Float, float[]>();
     private int[] colors=new int[1];
     private boolean weekday=true;
+    private double density=0.0;
+    //手势监测器
+    private GestureDetector mGestureDetector;
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return mGestureDetector.onTouchEvent(event);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,21 +51,23 @@ public class PatternAnalysisPage6 extends AppCompatActivity {
         /*initData();
         drawChart();*/
         //进入页面时绘制统计图
-        getDataAndDraw(colors);
+        getDataAndDraw();
         ChartButton chartButton=findViewById(R.id.P6ChartButtion);
         chartButton.setonClick(new ChartButton.TransforWeekday() {
             @Override
             public void onTransforWeekday(boolean isWeekday) {
                 weekday=isWeekday;
                 //切换工作日休息日时重新绘制统计图
-                getDataAndDraw(colors);
+                getDataAndDraw();
             }
         });
+        //初始化手势监测器
+        mGestureDetector=new GestureDetectorUtil(this,Index_Timing_Change.class).getDetector();
     }
-    private void getDataAndDraw(final int[] colors)
+    private void getDataAndDraw()
     {
         //请求获得统计图数据
-        JSONObject reqJson=new JSONObject();
+        final JSONObject reqJson=new JSONObject();
         reqJson.put("weekday",weekday);
         reqJson.put("type","densityAnalysis");
         HttpUtil.request("AnalysisServlet?method=GetChart","post",reqJson,new okhttp3.Callback(){
@@ -64,6 +77,7 @@ public class PatternAnalysisPage6 extends AppCompatActivity {
                     String ress=response.body().string();
                     JSONObject resJson = JSONObject.parseObject(ress);
                     JSONArray chartInfor=resJson.getJSONArray("chartInfor");
+                    density=resJson.getDoubleValue("density");
                     for(int i=0;i<chartInfor.size();i++)
                     {
                         //设置每个柱体的高度
@@ -72,7 +86,7 @@ public class PatternAnalysisPage6 extends AppCompatActivity {
                         every[0]=nowData.getFloatValue("percents");
                         Percents.put((float)i,every);
                     }
-                    drawChart(colors);
+                    drawChart();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -82,8 +96,15 @@ public class PatternAnalysisPage6 extends AppCompatActivity {
             }
         });
     }
-    private void drawChart(int[] colors){
-        DrawAnalysisChartUtil.drawChart(this,R.id.DensityChartMain,"DensityBarChart",Percents,colors);
+    private void drawChart(){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                TextView allDensityText=(TextView)findViewById(R.id.AnalysisPage6Density);
+                allDensityText.setText("平均每小时完成的事件数为"+density);
+                DrawAnalysisChartUtil.drawChart(PatternAnalysisPage6.this,R.id.DensityChartMain,"DensityBarChart",Percents,colors);
+            }
+        });
     }
     private void initData()
     {
@@ -100,7 +121,7 @@ public class PatternAnalysisPage6 extends AppCompatActivity {
         }
         colors[0]=R.color.orange;
     }
-    private void drawChart()
+    private void drawChartTest()
     {
         DrawAnalysisChartUtil.drawChart(this,R.id.DensityChartMain,"DensityBarChart",Percents,colors);
     }

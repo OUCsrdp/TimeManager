@@ -35,22 +35,29 @@
         <activity android:name=".ui.RegisterSchoolActivity" />
         <activity android:name=".ui.ReportCalendarActivity">
         </activity>
-        <activity android:name=".ui.PatternAnalysisPage5">
+        <activity android:name=".ui.PatternAnalysisPage5"
+            android:theme="@style/AnalysisTheme">
 
         </activity>
-        <activity android:name=".ui.PatternAnalysisPage2Activity">
+        <activity android:name=".ui.PatternAnalysisPage2Activity"
+            android:theme="@style/AnalysisTheme">
         </activity>
-        <activity android:name=".ui.PatternAnalysisPage3Activity">
+        <activity android:name=".ui.PatternAnalysisPage3Activity"
+            android:theme="@style/AnalysisTheme">
         </activity>
-        <activity android:name=".ui.PatternAnalysisPage1Activity">
+        <activity android:name=".ui.PatternAnalysisPage1Activity"
+            android:theme="@style/AnalysisTheme">
         </activity>
-        <activity android:name=".ui.PatternAnalysisPage4">
+        <activity android:name=".ui.PatternAnalysisPage4"
+            android:theme="@style/AnalysisTheme">
         </activity>
-        <activity android:name=".ui.PatternAnalysisPage6">
+        <activity android:name=".ui.PatternAnalysisPage6"
+            android:theme="@style/AnalysisTheme">
         </activity>
         <activity android:name=".ui.ReportFormActivity">
         </activity>
-        <activity android:name=".ui.PatternAnalysisPage7Activity">
+        <activity android:name=".ui.PatternAnalysisPage7Activity"
+            android:theme="@style/AnalysisTheme">
         </activity>
         <activity android:name=".ui.ReportFormDayActivity">
         </activity>

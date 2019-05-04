@@ -67,8 +67,9 @@
             android:text="迄今为止"
             />
         <TextView
+            android:id="@+id/AnalysisPage6Density"
             style="@style/AnalaysisChartTipsText"
-            android:text="平均每小时完成的事件数为"
+            android:text="平均每小时完成的事件数为0.0"
             />
         </LinearLayout>
     </LinearLayout>

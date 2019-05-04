@@ -6,6 +6,20 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <!--<item name="android:windowEnterTransition">@transition/explode</item>
+        <item name="android:windowExitTransition">@transition/explode</item>-->
+    </style>
+    <!-- Analysis页面主题 -->
+    <style name="AnalysisTheme" parent="@style/AppTheme">
+        <item name="android:windowAnimationStyle">@style/analysisAnimation</item>
+    </style>
+    <!-- Analysis页面动画 -->
+    <style name="analysisAnimation" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@transition/in_from_bottom</item>
+        <item name="android:activityOpenExitAnimation">@transition/out_to_top</item>
+        <!--<item name="android:activityOpenExitAnimation">@anim/test_a_to_b_of_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/test_a_back_b_of_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/test_a_back_b_of_out</item>-->
     </style>
 
     <!--Person_Infor activity-->

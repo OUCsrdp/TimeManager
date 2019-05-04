@@ -1,7 +1,11 @@
 package com.srdp.admin.time_manager.ui;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -31,7 +35,6 @@ public class PatternAnalysisPage1Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pattern_analysis_page1);
-
         //隐藏默认actionbar
         ActionBar actionbar = getSupportActionBar();
         if (actionbar != null) {
@@ -68,8 +71,15 @@ public class PatternAnalysisPage1Activity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent();
                 intent.setClass(PatternAnalysisPage1Activity.this, PatternAnalysisPage2Activity.class);//从哪里跳到哪里
-                PatternAnalysisPage1Activity.this.startActivity(intent);
+                startActivity(intent);
+                overridePendingTransition(R.transition.in_from_bottom, R.transition.out_to_top);
+                //ActivityOptionsCompat options6 = ActivityOptionsCompat.makeSceneTransitionAnimation(PatternAnalysisPage1Activity.this);
+                //ActivityCompat.startActivity(PatternAnalysisPage1Activity.this,intent, options6.toBundle());
+                //PatternAnalysisPage1Activity.this.startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(PatternAnalysisPage1Activity.this).toBundle());
             }
         });
+    }
+    public void slideToNext(){
+
     }
 }

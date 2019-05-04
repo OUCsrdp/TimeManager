@@ -37,7 +37,7 @@ public class AnalysisServlet extends BaseServlet {
 		String token = reqJson.getString("token");
 		String weekday = reqJson.getString("weekday");
 		boolean isWeekday = false;
-		if(weekday.equals("true"))
+		if(weekday.equals("True"))
 			isWeekday = true;
 		String delayTime = AnalysisService.getDelayedTime(Integer.parseInt(userId), isWeekday);
 		resJson.put("delayedtime", delayTime);
@@ -53,7 +53,7 @@ public class AnalysisServlet extends BaseServlet {
 		String token = reqJson.getString("token");
 		String weekday = reqJson.getString("weekday");
 		boolean isWeekday = false;
-		if(weekday.equals("true"))
+		if(weekday.equals("True"))
 			isWeekday = true;
 		int percent = AnalysisService.getUnfinishedPercent(Integer.parseInt(userId), isWeekday);
 		resJson.put("unfininshedPercent", percent + "%");

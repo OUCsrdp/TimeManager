@@ -6,11 +6,14 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.srdp.admin.time_manager.util.GestureDetectorUtil;
 import com.srdp.admin.time_manager.util.HttpUtil;
 import com.srdp.admin.time_manager.widget.AnalysisChart.ChartButton;
 import com.srdp.admin.time_manager.R;
@@ -27,7 +30,13 @@ public class PatternAnalysisPage2Activity extends AppCompatActivity {
     private TextView p2_time_text;
     private ChartButton p2_chartButton;
     private boolean weekDay = true;
-
+    private String delayedTime;
+    //手势检测器
+    private GestureDetector mGestureDetector;
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return mGestureDetector.onTouchEvent(event);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,15 +54,16 @@ public class PatternAnalysisPage2Activity extends AppCompatActivity {
 
         getData();
         //weekday点击事件
-        p2_chartButton.setOnClickListener(new View.OnClickListener() {
+        p2_chartButton.setonClick(new ChartButton.TransforWeekday() {
             @Override
-            public void onClick(View view) {
-                weekDay = p2_chartButton.getWeekDay();
-//                String info = weekDay==true?"true":"false";
-//                Log.i("info",info);
+            public void onTransforWeekday(boolean isWeekday) {
+                weekDay=isWeekday;
+                //切换工作日休息日时重新绘制统计图
                 getData();
             }
         });
+        //初始化手势监测器
+        mGestureDetector=new GestureDetectorUtil(this,PatternAnalysisPage3Activity.class).getDetector();
     }
     //从后端获取平均推迟时间
     private void getData(){
@@ -65,9 +75,13 @@ public class PatternAnalysisPage2Activity extends AppCompatActivity {
                 try{
                     String jsonString = response.body().string();
                     Log.i("jsonString",jsonString);
-                    String delayedTime = parseObject(jsonString).getString("delayedtime");
-                    p2_time_text.setText(delayedTime);
-
+                    delayedTime = parseObject(jsonString).getString("delayedtime");
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            p2_time_text.setText(delayedTime);
+                        }
+                    });
                 }catch(Exception e){
                     e.printStackTrace();
                 }
