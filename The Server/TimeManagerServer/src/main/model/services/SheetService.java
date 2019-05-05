@@ -15,7 +15,7 @@ public class SheetService
 	{
 		JSONObject back = new JSONObject();
 		ArrayList<TimeSharing> timeSharings = TimeSharingManager.findWithIdUser(userId);
-		if(timeSharings.isEmpty())
+		if(timeSharings.isEmpty() || timeSharings == null)
 			return null;
 		TimeSharing timeSharing = null;
 		for(int i = 0; i < timeSharings.size(); i++)
@@ -103,7 +103,9 @@ public class SheetService
 			if(minutesAll != 0)
 				percent = (float)minutesPerLabel/(float)minutesAll;
 			else percent = 0;
-			satisfaction /= numberPerLabel;
+			if(numberPerLabel != 0)
+        		satisfaction /= numberPerLabel;
+        	else satisfaction = 0;
 			labelAffair.put("duration", duration);
 			labelAffair.put("percent", percent);
 			labelAffair.put("satisfaction", satisfaction);
@@ -184,6 +186,8 @@ public class SheetService
 		
 		ArrayList<TimeSharing> timeSharings = TimeSharingManager.findWithIdUser(userId);
 		
+		//System.out.println(timeSharings.size());
+		
 		Pattern p = Pattern.compile("年"); 
 		String [] split1 = p.split(date);
 		String yearS = split1[0];
@@ -236,13 +240,22 @@ public class SheetService
         //截至此获取到今天是使用的第几周
         
         ArrayList<String> durationArray = new ArrayList<String>();
+        //用户没有时间分配表
+        if(timeSharings == null) {
+			for(int i = 0; i < 7; i++) {
+				durationArray.add("00:00");
+			}
+			back.put("durationArray", durationArray);
+	        return back;
+		}
+        
         timeOfDate.add(Calendar.DATE, -timeRegister.get(Calendar.DAY_OF_WEEK));
         for(int i = 0; i < 7; i++)
         {
         	String newDate = timeOfDate.get(Calendar.YEAR) + "年" + timeOfDate.get(Calendar.MONTH)+ "月" +timeOfDate.get(Calendar.DATE) + "日";
         	timeOfDate.add(Calendar.DATE, 1);
         	TimeSharing timeSharing = null;
-        	System.out.println(timeSharings.size());
+  
         	for(int j = 0; j < timeSharings.size(); j++)
         	{
         		if(timeSharings.get(j).getDate().equals(newDate))
@@ -261,6 +274,7 @@ public class SheetService
         	ArrayList<Affair> affairs = AffairManager.findWithIdTS(timeSharing.getId());
         	if(affairs == null)
         		affairs = new ArrayList<Affair>();
+        	int hours0 = 0,minutes0 = 0;
         	for(int j = 0; j < affairs.size(); j++)
 			{
 				if(affairs.get(j).getIdLabel() == labelid)
@@ -273,21 +287,26 @@ public class SheetService
 						minutes += 60;
 						hours--;
 					}
-					if(hours < 10)
-						if(minutes < 10)
-							duration ="0"+ String.valueOf(hours) + ":0" + String.valueOf(minutes);
-						else 
-							duration = "0"+String.valueOf(hours) + ":" + String.valueOf(minutes);
-					else {
-						if(minutes < 10)
-							duration = String.valueOf(hours) + ":0" + String.valueOf(minutes);
-						else 
-							duration = String.valueOf(hours) + ":" + String.valueOf(minutes);
-					}
-						
-					durationArray.add(duration);
+					minutes0 += minutes;
+					hours0 += hours;
 				}
 			}
+        	minutes0 /= 60;
+        	hours0 %= 60;
+        	
+        	if(hours0 < 10)
+				if(minutes0 < 10)
+					duration ="0"+ String.valueOf(hours0) + ":0" + String.valueOf(minutes0);
+				else 
+					duration = "0"+String.valueOf(hours0) + ":" + String.valueOf(minutes0);
+			else {
+				if(minutes0 < 10)
+					duration = String.valueOf(hours0) + ":0" + String.valueOf(minutes0);
+				else 
+					duration = String.valueOf(hours0) + ":" + String.valueOf(minutes0);
+			}
+				
+			durationArray.add(duration);
         }
         back.put("durationArray", durationArray);
         return back;
@@ -352,12 +371,17 @@ public class SheetService
         
         back.put("week", "第" + week + "周");
         
-        
-
         int w = timeOfDate.get(Calendar.DAY_OF_WEEK);
         timeOfDate.add(Calendar.DATE, -w);       
         
         ArrayList<Label> labels = LabelManager.findWithNothing();
+      //用户没有时间分配表
+        if(timeSharings == null) {
+        	JSONArray affairArray = new JSONArray();
+        	back.put("TimeSharing", affairArray);
+        	back.put("Schedule", affairArray);
+	        return back;
+		}
         
       //算出7天所有事件的时间
         int minutesAll = 0;
@@ -378,7 +402,10 @@ public class SheetService
         	}
         	if(timeSharing == null)
     			continue;
+        	
     		ArrayList<Affair> affairs = AffairManager.findWithIdTS(timeSharing.getId());
+    		if(affairs == null) continue;
+    		
     		for(int j = 0; j < affairs.size(); j++)
     		{
     			if(affairs.get(j).getTimeEnd() == null || affairs.get(j).getTimeStart() == null) continue;
@@ -457,7 +484,10 @@ public class SheetService
         	if(minutesAll != 0)
         		percent = (float)minutesPerLabel/(float)minutesAll;
         	else percent = 0;
-			satisfaction /= numberPerLabel;
+        	if(numberPerLabel != 0)
+        		satisfaction /= numberPerLabel;
+        	else satisfaction = 0;
+			
 			labelAffair.put("duration", duration);
 			labelAffair.put("percent", percent);
 			labelAffair.put("satisfaction", satisfaction);
@@ -531,7 +561,9 @@ public class SheetService
         	if(minutesAll != 0)
         		percent = (float)minutesPerLabel/(float)minutesAll;
         	else percent = 0;
-        	satisfaction /= numberPerLabel;
+        	if(numberPerLabel != 0)
+        		satisfaction /= numberPerLabel;
+        	else satisfaction = 0;
 			labelS_Affair.put("duration", duration);
 			labelS_Affair.put("percent", percent);
 			labelS_Affair.put("satisfaction", satisfaction);

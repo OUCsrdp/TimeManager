@@ -23,7 +23,10 @@ public class Main {
 		String dt=aService.getDelayedTime(2,true);
 		System.out.println("dt"+dt);
 		String dtf=aService.getDelayedTime(2,false);
-		System.out.println("dtf"+dt);
+		System.out.println("dtf"+dtf);
+		SheetService s=new SheetService();
+		JSONObject j=s.getWeeklySheet(2,"2019Äê5ÔÂ4ÈÕ");
+		System.out.println(j.toString());
 		//int a=aService.getUnfinishedPercent(2,true);
 		//System.out.println("uf"+a);
 		//JSONObject simple=aService.getChart(2, true, "SimpleAnalysis");
