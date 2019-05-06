@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class SqlServerManager {
 	
-	private static String url = "jdbc:sqlserver://47.103.6.104:1433;databaseName=TimeManager";
+	private static String url = "jdbc:sqlserver://localhost:1433;databaseName=TimeManager";
 	//118.89.242.245:·şÎñÆ÷ipµØÖ·
 	private static String username = "root";
 	private static String password = "password";
