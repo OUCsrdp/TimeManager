@@ -115,6 +115,7 @@ public class ReportFormActivity extends AppCompatActivity {
     private String week;//获取的第x周
     private int flag_pic = 1;//切换标志
     private String jsonString="";
+    private int labelId=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -229,6 +230,8 @@ public class ReportFormActivity extends AppCompatActivity {
                         label_name.setText("学习");
                         label_img.setImageDrawable(getResources().getDrawable(R.drawable.label_learning));
                         dialog.dismiss();
+                        labelId = 1;
+                        getLineData();
                     }
                 });
                 label_self_learning.setOnClickListener(new View.OnClickListener(){
@@ -237,6 +240,8 @@ public class ReportFormActivity extends AppCompatActivity {
                         label_name.setText("自学");
                         label_img.setImageDrawable(getResources().getDrawable(R.drawable.label_self_learning));
                         dialog.dismiss();
+                        labelId = 2;
+                        getLineData();
                     }
                 });
                 label_club.setOnClickListener(new View.OnClickListener(){
@@ -245,6 +250,8 @@ public class ReportFormActivity extends AppCompatActivity {
                         label_name.setText("社团");
                         label_img.setImageDrawable(getResources().getDrawable(R.drawable.label_club));
                         dialog.dismiss();
+                        labelId = 3;
+                        getLineData();
                     }
                 });
                 label_entertainment.setOnClickListener(new View.OnClickListener(){
@@ -253,6 +260,8 @@ public class ReportFormActivity extends AppCompatActivity {
                         label_name.setText("娱乐");
                         label_img.setImageDrawable(getResources().getDrawable(R.drawable.label_entertainment));
                         dialog.dismiss();
+                        labelId = 4;
+                        getLineData();
                     }
                 });
                 label_transport.setOnClickListener(new View.OnClickListener(){
@@ -261,6 +270,8 @@ public class ReportFormActivity extends AppCompatActivity {
                         label_name.setText("交通");
                         label_img.setImageDrawable(getResources().getDrawable(R.drawable.label_transport));
                         dialog.dismiss();
+                        labelId = 5;
+                        getLineData();
                     }
                 });
                 label_eat.setOnClickListener(new View.OnClickListener(){
@@ -269,6 +280,8 @@ public class ReportFormActivity extends AppCompatActivity {
                         label_name.setText("吃饭");
                         label_img.setImageDrawable(getResources().getDrawable(R.drawable.label_eat));
                         dialog.dismiss();
+                        labelId = 6;
+                        getLineData();
                     }
                 });
                 label_rest.setOnClickListener(new View.OnClickListener(){
@@ -277,6 +290,8 @@ public class ReportFormActivity extends AppCompatActivity {
                         label_name.setText("休息");
                         label_img.setImageDrawable(getResources().getDrawable(R.drawable.label_rest));
                         dialog.dismiss();
+                        labelId = 7;
+                        getLineData();
                     }
                 });
                 label_sleep.setOnClickListener(new View.OnClickListener(){
@@ -285,6 +300,8 @@ public class ReportFormActivity extends AppCompatActivity {
                         label_name.setText("睡觉");
                         label_img.setImageDrawable(getResources().getDrawable(R.drawable.label_sleep));
                         dialog.dismiss();
+                        labelId = 8;
+                        getLineData();
                     }
                 });
                 label_life.setOnClickListener(new View.OnClickListener(){
@@ -293,6 +310,8 @@ public class ReportFormActivity extends AppCompatActivity {
                         label_name.setText("生活");
                         label_img.setImageDrawable(getResources().getDrawable(R.drawable.label_life));
                         dialog.dismiss();
+                        labelId = 9;
+                        getLineData();
                     }
                 });
                 label_sports.setOnClickListener(new View.OnClickListener(){
@@ -301,6 +320,8 @@ public class ReportFormActivity extends AppCompatActivity {
                         label_name.setText("运动");
                         label_img.setImageDrawable(getResources().getDrawable(R.drawable.label_sports));
                         dialog.dismiss();
+                        labelId = 10;
+                        getLineData();
                     }
                 });
                 label_other.setOnClickListener(new View.OnClickListener(){
@@ -309,6 +330,8 @@ public class ReportFormActivity extends AppCompatActivity {
                         label_name.setText("其他");
                         label_img.setImageDrawable(getResources().getDrawable(R.drawable.label_other));
                         dialog.dismiss();
+                        labelId = 11;
+                        getLineData();
                     }
                 });
 
@@ -422,13 +445,7 @@ public class ReportFormActivity extends AppCompatActivity {
         Intent intent=getIntent();
         String today=intent.getStringExtra("date");
         rep_date.setText(today);
-        //TODO 获取标签
-        String labelName = label_name.getText().toString();
-        Log.i("labelName",labelUtil.getLabelByName("学习").getId()+"");
-        int labelId = labelUtil.getLabelByName(labelName).getId();
-        Log.i("labelName",labelId+""+label_name.getText().toString());
-
-
+        Log.i("labelId",labelId+"");
 
 
         //从后端获取数据
