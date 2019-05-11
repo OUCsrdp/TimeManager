@@ -49,4 +49,13 @@ public class LabelUtil {
         }
         return null;
     }
+    public static Label getLabelByName(String name)
+    {
+        for(int i=0;i<labels.size();i++)
+        {
+            if(labels.get(i).getName()==name)
+                return labels.get(i);
+        }
+        return null;
+    }
 }

@@ -37,6 +37,7 @@ public class RegisterSchoolActivity extends AppCompatActivity {
 
     private EditText register_school;
     private EditText register_major;
+    private EditText register_gpa;
 
     private ScrollPickerView select_school;
 
@@ -61,6 +62,7 @@ public class RegisterSchoolActivity extends AppCompatActivity {
 
         register_school = (EditText) findViewById(R.id.register_school);
         register_major = (EditText) findViewById(R.id.register_major);
+        register_gpa = (EditText) findViewById(R.id.register_gpa);
 
         select_school = (ScrollPickerView) findViewById(R.id.select_school);
 
@@ -72,6 +74,7 @@ public class RegisterSchoolActivity extends AppCompatActivity {
                 //跳转注册下一页以及验证
                 final String register_school_edit = register_school.getText().toString();//获取学校
                 final String register_major_edit = register_major.getText().toString();//获取专业
+                final String register_gpa_edit = register_gpa.getText().toString();//获取gpa
 
                 if(TextUtils.isEmpty(register_school_edit)){
                     Toast.makeText(RegisterSchoolActivity.this,"学校不能为空",Toast.LENGTH_SHORT).show();
@@ -81,31 +84,36 @@ public class RegisterSchoolActivity extends AppCompatActivity {
                     Toast.makeText(RegisterSchoolActivity.this,"专业不能为空",Toast.LENGTH_SHORT).show();
                     return;
                 }
+                if(TextUtils.isEmpty(register_gpa_edit)){
+                    Toast.makeText(RegisterSchoolActivity.this,"gpa不能为空",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 //去往继续注册页
                 Intent register_next_page = new Intent(RegisterSchoolActivity.this,RegisterActivity.class);
                 register_next_page.putExtra("school",user.getSchool());
                 register_next_page.putExtra("major",user.getMajor());
+                register_next_page.putExtra("gpa",user.getGPA());
                 startActivity(register_next_page);
             }
         });
-        register_school.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //选择学校
-                String[] school = {"中国政法大学","中国石油大学","中国海洋大学","中国科学院大学","中国地质大学"};
-                select_school.setData(Arrays.asList(school));
-                select_school.setVisibility(View.VISIBLE);
-                select_school.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        //放置学校选项
-                        register_school.setText(select_school.getSelectedItem().toString());
-                        select_school.setVisibility(View.INVISIBLE);
-                        user.setSchool(select_school.getSelectedItem().toString());
-                    }
-                });
-            }
-        });
+//        register_school.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //选择学校
+//                String[] school = {"中国政法大学","中国石油大学","中国海洋大学","中国科学院大学","中国地质大学"};
+//                select_school.setData(Arrays.asList(school));
+//                select_school.setVisibility(View.VISIBLE);
+//                select_school.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        //放置学校选项
+//                        register_school.setText(select_school.getSelectedItem().toString());
+//                        select_school.setVisibility(View.INVISIBLE);
+//                        user.setSchool(select_school.getSelectedItem().toString());
+//                    }
+//                });
+//            }
+//        });
         register_major.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

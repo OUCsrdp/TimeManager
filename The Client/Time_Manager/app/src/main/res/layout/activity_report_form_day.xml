@@ -119,6 +119,7 @@
                             android:textColor="#ffffff" />
 
                         <TextView
+                            android:id="@+id/day_plan_time"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
@@ -177,6 +178,7 @@
                             android:textColor="#ffffff" />
 
                         <TextView
+                            android:id="@+id/day_time"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
