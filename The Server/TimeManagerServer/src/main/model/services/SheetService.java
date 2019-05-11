@@ -66,6 +66,7 @@ public class SheetService
 			String duration = "00:00";
 			int minutesPerLabel = 0;
 			int numberPerLabel = 0;
+			int numberSatis = 0;
 			float percent = 0.0f;
 			float satisfaction = 0.0f;
 			JSONObject labelAffair = new JSONObject();
@@ -83,7 +84,12 @@ public class SheetService
 						hours--;
 					}
 					minutesPerLabel += (minutes + hours*60);
-					satisfaction += affairs.get(j).getSatisfaction();
+					int satis = affairs.get(j).getSatisfaction();
+					if(satis != 0) {
+						satisfaction += satis;
+						numberSatis ++;
+					}
+					
 					numberPerLabel ++;
 				}
 			}
@@ -103,8 +109,8 @@ public class SheetService
 			if(minutesAll != 0)
 				percent = (float)minutesPerLabel/(float)minutesAll;
 			else percent = 0;
-			if(numberPerLabel != 0)
-        		satisfaction /= numberPerLabel;
+			if(numberSatis != 0)
+        		satisfaction /= numberSatis;
         	else satisfaction = 0;
 			labelAffair.put("duration", duration);
 			labelAffair.put("percent", percent);
@@ -291,8 +297,9 @@ public class SheetService
 					hours0 += hours;
 				}
 			}
-        	minutes0 /= 60;
-        	hours0 %= 60;
+        	
+        	hours0 += minutes0 / 60;
+        	minutes0 %= 60;
         	
         	if(hours0 < 10)
 				if(minutes0 < 10)
@@ -430,6 +437,7 @@ public class SheetService
         	String duration = "00:00";
 			int minutesPerLabel = 0;
 			int numberPerLabel = 0;
+			int numberSatis = 0;
 			float percent = 0.0f;
 			float satisfaction = 0.0f;
         	for(int j = 0; j < 7; j++)
@@ -463,7 +471,12 @@ public class SheetService
     						hours--;
     					}
     					minutesPerLabel += (minutes + hours*60);
-    					satisfaction += affairs.get(k).getSatisfaction();
+    					int satis = affairs.get(k).getSatisfaction();
+    					
+    					if(satis != 0) {
+    						satisfaction += satis;
+    						numberSatis ++;
+    					}
     					numberPerLabel ++;
     				}
     			}
@@ -484,8 +497,8 @@ public class SheetService
         	if(minutesAll != 0)
         		percent = (float)minutesPerLabel/(float)minutesAll;
         	else percent = 0;
-        	if(numberPerLabel != 0)
-        		satisfaction /= numberPerLabel;
+        	if(numberSatis != 0)
+        		satisfaction /= numberSatis;
         	else satisfaction = 0;
 			
 			labelAffair.put("duration", duration);
@@ -508,7 +521,7 @@ public class SheetService
 			int minutesPerLabel = 0;
 			int numberPerLabel = 0;
 			float percent = 0.0f;
-			float satisfaction = 0.0f;
+			//float satisfaction = 0.0f;
         	for(int j = 0; j < 7; j++)
             {
             	timeOfDate.add(Calendar.DATE, 1);
@@ -540,7 +553,7 @@ public class SheetService
     						hours--;
     					}
     					minutesPerLabel += (minutes + hours*60);
-    					satisfaction += s_Affairs.get(k).getSatisfaction();
+    					//satisfaction += s_Affairs.get(k).getSatisfaction();
     					numberPerLabel ++;
     				}
     			}
@@ -561,12 +574,12 @@ public class SheetService
         	if(minutesAll != 0)
         		percent = (float)minutesPerLabel/(float)minutesAll;
         	else percent = 0;
-        	if(numberPerLabel != 0)
+        	/*if(numberPerLabel != 0)
         		satisfaction /= numberPerLabel;
-        	else satisfaction = 0;
+        	else satisfaction = 0;*/
 			labelS_Affair.put("duration", duration);
 			labelS_Affair.put("percent", percent);
-			labelS_Affair.put("satisfaction", satisfaction);
+			
 			if(percent != 0) {
 				s_AffairArray.add(labelS_Affair);
 			}
