@@ -90,9 +90,9 @@ public class RegisterSchoolActivity extends AppCompatActivity {
                 }
                 //去往继续注册页
                 Intent register_next_page = new Intent(RegisterSchoolActivity.this,RegisterActivity.class);
-                register_next_page.putExtra("school",user.getSchool());
-                register_next_page.putExtra("major",user.getMajor());
-                register_next_page.putExtra("gpa",user.getGPA());
+                register_next_page.putExtra("school",register_school_edit);
+                register_next_page.putExtra("major", register_major_edit);
+                register_next_page.putExtra("gpa",register_gpa_edit);
                 startActivity(register_next_page);
             }
         });

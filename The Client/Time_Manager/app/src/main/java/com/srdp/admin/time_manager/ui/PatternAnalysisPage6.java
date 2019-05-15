@@ -62,7 +62,7 @@ public class PatternAnalysisPage6 extends AppCompatActivity {
             }
         });
         //初始化手势监测器
-        mGestureDetector=new GestureDetectorUtil(this,Index_Timing_Change.class).getDetector();
+        mGestureDetector=new GestureDetectorUtil(this,PatternAnalysisPage7Activity.class).getDetector();
     }
     private void getDataAndDraw()
     {
