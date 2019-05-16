@@ -178,6 +178,7 @@ public class RegisterActivity extends AppCompatActivity {
     {
         user.setSchool(regist_school_intent.getStringExtra("school"));
         user.setMajor(regist_school_intent.getStringExtra("major"));
+        user.setGPA(Float.valueOf(regist_school_intent.getStringExtra("gpa")));
         user.setImage("for test");
         Date date=new Date();
         SimpleDateFormat df=new SimpleDateFormat("yyyy年MM月dd日");

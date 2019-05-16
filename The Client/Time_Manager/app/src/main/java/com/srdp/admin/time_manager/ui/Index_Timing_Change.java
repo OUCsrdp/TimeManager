@@ -350,7 +350,7 @@ public class Index_Timing_Change extends AppCompatActivity {
         navi4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent theIntent=new Intent(Index_Timing_Change.this,PatternAnalysisPage5.class);
+                Intent theIntent=new Intent(Index_Timing_Change.this,PatternAnalysisPage1Activity.class);
                 startActivity(theIntent);
             }
         });

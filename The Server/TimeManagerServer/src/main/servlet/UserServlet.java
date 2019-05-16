@@ -45,6 +45,8 @@ public class UserServlet extends BaseServlet {
 		JSONObject reqJson = new JSONObject();/*
 		String jsonString=GetRequestUtil.getRequestJsonString(request);
 		System.out.println("userservletjsonstring:"+jsonString);*/
+		/*resJson.put("userJsonstring",jsonString);
+		return resJson;*/
 		reqJson=JSON.parseObject(jsonString);
 		if(reqJson.getString("operation").equals("register"))//ÓÃ»§×¢²á
 		{

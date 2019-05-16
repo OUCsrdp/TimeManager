@@ -436,38 +436,38 @@ public class ReportFormDayActivity extends AppCompatActivity {
         JSONObject reportObject = new JSONObject();
         reportObject.put("date",today);
 
-//        HttpUtil.request("SheetServlet?method=GetDailySheet","post",reportObject,new okhttp3.Callback(){
-//            @Override
-//            public void onResponse(@NonNull Call call, @NonNull Response response){
-//                try{
-//                    //获取服务器端响应数据
-//                    jsonString = response.body().string();
-//                    Log.i("jsonString",jsonString);
-//                    runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            //appendDailySheet(jsonString);
-//                            appendDailySheet(jsonString,1);
-//                            appendDailySheet(jsonString,2);
-//                        }
-//                    });
-//
-//
-//                } catch(Exception e){
-//                    e.printStackTrace();
-//                }
-//            }
-//            @Override
-//            public void onFailure(@NonNull Call call, @NonNull IOException e){
-//                //createFail();
-//            }
-//        });
+        HttpUtil.request("SheetServlet?method=GetDailySheet","post",reportObject,new okhttp3.Callback(){
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response){
+                try{
+                    //获取服务器端响应数据
+                    jsonString = response.body().string();
+                    Log.i("jsonString",jsonString);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            //appendDailySheet(jsonString);
+                            appendDailySheet(jsonString,1);
+                            appendDailySheet(jsonString,2);
+                        }
+                    });
+
+
+                } catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e){
+                //createFail();
+            }
+        });
 
 
         /*
          * 数据测试
          */
-        final String jsonString="{\"status\":\"success\",\n" +
+        /*final String jsonString="{\"status\":\"success\",\n" +
                 "\n" +
                 " \"weekday\": \"星期六\",\n" +
                 "\n" +
@@ -512,7 +512,7 @@ public class ReportFormDayActivity extends AppCompatActivity {
                 "               }]}";
         Log.i("jsonString",jsonString);
         appendDailySheet(jsonString,1);
-        appendDailySheet(jsonString,2);
+        appendDailySheet(jsonString,2);*/
 
 
         // 饼图数据

@@ -20,14 +20,11 @@ import main.model.db.*;
 public class AnalysisService{
 	
 	
-	// 返回用户平均推迟时间（格式xx时xx分）
+		// 返回用户平均推迟时间（格式xx时xx分）
 	public static String getDelayedTime(int userId,boolean weekday) 
 	{
 		ArrayList<Schedule> schedules = ScheduleManager.findWithIdUser(userId);
-		
-		if(schedules == null)
-			return "00时00分";
-		
+		if(schedules == null) schedules = new ArrayList<Schedule>();
 		int total = 0; // 总事件数
 		int delayMinutes = 0; // 总共推迟了多少时间
 		int delayHours = 0;
@@ -47,8 +44,7 @@ public class AnalysisService{
 		for(int i =0; i < schedules.size(); i++)
 		{
 			ArrayList<S_Affair> s_Affairs = S_AffairManager.findWithIdS(schedules.get(i).getId());
-			if(s_Affairs == null)
-				continue;
+			if(s_Affairs == null) s_Affairs = new ArrayList<S_Affair>();
 			for(int j = 0; j < s_Affairs.size(); j++)
 			{
 				if(s_Affairs.get(j).getTimeStart() != null)
@@ -119,7 +115,10 @@ public class AnalysisService{
 			total += s_Affairs.size();
 		}
 		
-		delayMinutes /= total;
+		if(total != 0) {
+			delayMinutes /= total;
+		}
+		else delayMinutes = 0;
 		// System.out.println(delayMinutes);
 		delayHours = delayMinutes / 60;
 		delayMinutes = delayMinutes % 60;
@@ -136,17 +135,15 @@ public class AnalysisService{
 		int percent = 0;
 		
 		ArrayList<Schedule> schedules = ScheduleManager.findWithIdUser(userId);
-		
-		if(schedules == null)
-			return 0;
-		
+		if(schedules == null) schedules = new ArrayList<Schedule>();
+
 		for(int i = 0; i < schedules.size(); i++)
 		{
 			if((schedules.get(i).getWeekday() == 6 || schedules.get(i).getWeekday() == 7) && weekday)
 				continue;
 			ArrayList<S_Affair> s_Affairs = S_AffairManager.findWithIdS(schedules.get(i).getId());
-			if(s_Affairs == null)
-				continue;
+			if(s_Affairs == null) s_Affairs = new ArrayList<S_Affair>();
+
 			for(int j = 0; j < s_Affairs.size(); j++)
 			{
 				if(s_Affairs.get(j).getTimeEnd() == null)
@@ -155,10 +152,14 @@ public class AnalysisService{
 			total += s_Affairs.size();
 		}
 		
-		percent = (int)((unfinish/total) * 100);
+		if(total != 0) {
+			percent = (int)((unfinish/total) * 100);
+		}
+		else percent = 0;
 		
 		return percent;
 	}
+	
 	
 	public static String getInsDate()
 	{
@@ -263,6 +264,8 @@ public class AnalysisService{
 				 
 				 int idLabel = label.getId();
 				 ArrayList<S_Affair> SAList = S_AffairManager.findWithIdLabel(idLabel);
+				
+				 
 				 JSONObject js = new JSONObject();
 				 js.put("labelid", idLabel);
 				 
@@ -380,6 +383,7 @@ public class AnalysisService{
 				count[i] = 0;
 			}
 			ArrayList<TimeSharing> tsList = TimeSharingManager.findWithIdUser(userId);
+			if(tsList == null) tsList = new ArrayList<TimeSharing>();
 			
 			for(TimeSharing t : tsList) {
 				if(weekday && t.getWeekday() > 5) { //需要工作日但当前日程表为非工作日
@@ -391,6 +395,10 @@ public class AnalysisService{
 					 continue;
 				 }
 				 allDays ++;
+			}
+			
+			if(allDays == 0) {
+				return null;
 			}
 			
 			int[] l = new int[8];
@@ -494,7 +502,7 @@ public class AnalysisService{
 	}
 	
 	//toDOCfile process
-	/*private static String json2string(JSONObject json,String type) {
+	private static String json2string(JSONObject json,String type) {
 		String back = "";
 		if(type.equals("SimpleAnalysis")) {
 			JSONArray array = json.getJSONArray("chartInfor");
@@ -535,9 +543,9 @@ public class AnalysisService{
 			}
 		}
 		return back;
-	}*/
+	}
 	
-	/*private static boolean testForFile(JSONObject json,String type) {
+	private static boolean testForFile(JSONObject json,String type) {
 		boolean back = false;
 		String content = json2string(json,type);
 		System.out.println(content);
@@ -545,8 +553,6 @@ public class AnalysisService{
 		try {
 			fileWriter = new FileWriter("./testForFile.doc");
 			fileWriter.write(content);
-			
-			
 			fileWriter.flush();
 			fileWriter.close();
 			back = true;
@@ -555,5 +561,5 @@ public class AnalysisService{
         }
 		
 		return back;
-	}*/
+	}
 }

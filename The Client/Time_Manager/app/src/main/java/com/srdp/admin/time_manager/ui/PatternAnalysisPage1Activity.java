@@ -30,6 +30,7 @@ public class PatternAnalysisPage1Activity extends AppCompatActivity {
 
     private TextView p1_day_count;//天数
     private Button p1_btn_next;//下一页按钮
+    private String resText;//例如367天
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +54,14 @@ public class PatternAnalysisPage1Activity extends AppCompatActivity {
                     String jsonString = response.body().string();
                     Log.i("jsonString",jsonString);
                     int dayCount = parseObject(jsonString).getIntValue("days");
-                    String resText = dayCount + "天";
-                    p1_day_count.setText(resText);
+                    resText = dayCount + "天";
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            p1_day_count.setText(resText);
+                        }
+                    });
+
                 }catch(Exception e){
                     e.printStackTrace();
                 }
