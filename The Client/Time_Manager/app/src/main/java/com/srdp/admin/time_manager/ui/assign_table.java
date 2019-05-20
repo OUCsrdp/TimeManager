@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -61,6 +62,8 @@ public class assign_table extends AppCompatActivity {
     private List<Affair> affair=new ArrayList<Affair>();
     private List<S_Affair> saffair=new ArrayList<S_Affair>();
     private String[] weekday={"星期一","星期二","星期三","星期四","星期五","星期六","星期日"};
+    private String status;
+    private AlertDialog shareDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,19 +121,48 @@ public class assign_table extends AppCompatActivity {
             }
         });
         //创建新的时间分配事件时跳转到该timesharing_edit并且把时间分配表的id传过去
+        ImageView shareAssign=(ImageView)findViewById(R.id.ShareAssign);
+        shareAssign.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("share","click");
+                showShareDialog();
+            }
+        });
+
     }
     private void showShareDialog(){
-        AlertDialog.Builder setshareDialog = new AlertDialog.Builder(this);
+        /*AlertDialog.Builder setshareDialog = new AlertDialog.Builder(this);
         //获取界面
         View dialogView = LayoutInflater.from(this).inflate(R.layout.share_pop, null);
         //将界面填充到AlertDiaLog容器
-        setshareDialog.setView(dialogView);
-        Button shareCancel=dialogView.findViewById(R.id.ShareCancel);
-        Button shareEnsre=dialogView.findViewById(R.id.ShareEnsure);
+        //setshareDialog.setView(dialogView);
         //创建AlertDiaLog
         setshareDialog.create();
         //AlertDiaLog显示
         final AlertDialog shareDialog = setshareDialog.show();
+        shareDialog.getWindow().setContentView(dialogView);
+        ImageView shareCancel=dialogView.findViewById(R.id.ShareCancel);
+        Button shareEnsre=dialogView.findViewById(R.id.ShareEnsure);*/
+
+
+        // 构建dialog显示的view布局
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.share_pop, null);
+        if (shareDialog == null){
+            // 创建AlertDialog对象
+            shareDialog = new AlertDialog.Builder(this)
+                    .create();
+            shareDialog.show();
+
+            // 获取Window对象
+            Window window = shareDialog.getWindow();
+            // 设置显示视图内容
+            window.setContentView(dialogView);
+        }else {
+            shareDialog.show();
+        }
+        ImageView shareCancel=dialogView.findViewById(R.id.ShareCancel);
+        Button shareEnsre=dialogView.findViewById(R.id.ShareEnsure);
         //设置自定义事件
         shareCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,21 +174,51 @@ public class assign_table extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                requestShare();
+               shareDialog.dismiss();
             }
         });
-
-
+    }
+    private void showResDialog(String status)
+    {
+        AlertDialog.Builder setshareDialog = new AlertDialog.Builder(this);
+        //获取界面
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.share_result_pop, null);
+        //将界面填充到AlertDiaLog容器
+        setshareDialog.setView(dialogView);
+        ImageView shareInforCancel=dialogView.findViewById(R.id.ShareResCancel);
+        TextView tipsInfor=dialogView.findViewById(R.id.ShareResText);
+        if(status.equals("success"))
+            tipsInfor.setText("分享事件分配表成功！");
+        else if(status.equals("gpafail"))
+            tipsInfor.setText("不好意思，您的GPA没达到标准，请继续努力！");
+        //创建AlertDiaLog
+        setshareDialog.create();
+        //AlertDiaLog显示
+        final AlertDialog shareDialog = setshareDialog.show();
+        //设置自定义事件
+        shareInforCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shareDialog.dismiss();
+            }
+        });
     }
     private void requestShare(){
         JSONObject reqJson=new JSONObject();
         reqJson.put("idTS",nowTable.getId());
-        HttpUtil.request("UserServlet?method=GetVerify&time="+new Date(),"post",reqJson,new okhttp3.Callback(){
+        HttpUtil.request("ShareTableServlet?method=share","post",reqJson,new okhttp3.Callback(){
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) {
                 try {
                     String ress=response.body().string();
                     JSONObject resJson = JSONObject.parseObject(ress);
-
+                    status=resJson.getString("status");
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            showResDialog(status);
+                        }
+                    });
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -358,7 +420,7 @@ public class assign_table extends AppCompatActivity {
         container.setAlpha(0.0f);
         LinearLayout assignDate =(LinearLayout)layoutInflater.inflate(R.layout.assign_date, null);
         //把时间分配表的基本信息加入表
-        ViewGroup dateGroup=(ViewGroup) assignDate.getChildAt(1);
+        ViewGroup dateGroup=(ViewGroup) assignDate.getChildAt(0);
         TextView dateText=(TextView) dateGroup.getChildAt(0);
         TextView weekdayText=(TextView)dateGroup.getChildAt(1);
         Log.i("tsappenddate","1");
