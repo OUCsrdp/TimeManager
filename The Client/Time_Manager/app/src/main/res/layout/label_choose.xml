@@ -4,9 +4,9 @@
     android:gravity="center"
     android:layout_gravity="center"
     android:background="@android:color/transparent"
-    android:columnCount="6"
+    android:columnCount="4"
     android:orientation="horizontal"
-    android:rowCount="6">
+    android:rowCount="4">
 
     <LinearLayout
         android:id="@+id/label_learning"
