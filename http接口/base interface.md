@@ -96,7 +96,7 @@
 	“id”:1333,//affairid
 
 	"isAffair":true,
-
+	
 	"status":"success"||"fail"||"unlogin"
 
 }
@@ -146,15 +146,15 @@
 
 {
 
-	“token”:,
-
-	"id":,
-
-	"isAffair":,//boolean类型
-
-	"StartTime":,
-
-	"EndTime":
+	    “token”:,
+	
+	    "id":,
+	
+	    "isAffair":,//boolean类型
+	
+	    "StartTime":,
+	
+	    "EndTime":
 
 }
 
