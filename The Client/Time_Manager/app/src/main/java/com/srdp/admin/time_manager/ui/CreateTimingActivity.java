@@ -13,6 +13,7 @@ import android.content.DialogInterface;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
@@ -90,7 +91,9 @@ public class CreateTimingActivity extends AppCompatActivity {
     private EditText timing_name;
     private EditText timing_ps;
 
-    private String[] strItems = new String[]{"交通","课业","社团","休息","睡眠","生活"};
+    private String[] strItems = new String[]{"学习","自学","社团","娱乐","交通","生活"};
+
+    private int labelId=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -215,18 +218,124 @@ public class CreateTimingActivity extends AppCompatActivity {
         timing_change_label.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+//                //点击按钮弹框
+//                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+//                //builder.setView(R.layout.schedule_label_dialog);
+//                //builder.setView(R.layout.schedule_label_dialog);
+//                builder.setItems(strItems, new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        timing_label_name.setText(strItems[i].toString());
+//                    }
+//                });
+//                builder.create();
+//                builder.show();
                 //点击按钮弹框
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                //builder.setView(R.layout.schedule_label_dialog);
-                //builder.setView(R.layout.schedule_label_dialog);
-                builder.setItems(strItems, new DialogInterface.OnClickListener() {
+                AlertDialog.Builder builder =new AlertDialog.Builder(context);
+                final AlertDialog dialog = builder.create();
+                View dialogView = View.inflate(context, R.layout.label_choose, null);
+                dialog.setView(dialogView);
+                dialog.show();
+                Window window = dialog.getWindow();
+                LinearLayout label_learning = (LinearLayout)window.findViewById(R.id.label_learning);
+                LinearLayout label_self_learning = (LinearLayout)window.findViewById(R.id.label_self_learning);
+                LinearLayout label_club = (LinearLayout)window.findViewById(R.id.label_club);
+                LinearLayout label_entertainment = (LinearLayout)window.findViewById(R.id.label_entertainment);
+                LinearLayout label_transport = (LinearLayout)window.findViewById(R.id.label_transport);
+                LinearLayout label_eat = (LinearLayout)window.findViewById(R.id.label_eat);
+                LinearLayout label_rest = (LinearLayout)window.findViewById(R.id.label_rest);
+                LinearLayout label_sleep = (LinearLayout)window.findViewById(R.id.label_sleep);
+                LinearLayout label_life = (LinearLayout)window.findViewById(R.id.label_life);
+                LinearLayout label_sports = (LinearLayout)window.findViewById(R.id.label_sports);
+                LinearLayout label_other = (LinearLayout)window.findViewById(R.id.label_other);
+                label_learning.setOnClickListener(new View.OnClickListener(){
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        timing_label_name.setText(strItems[i].toString());
+                    public void onClick(View view) {
+                        timing_label_name.setText("学习");
+                        dialog.dismiss();
+                        labelId = 1;
                     }
                 });
-                builder.create();
-                builder.show();
+                label_self_learning.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View view) {
+                        timing_label_name.setText("自学");
+                        dialog.dismiss();
+                        labelId = 2;
+                    }
+                });
+                label_club.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View view) {
+                        timing_label_name.setText("社团");
+                        dialog.dismiss();
+                        labelId = 3;
+                    }
+                });
+                label_entertainment.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View view) {
+                        timing_label_name.setText("娱乐");
+                        dialog.dismiss();
+                        labelId = 4;
+                    }
+                });
+                label_transport.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View view) {
+                        timing_label_name.setText("交通");
+                        dialog.dismiss();
+                        labelId = 5;
+                    }
+                });
+                label_eat.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View view) {
+                        timing_label_name.setText("吃饭");
+                        dialog.dismiss();
+                        labelId = 6;
+                    }
+                });
+                label_rest.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View view) {
+                        timing_label_name.setText("休息");
+                        dialog.dismiss();
+                        labelId = 7;
+                    }
+                });
+                label_sleep.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View view) {
+                        timing_label_name.setText("睡觉");
+                        dialog.dismiss();
+                        labelId = 8;
+                    }
+                });
+                label_life.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View view) {
+                        timing_label_name.setText("生活");
+                        dialog.dismiss();
+                        labelId = 9;
+                    }
+                });
+                label_sports.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View view) {
+                        timing_label_name.setText("运动");
+                        dialog.dismiss();
+                        labelId = 10;
+                    }
+                });
+                label_other.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View view) {
+                        timing_label_name.setText("其他");
+                        dialog.dismiss();
+                        labelId = 11;
+                    }
+                });
             }
         });
 
@@ -370,7 +479,7 @@ public class CreateTimingActivity extends AppCompatActivity {
         }else{
             Affair affair=new Affair();
             affair.setName(schedule_name_edit);
-            affair.setIdLabel(1);//暂且设置id标签为1
+            affair.setIdLabel(labelId);//暂且设置id标签为1
             affair.setTimeEndPlan(time_end_plan);
             affair.setTips(schedule_ps_edit);
             affair.setIdTS(0);//因为不知道所属时间分配表id,设置所属时间分配表为0
